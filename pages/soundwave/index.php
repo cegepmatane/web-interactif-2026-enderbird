@@ -1,11 +1,16 @@
 <?php
+// echo dirname(__DIR__, 2) . "/dao/AlbumDAO.php";
+include dirname(__DIR__, 2) . "/dao/AlbumDAO.php";
+$albumNo1 = AlbumDAO::detaillerAlbum(1);
+// print_r($albumNo1);
+
+// AFFICHAGE
 require_once dirname(__DIR__) . "/header.php";
 ?>
 
     <title>SoundWave - Ma Musique</title>
     <link rel="stylesheet" href="../css/general.css">
 
-    
     <main id="contenu-principal">
         <!-- Légende Ajax -->
         <section id="legende-ajax">
@@ -34,15 +39,15 @@ require_once dirname(__DIR__) . "/header.php";
         <!-- Album en vedette avec pochette personnalisable -->
         <section id="album-vedette">
             <div class="pochette-album">
-                <img src="https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=400&h=400&fit=crop" alt="Pochette album">
+                <img src="../../images/albums/<?= $albumNo1->id_image ?>.png" alt="Pochette album">
                 <div class="overlay-personnaliser">
                     <span>🎨</span>
                     <p>Personnaliser la pochette</p>
                 </div>
             </div>
             <div class="info-album-vedette">
-                <h2>Neon Horizons</h2>
-                <p class="artiste-vedette">par Synthwave Collective</p>
+                <h2><?= $albumNo1->nom ?></h2>
+                <p class="artiste-vedette"><?= $albumNo1->artiste ?></p>
 
                 <div class="stats-album">
                     <div class="stat-item">
@@ -54,8 +59,12 @@ require_once dirname(__DIR__) . "/header.php";
                         <div class="stat-label">Durée</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-nombre">2026</div>
-                        <div class="stat-label">Année</div>
+                        <div class="stat-nombre"><?= $albumNo1->date_sortie ?></div>
+                        <div class="stat-label">Date sortie</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-nombre"><?= $albumNo1->type ?></div>
+                        <div class="stat-label">Genre</div>
                     </div>
                 </div>
 

@@ -1,9 +1,7 @@
 <?php
-interface MorceauSQL
+interface AlbumSQL
 {
-	
-	public const SQL_LISTE_CONTRATS = "SELECT * FROM morceau";
-	public const SQL_DETAIL_CONTRAT = "SELECT * FROM morceau WHERE id = :id"; 
-
+	public const SQL_LISTE_ALBUM = "SELECT * FROM album";
+	public const SQL_DETAIL_ALBUM = "SELECT * FROM album WHERE id = :id";
 }
 ?>

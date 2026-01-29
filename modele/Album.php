@@ -1,51 +1,33 @@
-<!-- album...
-id
-type (single/Ep/album/compilation)
-nombre_morceaux
- image
-nom
-date_sortie
-artiste (string)
- duree
- note -->
-
 <?php 
 
 class Album
 {
     public static $filtres = array(
 		'id' => FILTER_VALIDATE_INT,
+		'id_image' => FILTER_VALIDATE_INT,
 		'type' => FILTER_UNSAFE_RAW,
-		'nombre_morceaux' => FILTER_VALIDATE_INT,
-		'image' => FILTER_UNSAFE_RAW,
 		'nom' => FILTER_UNSAFE_RAW,
 		'date_sortie' => FILTER_UNSAFE_RAW,
-		'artiste' => FILTER_UNSAFE_RAW,
-		'duree' => FILTER_VALIDATE_INT,
-		'note' => FILTER_VALIDATE_INT
+		'artiste' => FILTER_UNSAFE_RAW
 	);
 
     protected $id;
+	protected $id_image;
 	protected $type;
-	protected $nombre_morceaux;
-	protected $image;
+	protected $nom;
 	protected $date_sortie;
 	protected $artiste;
-	protected $duree;
-	protected $note;
 
     public function __construct($tableau)
 	{
-		$tableau = filter_var_array($tableau, Contrat::$filtres);
+		$tableau = filter_var_array($tableau, Album::$filtres);
 
 		$this->id = $tableau['id'];
+		$this->id_image = $tableau['id_image'];
 		$this->type = $tableau['type'];
-		$this->nombre_morceaux = $tableau['nombre_morceaux'];
-		$this->image = $tableau['image'];
+		$this->nom = $tableau['nom'];
 		$this->date_sortie = $tableau['date_sortie'];
 		$this->artiste = $tableau['artiste'];
-		$this->duree = $tableau['duree'];
-		$this->note = $tableau['note'];
 	}
 
     public function __set($propriete, $valeur)
@@ -55,26 +37,20 @@ class Album
 			case 'id':
 				$this->id = $valeur;
 			break;
+			case 'id_image':
+				$this->id_image = $valeur;
+			break;
 			case 'type':
 				$this->type = $valeur;
 			break;
-			case 'nombre_morceaux':
-				$this->nombre_morceaux = $valeur;
-			break;
-			case 'image':
-				$this->image = $valeur;
+			case 'nom':
+				$this->nom = $valeur;
 			break;
 			case 'date_sortie':
 				$this->date_sortie = $valeur;
 			break;
 			case 'artiste':
 				$this->artiste = $valeur;
-			break;
-            case 'duree':
-				$this->duree = $valeur;
-			break;
-            case 'note':
-				$this->note = $valeur;
 			break;
 		}
 	}
