@@ -1,0 +1,133 @@
+	
+	/* ///////// COLORATION /////////// */
+
+	#header
+	{
+		position:relative;
+		border:solid 1px blue;
+		background-color:white;
+	}
+	#header h1 span, header h1 span
+	{
+		color:#eeeeee;
+	}
+	#menu
+	{
+		background-color:#780e0e;
+		padding:1em;
+	}
+	#menu *
+	{
+		color:#eeeeee;
+		text-decoration:none;
+		font-weight:bold;
+	}	
+	h2
+	{
+		color:#eeeeee;
+	}
+	#liste-contrats .contrat 
+	{
+	}
+	
+	#liste-contrats .contrat .contrat-description
+	{
+	}
+	
+	body
+	{
+		background-color:#333333;
+	}
+	
+	#liste-contrats
+	{
+		background-color:#777777;
+	}
+	
+	#menu
+	{
+	
+	}
+	
+	#menu.lien-page
+	{
+	}
+	
+	/* ///////// POSITIONNEMENT /////////// */
+
+	header
+	{
+		width:100%;
+		height:20em;
+	}	
+	
+	#contenu
+	{
+		width:100%;
+	}	
+	
+	#liste-contrats
+	{
+		position:relative;
+		padding-top:2em;
+		padding-bottom:2em;		
+		width:100%;
+		display:flex;
+		flex-wrap: wrap;
+		/*flex-direction: column;*/
+	}
+	
+	#liste-contrats .contrat 
+	{
+		position:relative;
+		margin:2em;
+		margin-bottom:0;
+		width : 40em; /*50 - 10*/
+		height:7em; /* 10 em de hauteur - padding de 1.5 + 1.5*/
+		background-color:#b4edc1;
+		border-radius:2em;
+		padding-left:10em;
+		padding-top:1.5em;
+		padding-bottom:1.5em;
+	}
+	
+	#liste-contrats .contrat *
+	{
+		position:absolute;
+		width: 38.5em;/*50 - 10 - 1.5*/
+		/*background-color:blue;*/
+	}
+	
+	#liste-contrats .contrat .contrat-client
+	{
+		/* top:1.5em; non necessaire car paffing de 1.5*/
+		left:1.5em;
+		width:7em;
+		height:7em;
+		background-color:#e4e6e7;
+		/*background-image: url("decoration/profil-defaut.png");*/
+	}
+	#liste-contrats .contrat .contrat-client img
+	{
+		width:7em;
+		height:7em;	
+	}
+	
+	#liste-contrats .contrat h4
+	{
+		top:0em;
+	}
+	
+	#liste-contrats .contrat .contrat-description
+	{
+		top:4em;
+	}
+	
+	#liste-contrats .contrat .contrat-technologie
+	{
+		top:3em;
+	}
+	#liste-contrats .contrat .contrat-debut
+	{
+		display:none;
+	}
