@@ -1,8 +1,14 @@
 <?php
 // echo dirname(__DIR__, 2) . "/dao/AlbumDAO.php";
 include dirname(__DIR__, 2) . "/dao/AlbumDAO.php";
-$albumNo1 = AlbumDAO::detaillerAlbum(1);
+$albumNo1 = AlbumDAO::detaillerAlbum(2);
+$dureeAlbumNo1 = AlbumDAO::getDureeAlbum(2);
 // print_r($albumNo1);
+// print_r($dureeAlbumNo1);
+
+include dirname(__DIR__, 2) . "/dao/MorceauDAO.php";
+$morceauxNo1 = MorceauDAO::detaillerMorceauxAlbum(2);
+// print_r($morceauxNo1);
 
 // AFFICHAGE
 require_once dirname(__DIR__) . "/header.php";
@@ -51,11 +57,11 @@ require_once dirname(__DIR__) . "/header.php";
 
                 <div class="stats-album">
                     <div class="stat-item">
-                        <div class="stat-nombre">12</div>
+                        <div class="stat-nombre"><?= count($morceauxNo1) ?></div>
                         <div class="stat-label">Pistes</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-nombre">47:32</div>
+                        <div class="stat-nombre"><?= $dureeAlbumNo1 ?></div>
                         <div class="stat-label">Durée</div>
                     </div>
                     <div class="stat-item">
@@ -64,7 +70,7 @@ require_once dirname(__DIR__) . "/header.php";
                     </div>
                     <div class="stat-item">
                         <div class="stat-nombre"><?= $albumNo1->type ?></div>
-                        <div class="stat-label">Genre</div>
+                        <div class="stat-label">Type</div>
                     </div>
                 </div>
 
@@ -92,23 +98,27 @@ require_once dirname(__DIR__) . "/header.php";
         <section id="liste-pistes">
             <h2 class="titre-section">🎵 Pistes de l'album</h2>
 
-            <article class="piste">
-                <span class="piste-numero">1</span>
-                <div class="piste-pochette">
-                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100&h=100&fit=crop" alt="Pochette">
-                </div>
-                <div class="piste-info">
-                    <div class="piste-titre">Sunrise Protocol</div>
-                    <div class="piste-artiste">Synthwave Collective</div>
-                </div>
-                <span class="piste-duree">4:12</span>
-                <div class="piste-actions">
-                    <button class="bouton-piste favori" title="Favoris">❤️</button>
-                    <button class="bouton-piste" title="Jouer">▶️</button>
-                </div>
-            </article>
+            <?php foreach($morceauxNo1 as $morceau) { ?>
 
             <article class="piste">
+                <span class="piste-numero"><?= $morceau->ordre ?></span>
+                <div class="piste-pochette">
+                    <img src="../../images/albums/<?= $albumNo1->id_image ?>.png" alt="Pochette">
+                </div>
+                <div class="piste-info">
+                    <div class="piste-titre"><?= $morceau->titre ?></div>
+                    <div class="piste-artiste"><?= $morceau->artiste ?></div>
+                </div>
+                <span class="piste-duree"><?= $morceau->duree ?></span>
+                <div class="piste-actions">
+                    <button class="bouton-piste favori" title="Favoris">❤️</button>
+                    <button value="<?=$morceau->artiste ?> <?= $morceau->titre ?>" class="bouton-piste jouer" title="Jouer">▶️</button>
+                </div>
+            </article>
+            
+            <?php } ?>
+            
+            <!-- <article class="piste">
                 <span class="piste-numero">2</span>
                 <div class="piste-pochette">
                     <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" alt="Pochette">
@@ -122,55 +132,8 @@ require_once dirname(__DIR__) . "/header.php";
                     <button class="bouton-piste favori actif" title="Favoris">❤️</button>
                     <button class="bouton-piste" title="Jouer">▶️</button>
                 </div>
-            </article>
+            </article> -->
 
-            <article class="piste">
-                <span class="piste-numero">3</span>
-                <div class="piste-pochette">
-                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&h=100&fit=crop" alt="Pochette">
-                </div>
-                <div class="piste-info">
-                    <div class="piste-titre">Digital Dreams</div>
-                    <div class="piste-artiste">Synthwave Collective feat. Luna</div>
-                </div>
-                <span class="piste-duree">5:23</span>
-                <div class="piste-actions">
-                    <button class="bouton-piste favori" title="Favoris">❤️</button>
-                    <button class="bouton-piste" title="Jouer">▶️</button>
-                </div>
-            </article>
-
-            <article class="piste">
-                <span class="piste-numero">4</span>
-                <div class="piste-pochette">
-                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=100&h=100&fit=crop" alt="Pochette">
-                </div>
-                <div class="piste-info">
-                    <div class="piste-titre">Cyber Nights</div>
-                    <div class="piste-artiste">Synthwave Collective</div>
-                </div>
-                <span class="piste-duree">4:58</span>
-                <div class="piste-actions">
-                    <button class="bouton-piste favori" title="Favoris">❤️</button>
-                    <button class="bouton-piste" title="Jouer">▶️</button>
-                </div>
-            </article>
-
-            <article class="piste">
-                <span class="piste-numero">5</span>
-                <div class="piste-pochette">
-                    <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=100&h=100&fit=crop" alt="Pochette">
-                </div>
-                <div class="piste-info">
-                    <div class="piste-titre">Retrowave Sunset</div>
-                    <div class="piste-artiste">Synthwave Collective</div>
-                </div>
-                <span class="piste-duree">6:01</span>
-                <div class="piste-actions">
-                    <button class="bouton-piste favori" title="Favoris">❤️</button>
-                    <button class="bouton-piste" title="Jouer">▶️</button>
-                </div>
-            </article>
         </section>
 
         <!-- AJAX #4 : Commentaires -->
@@ -185,20 +148,13 @@ require_once dirname(__DIR__) . "/header.php";
                         <div class="texte-commentaire">Cet album est incroyable ! La piste 3 est mon coup de coeur 💜</div>
                     </div>
                 </div>
-                <div class="commentaire">
+                <!-- <div class="commentaire">
                     <div class="avatar-commentaire">🎹</div>
                     <div class="contenu-commentaire">
                         <div class="auteur-commentaire">SynthLover42</div>
                         <div class="texte-commentaire">Les vibes rétro sont parfaites. On se croirait dans les années 80 !</div>
                     </div>
-                </div>
-                <div class="commentaire">
-                    <div class="avatar-commentaire">🎸</div>
-                    <div class="contenu-commentaire">
-                        <div class="auteur-commentaire">MusicFan_Sophie</div>
-                        <div class="texte-commentaire">J'écoute en boucle depuis 3 jours. Chef d'oeuvre !</div>
-                    </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="formulaire-commentaire">
@@ -271,6 +227,13 @@ require_once dirname(__DIR__) . "/header.php";
         document.querySelectorAll('.bouton-piste.favori').forEach(btn => {
             btn.addEventListener('click', function() {
                 this.classList.toggle('actif');
+            });
+        });
+        // Jouer pistes
+        document.querySelectorAll('.bouton-piste.jouer').forEach(btn => {
+            btn.addEventListener('click', function() {
+                let search = "https://open.spotify.com/search/" + btn.value;
+                window.open(search, '_blank');
             });
         });
 

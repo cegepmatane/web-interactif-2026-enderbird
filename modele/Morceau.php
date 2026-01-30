@@ -1,40 +1,39 @@
-<!-- morceau...
-id
-id_album
-nom
-artiste
-duree
-
 <?php 
 
 class Morceau
 {
-  public static $filtres = array(
+	public static $filtres = array(
 		'id' => FILTER_VALIDATE_INT,
 		'id_album' => FILTER_VALIDATE_INT,
-		'nom' => FILTER_UNSAFE_RAW,
+		'ordre' => FILTER_VALIDATE_INT,
+		'titre' => FILTER_UNSAFE_RAW,
+		'date_sortie' => FILTER_UNSAFE_RAW,
 		'artiste' => FILTER_UNSAFE_RAW,
-		'duree' => FILTER_VALIDATE_INT
+		'duree' => FILTER_UNSAFE_RAW
 	);
 
-  protected $id;
+	protected $id;
 	protected $id_album;
-	protected $nom;
+	protected $ordre;
+	protected $titre;
+	protected $date_sortie;
 	protected $artiste;
 	protected $duree;
 
-  public function __construct($tableau)
+	public function __construct($tableau)
 	{
-		$tableau = filter_var_array($tableau, Contrat::$filtres);
+		$tableau = filter_var_array($tableau, Morceau::$filtres);
 
 		$this->id = $tableau['id'];
 		$this->id_album = $tableau['id_album'];
-		$this->nom = $tableau['nom'];
+		$this->ordre = $tableau['ordre'];
+		$this->titre = $tableau['titre'];
+		$this->date_sortie = $tableau['date_sortie'];
 		$this->artiste = $tableau['artiste'];
-		$this->duree = $tableau['duree'];
+		$this->duree = preg_replace('/^00:/', '', $tableau['duree']); //POUR LE FORMAT
 	}
-
-  public function __set($propriete, $valeur)
+  
+	public function __set($propriete, $valeur)
 	{
 		switch($propriete)
 		{
@@ -44,8 +43,14 @@ class Morceau
 			case 'id_album':
 				$this->id_album = $valeur;
 			break;
-			case 'nom':
-				$this->nom = $valeur;
+			case 'ordre':
+				$this->ordre = $valeur;
+			break;
+			case 'titre':
+				$this->titre = $valeur;
+			break;
+			case 'date_sortie':
+				$this->date_sortie = $valeur;
 			break;
 			case 'artiste':
 				$this->artiste = $valeur;
@@ -65,7 +70,4 @@ class Morceau
 		return $self[$propriete];
 	}	
 }
-//$contrat = new Contrat();
-//$contrat->titre = "coucou";
-//echo $contrat->titre;
 ?>

@@ -1,55 +1,44 @@
 <?php 
+	include_once __DIR__ . "/../modele/Morceau.php";
+	include_once __DIR__ . "/../accesseur/MorceauSQL.php";
 
-	include_once "modele/Album.php";
-	include_once "accesseur/AlbumSQL.php";
-
-	class Accesseur
-	{
-		public static $basededonnees = null;
-
-		public static function initialiser()
-		{
-			$usager = 'contracteur';
-			$motdepasse = 'creeperced10';
-			$hote = 'localhost';
-			$base = 'contracteur';
-			$dsn = 'mysql:dbname='.$base.';host=' . $hote;
-			AlbumDAO::$basededonnees = new PDO($dsn, $usager, $motdepasse);
-			AlbumDAO::$basededonnees->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}
-	}
-	
-	class AlbumDAO extends Accesseur implements AlbumSQL
+	class MorceauDAO implements MorceauSQL
 	{				
-		public static function listerAlbums()
+		public static function listerMorceaux()
 		{
-			AlbumDAO::initialiser();
+			include __DIR__ . "/../connexion.php";
 
-			$requete = AlbumDAO::$basededonnees->prepare(AlbumDAO::SQL_LISTE_ALBUM);
+			$requete = $basededonnees->prepare(MorceauSQL::SQL_LISTE_MORCEAU);
 			$requete->execute();
-			//$albums = $requete->fetchAll(PDO::FETCH_OBJ);
-			$albumsTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
-			foreach($albumsTableau as $albumTableau) $albums[] = new Album($albumTableau);
-			return $albums;
+			//$morceaux = $requete->fetchAll(PDO::FETCH_OBJ);
+			$morceauxTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($morceauxTableau as $morceauTableau) $morceaux[] = new Morceau($morceauTableau);
+			return $morceaux;
 		}
 		
-		public static function detaillerMusique($id)
+		public static function detaillerMorceau($id)
 		{
-			AlbumDAO::initialiser();
+			include __DIR__ . "/../connexion.php";
 
-			$requete = AlbumDAO::$basededonnees->prepare(AlbumDAO::SQL_DETAIL_ALBUM);
+			$requete = $basededonnees->prepare(MorceauSQL::SQL_DETAIL_MORCEAU);
 			$requete->bindParam(':id', $id, PDO::PARAM_INT);
 			$requete->execute();
-			//$album = $requete->fetchAll(PDO::FETCH_OBJ)[0];
-			$album = $requete->fetch(PDO::FETCH_ASSOC);
-			return new Album($album);
+			//$morceau = $requete->fetchAll(PDO::FETCH_OBJ)[0];
+			$morceau = $requete->fetch(PDO::FETCH_ASSOC);
+			return new Morceau($morceau);
+		}
+
+		public static function detaillerMorceauxAlbum($idAlbum)
+		{
+			include __DIR__ . "/../connexion.php";
+
+			$requete = $basededonnees->prepare(MorceauSQL::SQL_DETAIL_MORCEAUX);
+			$requete->bindParam(':id_album', $idAlbum, PDO::PARAM_INT);
+			$requete->execute();
+			//$morceauxTableau = $requete->fetchAll(PDO::FETCH_OBJ)[0];
+			$morceauxTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($morceauxTableau as $morceauTableau) $morceaux[] = new Morceau($morceauTableau);
+			return $morceaux;
 		}
 	}
-
-// function formater($texte)
-// {
-// 	//$texte = html_entity_decode($texte,ENT_COMPAT,'UTF-8');
-// 	//$texte = htmlentities($texte,ENT_COMPAT,'ISO-8859-1');
-// 	return $texte;
-// }
 ?>

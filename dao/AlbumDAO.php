@@ -27,6 +27,19 @@
 			$album = $requete->fetch(PDO::FETCH_ASSOC);
 			return new Album($album);
 		}
+
+		public static function getDureeAlbum($id)
+		{
+			include __DIR__ . "/../connexion.php";
+
+			$requete = $basededonnees->prepare(AlbumSQL::SQL_DUREE_ALBUM);
+			$requete->bindParam(':id', $id, PDO::PARAM_INT);
+			$requete->execute();
+			$resultat = $requete->fetch(PDO::FETCH_ASSOC);
+
+			$duree = preg_replace('/^00:/', '', $resultat['duree']);
+			return $duree; // string TIME
+		}
 	}
 
 // function formater($texte)
