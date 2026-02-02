@@ -132,6 +132,7 @@ DROP TABLE IF EXISTS `utilisateur`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `utilisateur` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `id_image` int DEFAULT NULL,
   `pseudo` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL,
@@ -145,7 +146,7 @@ CREATE TABLE `utilisateur` (
 
 LOCK TABLES `utilisateur` WRITE;
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
-INSERT INTO `utilisateur` VALUES (1,'notanik','cedricsimard28@gmail.com','admin123'),(2,'nova','nova@s0und.space','admin123');
+INSERT INTO `utilisateur` VALUES (1,NULL,'notanik','cedricsimard28@gmail.com','admin123'),(2,NULL,'nova','nova@s0und.space','admin123');
 /*!40000 ALTER TABLE `utilisateur` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-01-30 22:18:33
+-- Dump completed on 2026-02-02 17:19:15

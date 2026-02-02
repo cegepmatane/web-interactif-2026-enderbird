@@ -68,6 +68,6 @@ class Morceau
 		$self = get_object_vars($this); // externaliser pour optimiser
 		//print_r($self);
 		return $self[$propriete];
-	}	
+	}
 }
 ?>

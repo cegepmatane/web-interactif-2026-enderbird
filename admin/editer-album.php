@@ -5,14 +5,6 @@ $id=filter_var($_GET['album'],Album::$filtres['id']);
 
 include "../accesseur/AlbumDAO.php";
 $album = AlbumDAO::detaillerAlbum($id);
-$albumView = [
-    'id' => (int) $album->id,
-    'id_image' => htmlspecialchars($album->id_image, ENT_QUOTES, 'UTF-8'),
-    'type' => htmlspecialchars($album->type, ENT_QUOTES, 'UTF-8'),
-    'nom' => htmlspecialchars($album->nom, ENT_NOQUOTES, 'UTF-8'),
-    'date_sortie' => htmlspecialchars($album->date_sortie, ENT_NOQUOTES, 'UTF-8'),
-    'artiste' => htmlspecialchars($album->artiste, ENT_QUOTES, 'UTF-8'),
-];
 //print_r($album);
 ?>
 <!doctype html>
@@ -28,35 +20,35 @@ $albumView = [
 	</header>
 	
 	<section id="contenu">
-		<header><h2>Éditer le album : <?=formater($album->nom)?></h2></header>
+		<header><h2>Éditer le album : <?=AlbumDAO::formater($album->nom)?></h2></header>
 		
-		<form action="contrats.php" method="post">
-			<input type="hidden" name="id" value="<?=formater($album->id)?>"/>
+		<form action="index.php" method="post">
+			<input type="hidden" name="id" value="<?=AlbumDAO::formater($album->id)?>"/>
 				
 			<div class="champs">
 				<label for="id_image">Image</label>
-				<img src="../images/albums/<?=formater($album->id_image)?>.png" alt="id_image">
+				<img src="../images/albums/<?=AlbumDAO::formater($album->id_image)?>.png" alt="id_image">
 				<input type="file" name="id_image" id="id_image">
 			</div>
 
 			<div class="champs">
 				<label for="type">Type</label>
-				<input type="text" name="type" id="type" value="<?=formater($album->type)?>"/>			
+				<input type="text" name="type" id="type" value="<?=AlbumDAO::formater($album->type)?>"/>			
 			</div>
 
 			<div class="champs">
 				<label for="nom">Nom</label>
-				<input type="text" name="nom" id="nom" value="<?=formater($album->nom)?>"/>			
+				<input type="text" name="nom" id="nom" value="<?=AlbumDAO::formater($album->nom)?>"/>			
 			</div>
 
 			<div class="champs">
 				<label for="date_sortie">Date de sortie</label>
-				<input type="date" name="date_sortie" id="date_sortie" value="<?=formater($album->date_sortie)?>"/>
+				<input type="date" name="date_sortie" id="date_sortie" value="<?=AlbumDAO::formater($album->date_sortie)?>"/>
 			</div>
 
 			<div class="champs">
 				<label for="artiste">Artiste</label>
-				<input type="text" name="artiste" id="artiste" value="<?=formater($album->artiste)?>"/>			
+				<input type="text" name="artiste" id="artiste" value="<?=AlbumDAO::formater($album->artiste)?>"/>			
 			</div>
 			
 			<input type="submit" name="action-editer" value="Enregistrer">

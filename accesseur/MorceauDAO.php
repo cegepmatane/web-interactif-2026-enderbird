@@ -1,12 +1,12 @@
 <?php 
-	include_once __DIR__ . "/../modele/Morceau.php";
-	include_once __DIR__ . "/../accesseur/AlbumSQL.php";
+	include_once "../modele/Morceau.php";
+	include_once "MorceauSQL.php";
 
-	class MorceauDAO implements AlbumSQL
+	class MorceauDAO implements MorceauSQL
 	{				
 		public static function listerMorceaux()
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$requete = $basededonnees->prepare(MorceauDAO::SQL_LISTE_MORCEAU);
 			$requete->execute();
@@ -18,7 +18,7 @@
 		
 		public static function detaillerMorceau($id)
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$requete = $basededonnees->prepare(MorceauDAO::SQL_DETAIL_MORCEAU);
 			$requete->bindParam(':id', $id, PDO::PARAM_INT);
@@ -30,7 +30,7 @@
 
 		public static function detaillerMorceauxAlbum($idAlbum)
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$requete = $basededonnees->prepare(MorceauDAO::SQL_DETAIL_MORCEAUX);
 			$requete->bindParam(':id_album', $idAlbum, PDO::PARAM_INT);
@@ -40,5 +40,13 @@
 			foreach($morceauxTableau as $morceauTableau) $morceaux[] = new Morceau($morceauTableau);
 			return $morceaux;
 		}
+
+		public static function formater($texte)
+		{
+			$texte = htmlspecialchars($texte,ENT_COMPAT,'UTF-8');
+			//$texte = htmlentities($texte,ENT_COMPAT,'ISO-8859-1');
+			return $texte;
+		}
 	}
+
 ?>

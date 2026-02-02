@@ -1,12 +1,12 @@
 <?php 
-	include_once __DIR__ . "/../modele/Album.php";
-	include_once __DIR__ . "/../accesseur/AlbumSQL.php";
+	include_once "../modele/Album.php";
+	include_once "AlbumSQL.php";
 
 	class AlbumDAO implements AlbumSQL
 	{				
 		public static function listerAlbums()
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$requete = $basededonnees->prepare(AlbumDAO::SQL_LISTE_ALBUM);
 			$requete->execute();
@@ -18,7 +18,7 @@
 		
 		public static function detaillerAlbum($id)
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$requete = $basededonnees->prepare(AlbumDAO::SQL_DETAIL_ALBUM);
 			$requete->bindParam(':id', $id, PDO::PARAM_INT);
@@ -30,7 +30,7 @@
 
 		public static function getDureeAlbum($id)
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$requete = $basededonnees->prepare(AlbumDAO::SQL_DUREE_ALBUM);
 			$requete->bindParam(':id', $id, PDO::PARAM_INT);
@@ -44,7 +44,7 @@
 		// - - - - - ADMIN - - - - - 
 		public static function ajouterAlbum($album)
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$demandeAjout = $basededonnees->prepare(AlbumDAO::SQL_AJOUTER_ALBUM);
 			$demandeAjout->bindValue(':id_image',$album->id_image, PDO::PARAM_INT);
@@ -59,7 +59,7 @@
 		public static function editerAlbum($album)
 		{
 			//print_r($album);
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$demandeEdition = $basededonnees->prepare(AlbumDAO::SQL_EDITER_ALBUM);
 			// $demandeEdition->bindValue(':id',$album->id, PDO::PARAM_STR);
@@ -75,18 +75,18 @@
 		
 		public static function effacerAlbum($id)
 		{
-			include __DIR__ . "/../connexion.php";
+			include "Connexion.php";
 
 			$demandeEffacement = $basededonnees->prepare(AlbumDAO::SQL_EFFACER_ALBUM);
 			$demandeEffacement->bindParam(':id', $id, PDO::PARAM_INT);
 			$demandeEffacement->execute();
 		}
-	}
 
-function formater($texte)
-{
-	$texte = htmlspecialchars($texte,ENT_COMPAT,'UTF-8');
-	//$texte = htmlentities($texte,ENT_COMPAT,'ISO-8859-1');
-	return $texte;
-}
+		public static function formater($texte)
+		{
+			$texte = htmlspecialchars($texte,ENT_COMPAT,'UTF-8');
+			//$texte = htmlentities($texte,ENT_COMPAT,'ISO-8859-1');
+			return $texte;
+		}
+	}
 ?>

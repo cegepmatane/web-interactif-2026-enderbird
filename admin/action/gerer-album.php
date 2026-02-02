@@ -1,5 +1,4 @@
 <?php
-
 if(!empty($_POST['action-ajouter']))
 {
 	//echo "action-ajouter";
@@ -15,7 +14,4 @@ if(!empty($_POST['action-effacer']))
 	//echo "action-effacer";
 	include "action/effacer-album.php";			
 }
-
-	
-
 ?>

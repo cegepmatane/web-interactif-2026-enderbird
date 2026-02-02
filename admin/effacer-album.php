@@ -4,8 +4,8 @@ include_once "../modele/Album.php";
 $id=filter_var($_GET['album'],Album::$filtres['id']);
 
 include_once "../accesseur/AlbumDAO.php";
-$contrat = AlbumDAO::detaillerAlbum($id);
-//print_r($contrat);
+$album = AlbumDAO::detaillerAlbum($id);
+//print_r($album);
 
 ?>
 <!doctype html>
@@ -14,7 +14,6 @@ $contrat = AlbumDAO::detaillerAlbum($id);
 	<meta charset="utf-8">
 	<title>Panneau d'administration de Contrat à tout</title>
 	<link rel="stylesheet" type="text/css" href="formulaire.css">	
-
 </head>
 <body>
 	<header>
@@ -23,11 +22,11 @@ $contrat = AlbumDAO::detaillerAlbum($id);
 	</header>
 	
 	<section id="contenu">
-		<header><h2>Voulez-vous vraiment effacer le contrat <?=formater($contrat->titre)?> ?</h2></header>
+		<header><h2>Voulez-vous vraiment effacer le contrat <?=AlbumDAO::formater($album->nom)?> ?</h2></header>
 		
-		<form action="contrats.php" method="post">
+		<form action="index.php" method="post">
 			
-			<input type="hidden" name="contrat" value="<?=formater($contrat->id)?>"/>
+			<input type="hidden" name="album" value="<?=AlbumDAO::formater($album->id)?>"/>
 			<input type="submit" name="action-effacer" value="Oui">
 			<input type="submit" value="Non">
 			

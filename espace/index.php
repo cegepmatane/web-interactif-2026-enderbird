@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . "/header.php";
+require_once "../header.php";
 ?>
 
     <title>SoundWave - Ma Musique</title>
@@ -10,5 +10,5 @@ require_once dirname(__DIR__) . "/header.php";
 
 <!-- Pied de page -->
 <?php
-require_once dirname(__DIR__) . "/footer.php";
+require_once "../footer.php";
 ?>

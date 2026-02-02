@@ -1,21 +1,22 @@
 <?php
-// echo dirname(__DIR__, 2) . "/accesseur/AlbumDAO.php";
-include dirname(__DIR__, 1) . "/accesseur/AlbumDAO.php";
+// echo "/accesseur/AlbumDAO.php";
+include "../accesseur/AlbumDAO.php";
 $albumNo1 = AlbumDAO::detaillerAlbum(2);
 $dureeAlbumNo1 = AlbumDAO::getDureeAlbum(2);
 
-include dirname(__DIR__, 1) . "/accesseur/MorceauDAO.php";
+include "../accesseur/MorceauDAO.php";
 $morceauxNo1 = MorceauDAO::detaillerMorceauxAlbum(2);
 // print_r($albumNo1);
 // print_r($dureeAlbumNo1);
 // print_r($morceauxNo1);
 
 // AFFICHAGE
-require_once dirname(__DIR__) . "/header.php";
+require_once "../header.php";
 ?>
 
     <title>SoundWave - Ma Musique</title>
     <link rel="stylesheet" href="../css/general.css">
+    <script src="script.js" defer></script>
 
     <!-- En-tête -->
     <header id="entete-principal">
@@ -80,31 +81,31 @@ require_once dirname(__DIR__) . "/header.php";
         <!-- Album en vedette avec pochette personnalisable -->
         <section id="album-vedette">
             <div class="pochette-album">
-                <img src="../images/albums/<?= $albumNo1->id_image ?>.png" alt="Pochette album">
+                <img src="../images/albums/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette album">
                 <div class="overlay-personnaliser">
                     <span>🎨</span>
                     <p>Personnaliser la pochette</p>
                 </div>
             </div>
             <div class="info-album-vedette">
-                <h2><?= $albumNo1->nom ?></h2>
-                <p class="artiste-vedette"><?= $albumNo1->artiste ?></p>
+                <h2><?=AlbumDAO::formater($albumNo1->nom)?></h2>
+                <p class="artiste-vedette"><?=AlbumDAO::formater($albumNo1->artiste)?></p>
 
                 <div class="stats-album">
                     <div class="stat-item">
-                        <div class="stat-nombre"><?= count($morceauxNo1) ?></div>
+                        <div class="stat-nombre"><?=count($morceauxNo1)?></div>
                         <div class="stat-label">Pistes</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-nombre"><?= $dureeAlbumNo1 ?></div>
+                        <div class="stat-nombre"><?=AlbumDAO::formater($dureeAlbumNo1)?></div>
                         <div class="stat-label">Durée</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-nombre"><?= $albumNo1->date_sortie ?></div>
+                        <div class="stat-nombre"><?=AlbumDAO::formater($albumNo1->date_sortie)?></div>
                         <div class="stat-label">Date sortie</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-nombre"><?= $albumNo1->type ?></div>
+                        <div class="stat-nombre"><?=AlbumDAO::formater($albumNo1->type)?></div>
                         <div class="stat-label">Type</div>
                     </div>
                 </div>
@@ -136,18 +137,18 @@ require_once dirname(__DIR__) . "/header.php";
             <?php foreach($morceauxNo1 as $morceau) { ?>
 
             <article class="piste">
-                <span class="piste-numero"><?= $morceau->ordre ?></span>
+                <span class="piste-numero"><?=MorceauDAO::formater($morceau->ordre)?></span>
                 <div class="piste-pochette">
-                    <img src="../images/albums/<?= $albumNo1->id_image ?>.png" alt="Pochette">
+                    <img src="../images/albums/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette">
                 </div>
                 <div class="piste-info">
-                    <div class="piste-titre"><?= $morceau->titre ?></div>
-                    <div class="piste-artiste"><?= $morceau->artiste ?></div>
+                    <div class="piste-titre"><?=MorceauDAO::formater($morceau->titre)?></div>
+                    <div class="piste-artiste"><?=MorceauDAO::formater($morceau->artiste)?></div>
                 </div>
-                <span class="piste-duree"><?= $morceau->duree ?></span>
+                <span class="piste-duree"><?=MorceauDAO::formater($morceau->duree)?></span>
                 <div class="piste-actions">
                     <button class="bouton-piste favori" title="Favoris">❤️</button>
-                    <button value="<?=$morceau->artiste ?> <?= $morceau->titre ?>" class="bouton-piste jouer" title="Jouer">▶️</button>
+                    <button value="<?=MorceauDAO::formater($morceau->artiste)?> <?=MorceauDAO::formater($morceau->titre)?>" class="bouton-piste jouer" title="Jouer">▶️</button>
                 </div>
             </article>
             
@@ -199,101 +200,7 @@ require_once dirname(__DIR__) . "/header.php";
         </section>
     </main>
 
-    <script>
-        // Observateur pour animations au scroll
-        const observateur = new IntersectionObserver((entrees) => {
-            entrees.forEach((entree, index) => {
-                if (entree.isIntersecting) {
-                    setTimeout(() => {
-                        entree.target.classList.add('visible');
-                    }, index * 80);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        // Observer les éléments
-        document.querySelectorAll('.item-legende, #album-vedette, .piste, .commentaire').forEach(el => {
-            observateur.observe(el);
-        });
-
-        // AJAX #1 : Recherche
-        const champRecherche = document.getElementById('champ-recherche');
-        const listeSuggestions = document.getElementById('liste-suggestions');
-
-        champRecherche.addEventListener('input', () => {
-            listeSuggestions.classList.toggle('active', champRecherche.value.length > 0);
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('#zone-recherche')) {
-                listeSuggestions.classList.remove('active');
-            }
-        });
-
-        // AJAX #2 : Bookmark
-        document.querySelectorAll('.bouton-bookmark').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.classList.toggle('actif');
-                const texte = this.querySelector('span').nextSibling;
-                if (this.classList.contains('actif')) {
-                    this.innerHTML = '<span>✓</span> Dans ma collection';
-                } else {
-                    this.innerHTML = '<span>🔖</span> Ajouter à ma collection';
-                }
-            });
-        });
-
-        // AJAX #3 : Rating
-        document.querySelectorAll('.zone-rating').forEach(zone => {
-            const etoiles = zone.querySelectorAll('.etoile');
-            etoiles.forEach(etoile => {
-                etoile.addEventListener('click', function() {
-                    const note = parseInt(this.dataset.note);
-                    etoiles.forEach((e, i) => {
-                        e.classList.toggle('active', i < note);
-                    });
-                });
-            });
-        });
-
-        // Favoris pistes
-        document.querySelectorAll('.bouton-piste.favori').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.classList.toggle('actif');
-            });
-        });
-        // Jouer pistes
-        document.querySelectorAll('.bouton-piste.jouer').forEach(btn => {
-            btn.addEventListener('click', function() {
-                let search = "https://open.spotify.com/search/" + btn.value;
-                window.open(search, '_blank');
-            });
-        });
-
-        // AJAX #4 : Commentaires
-        document.querySelectorAll('.bouton-commenter').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const champ = this.previousElementSibling;
-                const texte = champ.value.trim();
-                if (texte) {
-                    const liste = this.closest('section').querySelector('.liste-commentaires');
-                    const nouveau = document.createElement('div');
-                    nouveau.className = 'commentaire visible';
-                    nouveau.innerHTML = `
-                        <div class="avatar-commentaire">🎵</div>
-                        <div class="contenu-commentaire">
-                            <div class="auteur-commentaire">Moi</div>
-                            <div class="texte-commentaire">${texte}</div>
-                        </div>
-                    `;
-                    liste.appendChild(nouveau);
-                    champ.value = '';
-                }
-            });
-        });
-    </script>
-
 <!-- Pied de page -->
 <?php
-require_once dirname(__DIR__) . "/footer.php";
+require_once "../footer.php";
 ?>

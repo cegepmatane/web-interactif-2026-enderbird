@@ -12,38 +12,38 @@
 	</header>
 	
 	<section id="contenu">
-		<header><h2>Ajouter un contrat</h2></header>
-		
-		<form action="albums.php" method="post">
-		
+		<header><h2>Ajouter un album</h2></header>
+
+		<form action="index.php" method="post">
+			<input type="hidden" name="id" id="id" value="0">
+
 			<div class="champs">
-				<label for="titre">Titre</label>
-				<input type="text" name="titre" id="titre"/>			
+				<label for="id_image">Image</label>
+				<input type="file" name="id_image" id="id_image">
 			</div>
-		
+
 			<div class="champs">
-				<label for="client">Client</label>
-				<input type="text" name="client" id="client"/>			
+				<label for="type">Type</label>
+				<input type="text" name="type" id="type"/>			
 			</div>
-		
+
 			<div class="champs">
-				<label for="titre">Description</label>
-				<textarea name="description" id="description"></textarea>
+				<label for="nom">Nom</label>
+				<input type="text" name="nom" id="nom"/>			
 			</div>
-		
+
 			<div class="champs">
-				<label for="technologie">Technologie</label>
-				<textarea name="technologie" id="technologie"></textarea>
+				<label for="date_sortie">Date de sortie</label>
+				<input type="date" name="date_sortie" id="date_sortie"/>
 			</div>
-			
+
 			<div class="champs">
-				<label for="debut">D&eacute;but</label>
-				<input type="text" name="debut" id="debut"/>	
+				<label for="artiste">Artiste</label>
+				<input type="text" name="artiste" id="artiste"/>			
 			</div>
 			
 			<input type="submit" name="action-ajouter" value="Enregistrer">
 		</form>
-	
 	</section>
 	
 	<footer><span id="signature"></span></footer>
