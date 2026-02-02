@@ -30,7 +30,7 @@ CREATE TABLE `album` (
   `date_sortie` date NOT NULL,
   `artiste` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `album` (
 
 LOCK TABLES `album` WRITE;
 /*!40000 ALTER TABLE `album` DISABLE KEYS */;
-INSERT INTO `album` VALUES (1,1,'Single','Afterlife (from the Netflix Series \"Devil May Cry\")','2025-03-28','Evanescence'),(2,2,'Album','Empty Hands','2026-01-23','Poppy');
+INSERT INTO `album` VALUES (1,1,'Single','Afterlife (from the Netflix Series \"Devil May Cry\")','2025-03-28','Evanescence'),(2,2,'Album','Empty Hands','2026-01-23','Poppy'),(3,412,'awd','awd','2026-01-23','awd');
 /*!40000 ALTER TABLE `album` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,6 +68,32 @@ LOCK TABLES `commentaire` WRITE;
 /*!40000 ALTER TABLE `commentaire` DISABLE KEYS */;
 INSERT INTO `commentaire` VALUES (1,1,1,'I LOVE THIS SONG SO MUCH!!!!! WOOOOOOWWW.','2026-01-29 11:37:51');
 /*!40000 ALTER TABLE `commentaire` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `favori`
+--
+
+DROP TABLE IF EXISTS `favori`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `favori` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_morceau` int NOT NULL,
+  `id_utilisateur` int NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `favori`
+--
+
+LOCK TABLES `favori` WRITE;
+/*!40000 ALTER TABLE `favori` DISABLE KEYS */;
+INSERT INTO `favori` VALUES (1,16,1,'2026-02-02 15:58:15'),(2,20,1,'2026-02-02 15:58:15'),(3,24,1,'2026-02-02 15:58:15');
+/*!40000 ALTER TABLE `favori` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -106,7 +132,6 @@ CREATE TABLE `morceau` (
   `id_album` int NOT NULL,
   `ordre` smallint NOT NULL,
   `titre` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `date_sortie` date NOT NULL,
   `artiste` varchar(200) NOT NULL,
   `duree` time NOT NULL,
   PRIMARY KEY (`id`)
@@ -119,7 +144,7 @@ CREATE TABLE `morceau` (
 
 LOCK TABLES `morceau` WRITE;
 /*!40000 ALTER TABLE `morceau` DISABLE KEYS */;
-INSERT INTO `morceau` VALUES (1,1,1,'Afterlife (from the Netflix Series \"Devil May Cry\")','2025-03-28','Evanescence','00:04:09'),(15,2,1,'Public Domain','2026-01-23','Poppy','00:04:00'),(16,2,2,'Bruised Sky','2025-11-12','Poppy','00:03:40'),(17,2,3,'Guardian','2025-12-04','Poppy','00:03:14'),(18,2,4,'Constantly Nowhere','2026-01-23','Poppy','00:00:28'),(19,2,5,'Unravel','2025-10-23','Poppy','00:02:55'),(20,2,6,'Dying To Forget','2026-01-23','Poppy','00:03:33'),(21,2,7,'Time Will Tell','2026-01-23','Poppy','00:03:27'),(22,2,8,'Eat The Hate','2026-01-23','Poppy','00:01:50'),(23,2,9,'The Wait','2026-01-23','Poppy','00:01:50'),(24,2,10,'If We\'re Following The Light','2026-01-23','Poppy','00:04:06'),(25,2,11,'Blink','2026-01-23','Poppy','00:00:44'),(26,2,12,'Ribs','2026-01-23','Poppy','00:03:39'),(27,2,13,'Empty Hands','2026-01-23','Poppy','00:03:09');
+INSERT INTO `morceau` VALUES (1,1,1,'Afterlife (from the Netflix Series \"Devil May Cry\")','Evanescence','00:04:09'),(15,2,1,'Public Domain','Poppy','00:04:00'),(16,2,2,'Bruised Sky','Poppy','00:03:40'),(17,2,3,'Guardian','Poppy','00:03:14'),(18,2,4,'Constantly Nowhere','Poppy','00:00:28'),(19,2,5,'Unravel','Poppy','00:02:55'),(20,2,6,'Dying To Forget','Poppy','00:03:33'),(21,2,7,'Time Will Tell','Poppy','00:03:27'),(22,2,8,'Eat The Hate','Poppy','00:01:50'),(23,2,9,'The Wait','Poppy','00:01:50'),(24,2,10,'If We\'re Following The Light','Poppy','00:04:06'),(25,2,11,'Blink','Poppy','00:00:44'),(26,2,12,'Ribs','Poppy','00:03:39'),(27,2,13,'Empty Hands','Poppy','00:03:09');
 /*!40000 ALTER TABLE `morceau` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-02 17:19:15
+-- Dump completed on 2026-02-02 21:07:30
