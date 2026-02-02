@@ -7,7 +7,6 @@ class Morceau
 		'id_album' => FILTER_VALIDATE_INT,
 		'ordre' => FILTER_VALIDATE_INT,
 		'titre' => FILTER_UNSAFE_RAW,
-		'date_sortie' => FILTER_UNSAFE_RAW,
 		'artiste' => FILTER_UNSAFE_RAW,
 		'duree' => FILTER_UNSAFE_RAW
 	);
@@ -16,7 +15,6 @@ class Morceau
 	protected $id_album;
 	protected $ordre;
 	protected $titre;
-	protected $date_sortie;
 	protected $artiste;
 	protected $duree;
 
@@ -28,7 +26,6 @@ class Morceau
 		$this->id_album = $tableau['id_album'];
 		$this->ordre = $tableau['ordre'];
 		$this->titre = $tableau['titre'];
-		$this->date_sortie = $tableau['date_sortie'];
 		$this->artiste = $tableau['artiste'];
 		$this->duree = preg_replace('/^00:/', '', $tableau['duree']); //POUR LE FORMAT
 	}
@@ -48,9 +45,6 @@ class Morceau
 			break;
 			case 'titre':
 				$this->titre = $valeur;
-			break;
-			case 'date_sortie':
-				$this->date_sortie = $valeur;
 			break;
 			case 'artiste':
 				$this->artiste = $valeur;
