@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Lanceur de Dés Magiques</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .etoiles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .etoile {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: scintillement 3s infinite;
+        }
+
+        @keyframes scintillement {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .conteneur {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: 3em;
+            color: #5a4fcf;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0px rgba(255, 208, 0, 0.5);
+        }
+
+        .sous-titre {
+            color: #764ba2;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .zone-de {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        #affichage-de {
+            font-size: 120px;
+            animation: flottement 3s ease-in-out infinite;
+            display: inline-block;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s;
+        }
+
+        #affichage-de.en-rotation {
+            animation: rotation 0.6s ease-in-out;
+        }
+
+        @keyframes flottement {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.2); }
+            50% { transform: rotate(180deg) scale(0.9); }
+            75% { transform: rotate(270deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        #action-lancer {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.4em;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #action-lancer:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+
+        #action-lancer:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #zone-resultat {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 20px;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2d3436;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.4);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s;
+        }
+
+        #zone-resultat.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .informations-techniques {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(90, 79, 207, 0.1);
+            border-radius: 15px;
+            border-left: 5px solid #5a4fcf;
+            text-align: left;
+            font-size: 0.9em;
+            color: #2d3436;
+        }
+
+        .informations-techniques h3 {
+            color: #5a4fcf;
+            margin-bottom: 10px;
+        }
+
+        .informations-techniques code {
+            background: rgba(90, 79, 207, 0.1);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #764ba2;
+        }
+
+        .navigation {
+            margin-top: 20px;
+        }
+
+        .navigation a {
+            color: #5a4fcf;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="etoiles" id="conteneur-etoiles"></div>
+
+    <div class="conteneur">
+        <h1>🎲 Dés Magiques</h1>
+        <p class="sous-titre">Tentez votre chance avec AJAX GET !</p>
+
+        <div class="zone-de">
+            <div id="affichage-de">🎲</div>
+        </div>
+
+        <button id="action-lancer">
+            Lancer le dé !
+        </button>
+
+        <div id="zone-resultat">
+            Cliquez pour jouer ! 🎯
+        </div>
+
+        <div class="informations-techniques">
+            <h3>📚 Apprentissage : AJAX GET (Texte)</h3>
+            <p><strong>Méthode :</strong> <code>GET</code></p>
+            <p><strong>Type de réponse :</strong> Texte simple</p>
+            <p><strong>API utilisée :</strong> <code>XMLHttpRequest</code></p>
+        </div>
+
+        <div class="navigation">
+            <a href="../index.html">🏠 Accueil</a>
+            <a href="02-roue-de-la-fortune.html">Suivant →</a>
+        </div>
+    </div>
+
+    <script>
+        // === VARIABLES GLOBALES ===
+        var affichageDe = document.getElementById('affichage-de');
+        var zoneResultat = document.getElementById('zone-resultat');
+        var actionLancer = document.getElementById('action-lancer');
+        var emojisDeValeurs = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+        // === FONCTIONS UTILITAIRES ===
+        function creerEtoiles() {
+            var conteneurEtoiles = document.getElementById('conteneur-etoiles');
+            var nombreEtoiles = 100;
+
+            for (var noEtoile = 0; noEtoile < nombreEtoiles; noEtoile++) {
+                var etoile = document.createElement('div');
+                etoile.className = 'etoile';
+                etoile.style.left = Math.random() * 100 + '%';
+                etoile.style.top = Math.random() * 100 + '%';
+                etoile.style.animationDelay = Math.random() * 3 + 's';
+                conteneurEtoiles.appendChild(etoile);
+            }
+        }
+
+        function construireMessage(valeur) {
+            var message = 'Vous avez obtenu un ' + valeur + ' ! ';
+
+            if (valeur === 6) {
+                message = message + '🎉 JACKPOT !';
+            } else if (valeur >= 4) {
+                message = message + '✨ Excellent !';
+            } else {
+                message = message + '💫 Réessayez !';
+            }
+
+            return message;
+        }
+
+        // === FONCTIONS CALLBACK AJAX ===
+        function recevoirReponseServeur() {
+            if (requeteAjax.readyState === 4) {
+                if (requeteAjax.status === 200) {
+                    var valeur = parseInt(requeteAjax.responseText.trim());
+
+                    setTimeout(function terminerAnimation() {
+                        affichageDe.textContent = emojisDeValeurs[valeur - 1];
+                        affichageDe.classList.remove('en-rotation');
+
+                        var message = construireMessage(valeur);
+                        zoneResultat.textContent = message;
+                        zoneResultat.classList.add('visible');
+                        actionLancer.disabled = false;
+                    }, 600);
+                } else {
+                    gererErreur('Erreur serveur: ' + requeteAjax.status);
+                }
+            }
+        }
+
+        function gererErreur(messageErreur) {
+            zoneResultat.textContent = '❌ ' + messageErreur;
+            zoneResultat.classList.add('visible');
+            actionLancer.disabled = false;
+            affichageDe.classList.remove('en-rotation');
+        }
+
+        function gererErreurReseau() {
+            gererErreur('Impossible de contacter le serveur');
+        }
+
+        // === VARIABLE POUR LA REQUÊTE ===
+        var requeteAjax = null;
+
+        // === FONCTION PRINCIPALE ===
+        function lancerDe() {
+            actionLancer.disabled = true;
+            affichageDe.classList.add('en-rotation');
+            zoneResultat.classList.remove('visible');
+
+            requeteAjax = new XMLHttpRequest();
+            requeteAjax.open('GET', 'lancer-de-des.php', true);
+            requeteAjax.onreadystatechange = recevoirReponseServeur;
+            requeteAjax.onerror = gererErreurReseau;
+            requeteAjax.send();
+        }
+
+        // === INITIALISATION ===
+        function initialiser() {
+            creerEtoiles();
+            actionLancer.addEventListener('click', lancerDe);
+        }
+
+        initialiser();
+    </script>
+</body>
+</html>

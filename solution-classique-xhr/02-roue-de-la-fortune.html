@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎡 Roue de la Fortune</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lilita+One&family=Chewy&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Chewy', cursive;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bulles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bulle {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: montee 15s infinite ease-in;
+        }
+
+        @keyframes montee {
+            0% { bottom: -100px; transform: translateX(0); }
+            50% { transform: translateX(100px); }
+            100% { bottom: 110vh; transform: translateX(-100px); }
+        }
+
+        .conteneur {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 50px 40px;
+            border-radius: 40px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            border: 8px solid #ff6b6b;
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 3.5em;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+            text-shadow: 4px 4px 0px #ffd93d;
+            letter-spacing: 3px;
+            transform: rotate(-2deg);
+        }
+
+        .sous-titre {
+            color: #fa709a;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .zone-roue {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+        }
+
+        .pointeur {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 40px solid #ff6b6b;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+            z-index: 20;
+        }
+
+        #roue {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #ff6b6b 0deg 60deg,
+                #4ecdc4 60deg 120deg,
+                #ffe66d 120deg 180deg,
+                #a8e6cf 180deg 240deg,
+                #ff8b94 240deg 300deg,
+                #95e1d3 300deg 360deg
+            );
+            border: 15px solid white;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .centre-roue {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            border: 6px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        #action-tourner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 25px 60px;
+            font-size: 1.5em;
+            font-family: 'Lilita One', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: 5px solid white;
+        }
+
+        #action-tourner:hover:not(:disabled) {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(245, 87, 108, 0.6);
+        }
+
+        #action-tourner:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #zone-resultat {
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-radius: 25px;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2d3436;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(132, 250, 176, 0.4);
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+            transition: all 0.4s;
+            border: 5px solid white;
+        }
+
+        #zone-resultat.visible {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .affichage-prix {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .informations-techniques {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 15px;
+            border-left: 5px solid #ff6b6b;
+            text-align: left;
+            font-size: 0.9em;
+            color: #2d3436;
+        }
+
+        .informations-techniques h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .informations-techniques code {
+            background: rgba(255, 107, 107, 0.2);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #fa709a;
+        }
+
+        .navigation {
+            margin-top: 20px;
+        }
+
+        .navigation a {
+            color: #ff6b6b;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="bulles" id="conteneur-bulles"></div>
+
+    <div class="conteneur">
+        <h1>🎡 ROUE MAGIQUE</h1>
+        <p class="sous-titre">Tournez et gagnez avec AJAX XML !</p>
+
+        <div class="zone-roue">
+            <div class="pointeur"></div>
+            <div id="roue">
+                <div class="centre-roue">🍀</div>
+            </div>
+        </div>
+
+        <button id="action-tourner">
+            TOURNER !
+        </button>
+
+        <div id="zone-resultat">
+            Tournez la roue pour découvrir votre prix ! 🎁
+        </div>
+
+        <div class="informations-techniques">
+            <h3>📚 Apprentissage : AJAX GET (XML)</h3>
+            <p><strong>Méthode :</strong> <code>GET</code></p>
+            <p><strong>Type de réponse :</strong> XML</p>
+            <p><strong>Parsing :</strong> <code>responseXML</code> et <code>getElementsByTagName</code></p>
+        </div>
+
+        <div class="navigation">
+            <a href="01-lancer-de-des.html">← Précédent</a>
+            <a href="../index.html">🏠 Accueil</a>
+            <a href="03-fortune-cookies.html">Suivant →</a>
+        </div>
+    </div>
+
+    <script>
+        // === VARIABLES GLOBALES ===
+        var roue = document.getElementById('roue');
+        var zoneResultat = document.getElementById('zone-resultat');
+        var actionTourner = document.getElementById('action-tourner');
+        var rotationActuelle = 0;
+        var requeteAjax = null;
+
+        // === FONCTIONS UTILITAIRES ===
+        function creerBulles() {
+            var conteneurBulles = document.getElementById('conteneur-bulles');
+            var nombreBulles = 20;
+
+            for (var noBulle = 0; noBulle < nombreBulles; noBulle++) {
+                var bulle = document.createElement('div');
+                bulle.className = 'bulle';
+                var taille = Math.random() * 60 + 20;
+                bulle.style.width = taille + 'px';
+                bulle.style.height = taille + 'px';
+                bulle.style.left = Math.random() * 100 + '%';
+                bulle.style.animationDelay = Math.random() * 5 + 's';
+                bulle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                conteneurBulles.appendChild(bulle);
+            }
+        }
+
+        function extraireTexteXml(documentXml, nomBalise) {
+            var elements = documentXml.getElementsByTagName(nomBalise);
+            if (elements.length > 0) {
+                return elements[0].textContent;
+            }
+            return '';
+        }
+
+        function afficherResultat(nomPrix, emojiPrix, valeurPrix, message) {
+            var contenuHtml = '<div class="affichage-prix">' + emojiPrix + '</div>';
+            contenuHtml = contenuHtml + '<div>' + message + '</div>';
+            contenuHtml = contenuHtml + '<div style="font-size: 1.8em; margin-top: 10px; color: #ff6b6b;">' + nomPrix + '</div>';
+            contenuHtml = contenuHtml + '<div style="font-size: 1.2em; color: #fa709a;">' + valeurPrix + ' points gagnés !</div>';
+
+            zoneResultat.innerHTML = contenuHtml;
+            zoneResultat.classList.add('visible');
+        }
+
+        function reinitialiserRoue() {
+            roue.style.transition = 'none';
+            roue.style.transform = 'rotate(0deg)';
+            rotationActuelle = 0;
+
+            setTimeout(function restaurerTransition() {
+                roue.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            }, 50);
+        }
+
+        // === FONCTIONS CALLBACK AJAX ===
+        function recevoirReponseXml() {
+            if (requeteAjax.readyState === 4) {
+                if (requeteAjax.status === 200) {
+                    var documentXml = requeteAjax.responseXML;
+
+                    var nomPrix = extraireTexteXml(documentXml, 'nom');
+                    var emojiPrix = extraireTexteXml(documentXml, 'emoji');
+                    var valeurPrix = extraireTexteXml(documentXml, 'valeur');
+                    var message = extraireTexteXml(documentXml, 'message');
+
+                    afficherResultat(nomPrix, emojiPrix, valeurPrix, message);
+                    actionTourner.disabled = false;
+
+                    setTimeout(reinitialiserRoue, 500);
+                } else {
+                    gererErreur('Erreur serveur: ' + requeteAjax.status);
+                }
+            }
+        }
+
+        function gererErreur(messageErreur) {
+            zoneResultat.innerHTML = '❌ ' + messageErreur;
+            zoneResultat.classList.add('visible');
+            actionTourner.disabled = false;
+        }
+
+        function gererErreurReseau() {
+            gererErreur('Impossible de contacter le serveur');
+        }
+
+        // === FONCTION PRINCIPALE ===
+        function tournerRoue() {
+            actionTourner.disabled = true;
+            zoneResultat.classList.remove('visible');
+
+            var rotationsSupplementaires = Math.floor(Math.random() * 360) + 720;
+            rotationActuelle = rotationActuelle + rotationsSupplementaires;
+            roue.style.transform = 'rotate(' + rotationActuelle + 'deg)';
+
+            setTimeout(function envoyerRequete() {
+                requeteAjax = new XMLHttpRequest();
+                requeteAjax.open('GET', 'roue-de-la-fortune.php', true);
+                requeteAjax.onreadystatechange = recevoirReponseXml;
+                requeteAjax.onerror = gererErreurReseau;
+                requeteAjax.send();
+            }, 3000);
+        }
+
+        // === INITIALISATION ===
+        function initialiser() {
+            creerBulles();
+            actionTourner.addEventListener('click', tournerRoue);
+        }
+
+        initialiser();
+    </script>
+</body>
+</html>

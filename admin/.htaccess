@@ -1,0 +1,7 @@
+AuthType Basic
+AuthName "Authentification required"
+AuthUserFile /var/www/passwords/.htpasswd
+Require valid-user
+
+# - Commande pour rajouter un user: htpasswd -c /var/www/passwords/.htpasswd usernamee
+# !!! le -c est juste pour créer le fichier, l'enlever ensuite pour ajouter d'autre utilisateurs

@@ -64,7 +64,4 @@ class Album
 		return $self[$propriete];
 	}	
 }
-//$contrat = new Contrat();
-//$contrat->titre = "coucou";
-//echo $contrat->titre;
 ?>
