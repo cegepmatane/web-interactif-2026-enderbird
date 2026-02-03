@@ -30,7 +30,7 @@ CREATE TABLE `album` (
   `date_sortie` date NOT NULL,
   `artiste` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `album` (
 
 LOCK TABLES `album` WRITE;
 /*!40000 ALTER TABLE `album` DISABLE KEYS */;
-INSERT INTO `album` VALUES (1,1,'Single','Afterlife (from the Netflix Series \"Devil May Cry\")','2025-03-28','Evanescence'),(2,2,'Album','Empty Hands','2026-01-23','Poppy'),(3,412,'awd','awd','2026-01-23','awd');
+INSERT INTO `album` VALUES (1,1,'Single','Afterlife (from the Netflix Series \"Devil May Cry\")','2025-03-28','Evanescence'),(2,2,'Album','Empty Hands','2026-01-23','Poppy');
 /*!40000 ALTER TABLE `album` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `image` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nom_fichier` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-02 21:07:30
+-- Dump completed on 2026-02-03  4:10:00

@@ -5,7 +5,8 @@ $id=filter_var($_GET['album'],Album::$filtres['id']);
 
 include "../accesseur/AlbumDAO.php";
 $album = AlbumDAO::detaillerAlbum($id);
-//print_r($album);
+include "../accesseur/ImageDAO.php";
+$image = ImageDAO::detaillerImage($album->id_image);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -22,13 +23,13 @@ $album = AlbumDAO::detaillerAlbum($id);
 	<section id="contenu">
 		<header><h2>Éditer le album : <?=AlbumDAO::formater($album->nom)?></h2></header>
 		
-		<form action="index.php" method="post">
-			<input type="hidden" name="id" value="<?=AlbumDAO::formater($album->id)?>"/>
+		<form action="index.php" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="<?=$album->id?>"/>
 				
 			<div class="champs">
 				<label for="id_image">Image</label>
-				<img src="../images/albums/<?=AlbumDAO::formater($album->id_image)?>.png" alt="id_image">
-				<input type="file" name="id_image" id="id_image">
+				<img src="../images/<?=$image->nom_fichier?>" alt="id_image">
+				<input type="file" name="id_image" id="id_image" accept="image/*">
 			</div>
 
 			<div class="champs">
@@ -43,7 +44,7 @@ $album = AlbumDAO::detaillerAlbum($id);
 
 			<div class="champs">
 				<label for="date_sortie">Date de sortie</label>
-				<input type="date" name="date_sortie" id="date_sortie" value="<?=AlbumDAO::formater($album->date_sortie)?>"/>
+				<input type="date" name="date_sortie" id="date_sortie" value="<?=$album->date_sortie?>"/>
 			</div>
 
 			<div class="champs">

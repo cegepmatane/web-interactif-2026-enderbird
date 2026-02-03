@@ -1,8 +1,6 @@
 <?php
+	include "action/gerer-action.php";
 	include_once "../accesseur/AlbumDAO.php";
-	include_once "../accesseur/AlbumDAO.php";
-	//print_r($contrats);
-	include "action/gerer-album.php";
 	$albums = AlbumDAO::listerAlbums();
 
     // AFFICHAGE
@@ -19,7 +17,7 @@
 		<header><h2>Contrats offerts</h2></header>
 	
 		<div>
-			<a href="ajouter-album.html" class="action">Ajouter un contrat</a>
+			<a href="ajouter-album.php" class="action">Ajouter un contrat</a>
 		</div>
 
 		<div id="liste-contrats">
@@ -31,7 +29,7 @@
 			<div class="contrat">			
 				<h4><?=AlbumDAO::formater($album->nom)?></h4> 
 				<a class="action" href="editer-album.php?album=<?=$album->id?>">Éditer</a> 
-				<a class="action" href="effacer-album.php?album=<?=$album->id?>">Effacer</a></h4>
+				<a class="action" href="effacer-album.php?album=<?=$album->id?>">Effacer</a>
 			</div>
 		<?php
 		}

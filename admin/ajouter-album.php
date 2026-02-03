@@ -14,12 +14,12 @@
 	<section id="contenu">
 		<header><h2>Ajouter un album</h2></header>
 
-		<form action="index.php" method="post">
+		<form action="index.php" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="id" id="id" value="0">
 
 			<div class="champs">
 				<label for="id_image">Image</label>
-				<input type="file" name="id_image" id="id_image">
+				<input type="file" name="id_image" id="id_image" accept="image/*">
 			</div>
 
 			<div class="champs">

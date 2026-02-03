@@ -25,15 +25,14 @@ $album = AlbumDAO::detaillerAlbum($id);
 		<header><h2>Voulez-vous vraiment effacer le contrat <?=AlbumDAO::formater($album->nom)?> ?</h2></header>
 		
 		<form action="index.php" method="post">
-			
-			<input type="hidden" name="album" value="<?=AlbumDAO::formater($album->id)?>"/>
+			<input type="hidden" name="id" value="<?=$album->id?>"/>
+			<input type="hidden" name="id_image" value="<?=$album->id_image?>"/>
 			<input type="submit" name="action-effacer" value="Oui">
 			<input type="submit" value="Non">
-			
 		</form>
 	
 	</section>
 	
-	<footer><span id="signature"></span></footer>
-</body>
-</html>
+<?php
+require_once "../footer.php";
+?>

@@ -81,7 +81,7 @@ require_once "../header.php";
         <!-- Album en vedette avec pochette personnalisable -->
         <section id="album-vedette">
             <div class="pochette-album">
-                <img src="../images/albums/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette album">
+                <img src="../images/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette album">
                 <div class="overlay-personnaliser">
                     <span>🎨</span>
                     <p>Personnaliser la pochette</p>
@@ -139,7 +139,7 @@ require_once "../header.php";
             <article class="piste">
                 <span class="piste-numero"><?=MorceauDAO::formater($morceau->ordre)?></span>
                 <div class="piste-pochette">
-                    <img src="../images/albums/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette">
+                    <img src="../images/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette">
                 </div>
                 <div class="piste-info">
                     <div class="piste-titre"><?=MorceauDAO::formater($morceau->titre)?></div>

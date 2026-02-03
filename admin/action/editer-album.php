@@ -1,8 +1,13 @@
 <?php
-	//print_r($_POST);
+	print_r($_POST);
+
+	if (!empty($_POST))
+	{
+		echo "works";
+	}
 		
-	$contrat = new Album($_POST);
+	//$album = new Album($_POST);
 	
 	//include_once "../accesseur/AlbumDAO.php";
-	AlbumDAO::editerAlbum($album);
+	// AlbumDAO::editerAlbum($album);
 	
