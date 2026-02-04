@@ -1,22 +1,20 @@
 <?php
-// echo "/accesseur/AlbumDAO.php";
-include "../accesseur/AlbumDAO.php";
-$albumNo1 = AlbumDAO::detaillerAlbum(2);
-$dureeAlbumNo1 = AlbumDAO::getDureeAlbum(2);
+    include "../accesseur/AlbumDAO.php";
+    $albumNo1 = AlbumDAO::detaillerAlbum(2);
+    $dureeAlbumNo1 = AlbumDAO::getDureeAlbum(2);
 
-include "../accesseur/MorceauDAO.php";
-$morceauxNo1 = MorceauDAO::detaillerMorceauxAlbum(2);
-// print_r($albumNo1);
-// print_r($dureeAlbumNo1);
-// print_r($morceauxNo1);
+    include "../accesseur/MorceauDAO.php";
+    $morceauxNo1 = MorceauDAO::detaillerMorceauxAlbum(2);
 
-// AFFICHAGE
-require_once "../header.php";
+    include "../accesseur/VoteDAO.php";
+
+    // AFFICHAGE
+    require_once "../header.php";
 ?>
 
     <title>SoundWave - Ma Musique</title>
     <link rel="stylesheet" href="../css/general.css">
-    <script src="script.js" defer></script>
+    <script src="../js/general.js" defer></script>
 
     <!-- En-tête -->
     <header id="entete-principal">
@@ -82,10 +80,6 @@ require_once "../header.php";
         <section id="album-vedette">
             <div class="pochette-album">
                 <img src="../images/<?=AlbumDAO::formater($albumNo1->id_image)?>.png" alt="Pochette album">
-                <div class="overlay-personnaliser">
-                    <span>🎨</span>
-                    <p>Personnaliser la pochette</p>
-                </div>
             </div>
             <div class="info-album-vedette">
                 <h2><?=AlbumDAO::formater($albumNo1->nom)?></h2>
