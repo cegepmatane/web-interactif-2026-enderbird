@@ -21,15 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
     albums.forEach(album => {
         const overlay = album.querySelector('.overlay-afficher');
         const splashMorceaux = album.querySelector('.splash-morceaux');
+        const texte = overlay.querySelector('p');
 
         overlay.addEventListener('click', () => {
-            splashMorceaux.classList = 'splash-morceaux actif';
+            splashMorceaux.classList.toggle('actif');
 
-            // Toggle tracks display
-            if (overlay.querySelector('p').textContent = 'Afficher les morceaux') {
-                overlay.querySelector('p').textContent = 'Masquer les morceaux';
+            if (splashMorceaux.classList.contains('actif')) {
+                texte.textContent = 'Masquer les morceaux';
             } else {
-                overlay.querySelector('p').textContent = 'Afficher les morceaux';
+                texte.textContent = 'Afficher les morceaux';
+                splashMorceaux.querySelectorAll('.piste').forEach(piste => {
+                    piste.classList.remove('visible');
+                });
             }
         });
     });

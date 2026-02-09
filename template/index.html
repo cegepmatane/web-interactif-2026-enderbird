@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundWave - Ma Musique</title>
+    <style>
+        /* Reset CSS */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variables - Thème néon violet/bleu */
+        :root {
+            --couleur-fond: #0d0d1a;
+            --couleur-fond-carte: #1a1a2e;
+            --couleur-violet: #8b5cf6;
+            --couleur-violet-clair: #a78bfa;
+            --couleur-bleu: #3b82f6;
+            --couleur-cyan: #06b6d4;
+            --couleur-rose: #ec4899;
+            --couleur-texte: #f8fafc;
+            --couleur-texte-secondaire: #94a3b8;
+            --degrade-neon: linear-gradient(135deg, var(--couleur-violet), var(--couleur-bleu), var(--couleur-cyan));
+            --ombre-neon: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--couleur-fond);
+            min-height: 100vh;
+            color: var(--couleur-texte);
+            line-height: 1.6;
+        }
+
+        /* Navigation projet */
+        #navigation-projet {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: linear-gradient(90deg, rgba(139,92,246,0.2), rgba(59,130,246,0.2), rgba(6,182,212,0.2));
+            border-bottom: 1px solid rgba(139,92,246,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .lien-navigation {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--couleur-texte);
+            transition: all 0.3s ease;
+        }
+
+        .lien-navigation:hover {
+            background: rgba(139,92,246,0.3);
+            border-color: var(--couleur-violet);
+            box-shadow: var(--ombre-neon);
+        }
+
+        .lien-navigation.accueil { border-color: var(--couleur-violet); }
+        .lien-navigation.blog { border-color: var(--couleur-bleu); }
+        .lien-navigation.application { border-color: var(--couleur-cyan); }
+        .lien-navigation.admin { border-color: var(--couleur-rose); }
+
+        /* En-tête */
+        #entete-principal {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            position: relative;
+        }
+
+        #titre-site {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--degrade-neon);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(139,92,246,0.5);
+        }
+
+        #slogan {
+            color: var(--couleur-texte-secondaire);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Barre de recherche */
+        #zone-recherche {
+            position: relative;
+            max-width: 500px;
+            margin: 2rem auto 0;
+        }
+
+        #champ-recherche {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            border: 2px solid rgba(139,92,246,0.3);
+            border-radius: 50px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.05);
+            color: var(--couleur-texte);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #champ-recherche::placeholder {
+            color: var(--couleur-texte-secondaire);
+        }
+
+        #champ-recherche:focus {
+            border-color: var(--couleur-violet);
+            box-shadow: var(--ombre-neon);
+        }
+
+        #icone-recherche {
+            position: absolute;
+            left: 1.3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        #liste-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--couleur-fond-carte);
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 20px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            display: none;
+            z-index: 50;
+        }
+
+        #liste-suggestions.active {
+            display: block;
+            animation: derouler 0.3s ease;
+        }
+
+        @keyframes derouler {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .suggestion {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion:hover {
+            background: rgba(139,92,246,0.2);
+        }
+
+        .suggestion-pochette {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--degrade-neon);
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-titre {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .suggestion-artiste {
+            font-size: 0.75rem;
+            color: var(--couleur-texte-secondaire);
+        }
+
+        /* Conteneur principal */
+        #contenu-principal {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Légende Ajax */
+        #legende-ajax {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .item-legende {
+            background: var(--couleur-fond-carte);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .item-legende.visible {
+            animation: apparition 0.5s ease forwards;
+        }
+
+        @keyframes apparition {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .item-legende:nth-child(1) { border-top: 3px solid var(--couleur-violet); }
+        .item-legende:nth-child(2) { border-top: 3px solid var(--couleur-bleu); }
+        .item-legende:nth-child(3) { border-top: 3px solid var(--couleur-cyan); }
+        .item-legende:nth-child(4) { border-top: 3px solid var(--couleur-rose); }
+
+        .icone-legende { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .titre-legende { font-weight: 700; font-size: 0.85rem; }
+        .desc-legende { font-size: 0.7rem; color: var(--couleur-texte-secondaire); }
+
+        /* Section album en vedette */
+        #album-vedette {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            background: var(--couleur-fond-carte);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        #album-vedette.visible {
+            animation: apparition 0.6s ease forwards;
+        }
+
+        /* Pochette personnalisable */
+        .pochette-album {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--ombre-neon);
+        }
+
+        .pochette-album img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .pochette-album .overlay-personnaliser {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pochette-album:hover .overlay-personnaliser {
+            opacity: 1;
+        }
+
+        .overlay-personnaliser span {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .overlay-personnaliser p {
+            font-size: 0.9rem;
+            color: var(--couleur-violet-clair);
+        }
+
+        .info-album-vedette h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: var(--degrade-neon);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .artiste-vedette {
+            color: var(--couleur-texte-secondaire);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-album {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-nombre {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--couleur-violet-clair);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--couleur-texte-secondaire);
+        }
+
+        /* Zone rating pour album */
+        .zone-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(139,92,246,0.1);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .etoiles {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .etoile {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            filter: grayscale(100%);
+            opacity: 0.4;
+        }
+
+        .etoile:hover { transform: scale(1.2); }
+
+        .etoile.active {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .moyenne-rating {
+            margin-left: auto;
+            font-weight: 700;
+            color: var(--couleur-cyan);
+        }
+
+        /* Bouton bookmark */
+        .bouton-bookmark {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--couleur-violet);
+            background: transparent;
+            color: var(--couleur-violet-clair);
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bouton-bookmark:hover {
+            background: var(--couleur-violet);
+            color: white;
+        }
+
+        .bouton-bookmark.actif {
+            background: var(--couleur-violet);
+            color: white;
+        }
+
+        /* Liste des pistes */
+        #liste-pistes {
+            background: var(--couleur-fond-carte);
+            border-radius: 25px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .titre-section {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .piste {
+            display: grid;
+            grid-template-columns: 40px 60px 1fr auto auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .piste.visible {
+            animation: glisser-droite 0.4s ease forwards;
+        }
+
+        @keyframes glisser-droite {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .piste:hover {
+            background: rgba(139,92,246,0.15);
+        }
+
+        .piste-numero {
+            font-size: 1rem;
+            color: var(--couleur-texte-secondaire);
+            text-align: center;
+        }
+
+        .piste:hover .piste-numero {
+            color: var(--couleur-violet-clair);
+        }
+
+        .piste-pochette {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .piste-pochette img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .piste-info {
+            flex: 1;
+        }
+
+        .piste-titre {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .piste-artiste {
+            font-size: 0.85rem;
+            color: var(--couleur-texte-secondaire);
+        }
+
+        .piste-duree {
+            color: var(--couleur-texte-secondaire);
+            font-size: 0.9rem;
+        }
+
+        .piste-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .bouton-piste {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            color: var(--couleur-texte);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .bouton-piste:hover {
+            background: var(--couleur-violet);
+            transform: scale(1.1);
+        }
+
+        .bouton-piste.favori.actif {
+            background: var(--couleur-rose);
+        }
+
+        /* Section commentaires */
+        #section-commentaires {
+            background: var(--couleur-fond-carte);
+            border-radius: 25px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .liste-commentaires {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .commentaire {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .commentaire.visible {
+            animation: apparition 0.3s ease forwards;
+        }
+
+        .avatar-commentaire {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--degrade-neon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contenu-commentaire { flex: 1; }
+
+        .auteur-commentaire {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--couleur-violet-clair);
+        }
+
+        .texte-commentaire {
+            font-size: 0.9rem;
+            color: var(--couleur-texte-secondaire);
+            margin-top: 0.3rem;
+        }
+
+        .formulaire-commentaire {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .champ-commentaire {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid rgba(139,92,246,0.3);
+            border-radius: 25px;
+            background: rgba(255,255,255,0.05);
+            color: var(--couleur-texte);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .champ-commentaire:focus {
+            border-color: var(--couleur-violet);
+        }
+
+        .bouton-commenter {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: var(--degrade-neon);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bouton-commenter:hover {
+            transform: scale(1.05);
+            box-shadow: var(--ombre-neon);
+        }
+
+        /* Pied de page */
+        #pied-page {
+            text-align: center;
+            padding: 2rem;
+            color: var(--couleur-texte-secondaire);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #album-vedette {
+                grid-template-columns: 1fr;
+            }
+            #legende-ajax {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .piste {
+                grid-template-columns: 30px 50px 1fr auto;
+            }
+            .piste-duree {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation du projet -->
+    <nav id="navigation-projet">
+        <a href="/" class="lien-navigation accueil">🏠 Accueil</a>
+        <a href="/journal/" class="lien-navigation blog">📝 Blog</a>
+        <a href="/espace/" class="lien-navigation application">✨ Mon Espace</a>
+        <a href="/admin/" class="lien-navigation admin">⚙️ Admin</a>
+    </nav>
+
+    <!-- En-tête -->
+    <header id="entete-principal">
+        <h1 id="titre-site">SoundWave</h1>
+        <p id="slogan">Ta musique, ton style</p>
+
+        <!-- AJAX #1 : Recherche auto-complete -->
+        <div id="zone-recherche">
+            <span id="icone-recherche">🔍</span>
+            <input type="text" id="champ-recherche" placeholder="Rechercher un artiste, un album, une piste...">
+            <div id="liste-suggestions">
+                <div class="suggestion">
+                    <div class="suggestion-pochette"></div>
+                    <div class="suggestion-info">
+                        <div class="suggestion-titre">Neon Dreams</div>
+                        <div class="suggestion-artiste">Synthwave Collective</div>
+                    </div>
+                </div>
+                <div class="suggestion">
+                    <div class="suggestion-pochette"></div>
+                    <div class="suggestion-info">
+                        <div class="suggestion-titre">Midnight City</div>
+                        <div class="suggestion-artiste">Electric Pulse</div>
+                    </div>
+                </div>
+                <div class="suggestion">
+                    <div class="suggestion-pochette"></div>
+                    <div class="suggestion-info">
+                        <div class="suggestion-titre">Digital Love</div>
+                        <div class="suggestion-artiste">Cyber Symphony</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="contenu-principal">
+        <!-- Légende Ajax -->
+        <section id="legende-ajax">
+            <div class="item-legende">
+                <div class="icone-legende">🔍</div>
+                <div class="titre-legende">Recherche</div>
+                <div class="desc-legende">Auto-complete Ajax</div>
+            </div>
+            <div class="item-legende">
+                <div class="icone-legende">🔖</div>
+                <div class="titre-legende">Bookmark</div>
+                <div class="desc-legende">Sauvegarder albums</div>
+            </div>
+            <div class="item-legende">
+                <div class="icone-legende">⭐</div>
+                <div class="titre-legende">Rating</div>
+                <div class="desc-legende">Noter les albums</div>
+            </div>
+            <div class="item-legende">
+                <div class="icone-legende">💬</div>
+                <div class="titre-legende">Commentaire</div>
+                <div class="desc-legende">Réagir sans reload</div>
+            </div>
+        </section>
+
+        <!-- Album en vedette avec pochette personnalisable -->
+        <section id="album-vedette">
+            <div class="pochette-album">
+                <img src="https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=400&h=400&fit=crop" alt="Pochette album">
+                <div class="overlay-personnaliser">
+                    <span>🎨</span>
+                    <p>Personnaliser la pochette</p>
+                </div>
+            </div>
+            <div class="info-album-vedette">
+                <h2>Neon Horizons</h2>
+                <p class="artiste-vedette">par Synthwave Collective</p>
+
+                <div class="stats-album">
+                    <div class="stat-item">
+                        <div class="stat-nombre">12</div>
+                        <div class="stat-label">Pistes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-nombre">47:32</div>
+                        <div class="stat-label">Durée</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-nombre">2026</div>
+                        <div class="stat-label">Année</div>
+                    </div>
+                </div>
+
+                <!-- AJAX #3 : Rating -->
+                <div class="zone-rating">
+                    <span>Votre note :</span>
+                    <div class="etoiles">
+                        <span class="etoile active" data-note="1">⭐</span>
+                        <span class="etoile active" data-note="2">⭐</span>
+                        <span class="etoile active" data-note="3">⭐</span>
+                        <span class="etoile active" data-note="4">⭐</span>
+                        <span class="etoile" data-note="5">⭐</span>
+                    </div>
+                    <span class="moyenne-rating">4.3 / 5</span>
+                </div>
+
+                <!-- AJAX #2 : Bookmark -->
+                <button class="bouton-bookmark">
+                    <span>🔖</span> Ajouter à ma collection
+                </button>
+            </div>
+        </section>
+
+        <!-- Liste des pistes -->
+        <section id="liste-pistes">
+            <h2 class="titre-section">🎵 Pistes de l'album</h2>
+
+            <article class="piste">
+                <span class="piste-numero">1</span>
+                <div class="piste-pochette">
+                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100&h=100&fit=crop" alt="Pochette">
+                </div>
+                <div class="piste-info">
+                    <div class="piste-titre">Sunrise Protocol</div>
+                    <div class="piste-artiste">Synthwave Collective</div>
+                </div>
+                <span class="piste-duree">4:12</span>
+                <div class="piste-actions">
+                    <button class="bouton-piste favori" title="Favoris">❤️</button>
+                    <button class="bouton-piste" title="Jouer">▶️</button>
+                </div>
+            </article>
+
+            <article class="piste">
+                <span class="piste-numero">2</span>
+                <div class="piste-pochette">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" alt="Pochette">
+                </div>
+                <div class="piste-info">
+                    <div class="piste-titre">Neon Boulevard</div>
+                    <div class="piste-artiste">Synthwave Collective</div>
+                </div>
+                <span class="piste-duree">3:45</span>
+                <div class="piste-actions">
+                    <button class="bouton-piste favori actif" title="Favoris">❤️</button>
+                    <button class="bouton-piste" title="Jouer">▶️</button>
+                </div>
+            </article>
+
+            <article class="piste">
+                <span class="piste-numero">3</span>
+                <div class="piste-pochette">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=100&h=100&fit=crop" alt="Pochette">
+                </div>
+                <div class="piste-info">
+                    <div class="piste-titre">Digital Dreams</div>
+                    <div class="piste-artiste">Synthwave Collective feat. Luna</div>
+                </div>
+                <span class="piste-duree">5:23</span>
+                <div class="piste-actions">
+                    <button class="bouton-piste favori" title="Favoris">❤️</button>
+                    <button class="bouton-piste" title="Jouer">▶️</button>
+                </div>
+            </article>
+
+            <article class="piste">
+                <span class="piste-numero">4</span>
+                <div class="piste-pochette">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=100&h=100&fit=crop" alt="Pochette">
+                </div>
+                <div class="piste-info">
+                    <div class="piste-titre">Cyber Nights</div>
+                    <div class="piste-artiste">Synthwave Collective</div>
+                </div>
+                <span class="piste-duree">4:58</span>
+                <div class="piste-actions">
+                    <button class="bouton-piste favori" title="Favoris">❤️</button>
+                    <button class="bouton-piste" title="Jouer">▶️</button>
+                </div>
+            </article>
+
+            <article class="piste">
+                <span class="piste-numero">5</span>
+                <div class="piste-pochette">
+                    <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=100&h=100&fit=crop" alt="Pochette">
+                </div>
+                <div class="piste-info">
+                    <div class="piste-titre">Retrowave Sunset</div>
+                    <div class="piste-artiste">Synthwave Collective</div>
+                </div>
+                <span class="piste-duree">6:01</span>
+                <div class="piste-actions">
+                    <button class="bouton-piste favori" title="Favoris">❤️</button>
+                    <button class="bouton-piste" title="Jouer">▶️</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- AJAX #4 : Commentaires -->
+        <section id="section-commentaires">
+            <h2 class="titre-section">💬 Commentaires (3)</h2>
+
+            <div class="liste-commentaires">
+                <div class="commentaire">
+                    <div class="avatar-commentaire">🎧</div>
+                    <div class="contenu-commentaire">
+                        <div class="auteur-commentaire">DJ_Maxime</div>
+                        <div class="texte-commentaire">Cet album est incroyable ! La piste 3 est mon coup de coeur 💜</div>
+                    </div>
+                </div>
+                <div class="commentaire">
+                    <div class="avatar-commentaire">🎹</div>
+                    <div class="contenu-commentaire">
+                        <div class="auteur-commentaire">SynthLover42</div>
+                        <div class="texte-commentaire">Les vibes rétro sont parfaites. On se croirait dans les années 80 !</div>
+                    </div>
+                </div>
+                <div class="commentaire">
+                    <div class="avatar-commentaire">🎸</div>
+                    <div class="contenu-commentaire">
+                        <div class="auteur-commentaire">MusicFan_Sophie</div>
+                        <div class="texte-commentaire">J'écoute en boucle depuis 3 jours. Chef d'oeuvre !</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formulaire-commentaire">
+                <input type="text" class="champ-commentaire" placeholder="Partagez votre avis sur cet album...">
+                <button class="bouton-commenter">Envoyer</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer id="pied-page">
+        SoundWave © 2026 • Votre musique, votre univers
+    </footer>
+
+    <script>
+        // Observateur pour animations au scroll
+        const observateur = new IntersectionObserver((entrees) => {
+            entrees.forEach((entree, index) => {
+                if (entree.isIntersecting) {
+                    setTimeout(() => {
+                        entree.target.classList.add('visible');
+                    }, index * 80);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observer les éléments
+        document.querySelectorAll('.item-legende, #album-vedette, .piste, .commentaire').forEach(el => {
+            observateur.observe(el);
+        });
+
+        // AJAX #1 : Recherche
+        const champRecherche = document.getElementById('champ-recherche');
+        const listeSuggestions = document.getElementById('liste-suggestions');
+
+        champRecherche.addEventListener('input', () => {
+            listeSuggestions.classList.toggle('active', champRecherche.value.length > 0);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#zone-recherche')) {
+                listeSuggestions.classList.remove('active');
+            }
+        });
+
+        // AJAX #2 : Bookmark
+        document.querySelectorAll('.bouton-bookmark').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('actif');
+                const texte = this.querySelector('span').nextSibling;
+                if (this.classList.contains('actif')) {
+                    this.innerHTML = '<span>✓</span> Dans ma collection';
+                } else {
+                    this.innerHTML = '<span>🔖</span> Ajouter à ma collection';
+                }
+            });
+        });
+
+        // AJAX #3 : Rating
+        document.querySelectorAll('.zone-rating').forEach(zone => {
+            const etoiles = zone.querySelectorAll('.etoile');
+            etoiles.forEach(etoile => {
+                etoile.addEventListener('click', function() {
+                    const note = parseInt(this.dataset.note);
+                    etoiles.forEach((e, i) => {
+                        e.classList.toggle('active', i < note);
+                    });
+                });
+            });
+        });
+
+        // Favoris pistes
+        document.querySelectorAll('.bouton-piste.favori').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('actif');
+            });
+        });
+
+        // AJAX #4 : Commentaires
+        document.querySelectorAll('.bouton-commenter').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const champ = this.previousElementSibling;
+                const texte = champ.value.trim();
+                if (texte) {
+                    const liste = this.closest('section').querySelector('.liste-commentaires');
+                    const nouveau = document.createElement('div');
+                    nouveau.className = 'commentaire visible';
+                    nouveau.innerHTML = `
+                        <div class="avatar-commentaire">🎵</div>
+                        <div class="contenu-commentaire">
+                            <div class="auteur-commentaire">Moi</div>
+                            <div class="texte-commentaire">${texte}</div>
+                        </div>
+                    `;
+                    liste.appendChild(nouveau);
+                    champ.value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

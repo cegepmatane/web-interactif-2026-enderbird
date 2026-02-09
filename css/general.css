@@ -171,6 +171,9 @@ body {
     border-radius: 8px;
     background: var(--degrade-neon);
 }
+.suggestion-pochette img {
+    width: 100%;
+}
 
 .suggestion-info {
     flex: 1;

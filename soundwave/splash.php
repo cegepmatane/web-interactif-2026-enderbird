@@ -70,10 +70,6 @@ require_once "../header.php";
                             <div class="piste-artiste"><?=MorceauDAO::formater($morceau->artiste)?></div>
                         </div>
                         <span class="piste-duree"><?=MorceauDAO::formater($morceau->duree)?></span>
-                        <div class="piste-actions">
-                            <button class="bouton-piste favori" title="Favoris">❤️</button>
-                            <button value="<?=MorceauDAO::formater($morceau->artiste)?> <?=MorceauDAO::formater($morceau->titre)?>"         class="bouton-piste jouer" title="Jouer">▶️</button>
-                        </div>
                     </article>
                 <?php } ?>
             </div>

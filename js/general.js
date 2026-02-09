@@ -19,9 +19,38 @@ const champRecherche = document.getElementById('champ-recherche');
 const listeSuggestions = document.getElementById('liste-suggestions');
 
 champRecherche.addEventListener('input', () => {
-    listeSuggestions.classList.toggle('active', champRecherche.value.length > 0);
-});
+    const query = champRecherche.value.trim();
 
+    listeSuggestions.classList.toggle('active', query.length > 0);
+
+    if (query.length === 0) {
+        listeSuggestions.innerHTML = '';
+        return;
+    }
+
+    fetch('../ajax-recherche.php?q=' + encodeURIComponent(query))
+        .then(resultat => resultat.json())
+        .then(data => {
+            listeSuggestions.innerHTML = '';
+
+            data.forEach(donnee => {
+                const div = document.createElement('div');
+                div.className = 'suggestion';
+
+                div.innerHTML = `
+                    <div class="suggestion-pochette">
+                        <img src="../images/${donnee.id_image}.png" alt="Pochette album">
+                    </div>
+                    <div class="suggestion-info">
+                        <div class="suggestion-titre">${donnee.nom}</div>
+                        <div class="suggestion-artiste">${donnee.artiste}</div>
+                    </div>
+                `;
+
+                listeSuggestions.appendChild(div);
+            });
+        });
+});
 document.addEventListener('click', (e) => {
     if (!e.target.closest('#zone-recherche')) {
         listeSuggestions.classList.remove('active');

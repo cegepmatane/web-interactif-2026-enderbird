@@ -33,7 +33,7 @@
                         <div class="suggestion-artiste">Synthwave Collective</div>
                     </div>
                 </div>
-                <div class="suggestion">
+                <!-- <div class="suggestion">
                     <div class="suggestion-pochette"></div>
                     <div class="suggestion-info">
                         <div class="suggestion-titre">Midnight City</div>
@@ -46,7 +46,7 @@
                         <div class="suggestion-titre">Digital Love</div>
                         <div class="suggestion-artiste">Cyber Symphony</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </header>
