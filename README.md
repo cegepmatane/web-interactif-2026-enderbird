@@ -20,4 +20,4 @@ Template : https://web.wavesofsounds.space/template/index.html
 
 abc
 
-[^admin]: **Accès restreint** - Il faut le nom d'utilisateur et mot de passe de la base de donnée pour accéder aux pages admin
+[^admin]: **Accès restreint** - Il faut le nom d'utilisateur et son mot de passe de la base de donnée (contracteur) pour accéder aux pages admin

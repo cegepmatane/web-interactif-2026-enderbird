@@ -3,11 +3,7 @@
     $albums = AlbumDAO::listerAlbums();
 
     require_once "accesseur/MorceauDAO.php";
-    // $album = new Album(['id' => 1]);
-    // $morceauxNo1 = MorceauDAO::detaillerMorceauxAlbum($album);
-    // print_r($morceauxNo1);
 
-    // AFFICHAGE
     include_once "header.php";
 ?>
 
