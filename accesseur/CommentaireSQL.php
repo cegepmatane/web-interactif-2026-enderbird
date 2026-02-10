@@ -1,9 +1,44 @@
 <?php
 interface CommentaireSQL
 {
-    public const SQL_LISTE_COMMENTAIRE = "SELECT * FROM commentaire";
-    public const SQL_DETAIL_COMMENTAIRE = "SELECT * FROM commentaire JOIN utilisateur ON commentaire.id_utilisateur = utilisateur.id WHERE id_utilisateur = :id";
-    public const SQL_DETAIL_COMMENTAIRES = "SELECT * FROM commentaire JOIN album ON commentaire.id_album = album.id WHERE id_album = :id";
-	/* Admin */
+    public const SQL_LISTE_COMMENTAIRE = "
+        SELECT 
+            id, 
+            id_album, 
+            id_utilisateur, 
+            message, 
+            date 
+        FROM commentaire
+    ";
+
+    public const SQL_LISTE_COMMENTAIRES_ALBUM = "
+        SELECT
+            id, 
+            id_album, 
+            id_utilisateur, 
+            message, 
+            date 
+        FROM commentaire
+        WHERE id_album = :id_album
+    ";
+
+    public const SQL_DETAIL_COMMENTAIRE = "
+        SELECT 
+            id, 
+            id_album, 
+            id_utilisateur, 
+            message, 
+            date 
+        FROM commentaire
+        WHERE id = :id
+    ";
+
+    public const SQL_AJOUTER_COMMENTAIRE = "INSERT INTO commentaire (id_album, id_utilisateur, message, date) VALUES (:id_album, :id_utilisateur, :message, NOW())";
 }
 ?>
+
+
+
+
+
+

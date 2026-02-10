@@ -1,22 +1,40 @@
 <?php
+    //https://web.wavesofsounds.space/index.php?albumvedette=7
+    if(isset($_GET['albumvedette'])) {
+        $id = filter_var($_GET['albumvedette'], FILTER_VALIDATE_INT);
+    }
+    
+    // Album par défaut si $id null
     require_once "accesseur/AlbumDAO.php";
-    $albumVedette = new Album(['id' => 2]);
-    $albumVedette = AlbumDAO::detaillerAlbum($albumVedette);
+    $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id])) ?? AlbumDAO::detaillerAlbum(new Album(['id' => 1]));
 
     require_once "accesseur/MorceauDAO.php";
     $morceauxAlbumVedette = MorceauDAO::detaillerMorceauxAlbum($albumVedette);
 
+    // Votes
     require_once "accesseur/VoteDAO.php";
     $votes = VoteDAO::listerVotesAlbum($albumVedette);
-    $premierVote = $votes[0];
+    if ($votes) {
+        $vote = $votes[0];
+    }
+    else {
+        $vote = VoteDAO::listerVotes()[0];
+        $vote->moyenne = 0;
+    }
 
-    // AFFICHAGE
+    // Commentaires
+    require_once "accesseur/CommentaireDAO.php";
+    $commentaires = CommentaireDAO::listerCommentairesAlbum($albumVedette);
+
     include_once "header.php";
 ?>
     <title>SoundWave - Ma Musique</title>
 
     <!-- #3 - Ajax -->
     <script src="js/vote.js" defer></script>
+
+    <!-- #4 - Ajax -->
+    <script src="js/commentaire.js" defer></script>
 
     <main id="contenu-principal">
         <!-- Légende Ajax -->
@@ -46,7 +64,7 @@
         <!-- Album en vedette avec pochette personnalisable -->
         <section id="album-vedette">
             <div class="pochette-album">
-                <img src="images/<?=$albumVedette->fichier_image?>" alt="Pochette album">
+                <img src="images/albums/<?=$albumVedette->fichier_image?>" alt="Pochette album">
             </div>
             <div class="info-album-vedette">
                 <h2><?=$albumVedette->nom?></h2>
@@ -81,7 +99,7 @@
                         <span class="etoile" data-note="4">⭐</span>
                         <span class="etoile" data-note="5">⭐</span>
                     </div>
-                    <span class="moyenne-rating"><?= $premierVote->moyenne ?> / 5</span>
+                    <span class="moyenne-rating"><?= $vote->moyenne ?> / 5</span>
                 </div>
 
                 <!-- AJAX #2 : Bookmark -->
@@ -100,7 +118,7 @@
             <article class="piste">
                 <span class="piste-numero"><?=$morceau->ordre?></span>
                 <div class="piste-pochette">
-                    <img src="images/<?=$albumVedette->fichier_image?>" alt="Pochette">
+                    <img src="images/albums/<?=$albumVedette->fichier_image?>" alt="Pochette">
                 </div>
                 <div class="piste-info">
                     <div class="piste-titre"><?=$morceau->titre?></div>
@@ -114,44 +132,28 @@
             </article>
             
             <?php } ?>
-            
-            <!-- <article class="piste">
-                <span class="piste-numero">2</span>
-                <div class="piste-pochette">
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100&h=100&fit=crop" alt="Pochette">
-                </div>
-                <div class="piste-info">
-                    <div class="piste-titre">Neon Boulevard</div>
-                    <div class="piste-artiste">Synthwave Collective</div>
-                </div>
-                <span class="piste-duree">3:45</span>
-                <div class="piste-actions">
-                    <button class="bouton-piste favori actif" title="Favoris">❤️</button>
-                    <button class="bouton-piste" title="Jouer">▶️</button>
-                </div>
-            </article> -->
-
+    
         </section>
 
         <!-- AJAX #4 : Commentaires -->
         <section id="section-commentaires">
-            <h2 class="titre-section">💬 Commentaires (3)</h2>
+            <h2 class="titre-section">💬 Commentaires (<?= count($commentaires ?? 0) ?>)</h2>
 
-            <div class="liste-commentaires">
+            <div class="liste-commentaires" data-user-avatar="<?= $utilisateur->fichier_image ?? 'defaut.jpg' ?>" data-item-id="<?= $albumVedette->id ?>" data-user-id="0">
+            
+                <?php foreach($commentaires as $commentaire) { ?>
+
                 <div class="commentaire">
-                    <div class="avatar-commentaire">🎧</div>
+                    <div class="avatar-commentaire">
+                        <img src="images/utilisateurs/<?= $utilisateur->fichier_image ?? "defaut.jpg" ?>" alt="avatar">
+                    </div>
                     <div class="contenu-commentaire">
-                        <div class="auteur-commentaire">DJ_Maxime</div>
-                        <div class="texte-commentaire">Cet album est incroyable ! La piste 3 est mon coup de coeur 💜</div>
+                        <div class="auteur-commentaire"><?= $commentaire->id_utilisateur ?></div>
+                        <div class="texte-commentaire"><?= $commentaire->message ?></div>
                     </div>
                 </div>
-                <!-- <div class="commentaire">
-                    <div class="avatar-commentaire">🎹</div>
-                    <div class="contenu-commentaire">
-                        <div class="auteur-commentaire">SynthLover42</div>
-                        <div class="texte-commentaire">Les vibes rétro sont parfaites. On se croirait dans les années 80 !</div>
-                    </div>
-                </div> -->
+            
+                <?php } ?>
             </div>
 
             <div class="formulaire-commentaire">

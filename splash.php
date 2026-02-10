@@ -20,7 +20,7 @@
         <!-- Album en vedette avec pochette personnalisable -->
         <section class="album-splash visible">
             <div class="pochette-album">
-                <img src="images/<?=$album->fichier_image?>" alt="Pochette album">
+                <img src="images/albums/<?=$album->fichier_image?>" alt="Pochette album">
                 <div class="overlay-afficher">
                     <span>🎶</span>
                     <p>Afficher les infos</p>

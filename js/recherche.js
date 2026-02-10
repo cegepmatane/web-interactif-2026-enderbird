@@ -21,7 +21,7 @@ function rechercher(recherche){
 
                 div.innerHTML = `
                     <div class="suggestion-pochette">
-                        <img src="../images/${donnee.fichier_image ?? "defaut.png"}" alt="Pochette album">
+                        <img src="../images/albums/${donnee.fichier_image ?? "defaut.png"}" alt="Pochette album">
                     </div>
                     <div class="suggestion-info">
                         <div class="suggestion-titre">${donnee.nom ?? ""}</div>

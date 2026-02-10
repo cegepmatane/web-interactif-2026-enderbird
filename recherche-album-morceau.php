@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include_once "accesseur/AlbumDAO.php";
+require_once "accesseur/AlbumDAO.php";
 
 try {
     $recherche = $_GET['recherche'] ?? '';

@@ -1,36 +1,30 @@
 <?php 
 
-class Vote
+class Commentaire
 {
     public static $filtres = array(
 		'id' => FILTER_VALIDATE_INT,
 		'id_album' => FILTER_VALIDATE_INT,
 		'id_utilisateur' => FILTER_VALIDATE_INT,
-		'note' => FILTER_VALIDATE_INT,
-		'date' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-		'moyenne' => FILTER_VALIDATE_FLOAT,
-		'total_votes' => FILTER_VALIDATE_INT
+		'message' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		'date' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
 	);
 
     protected $id;
 	protected $id_album;
 	protected $id_utilisateur;
-	protected $note;
+	protected $message;
 	protected $date;
-	protected $moyenne;
-	protected $total_votes;
 
     public function __construct($tableau)
 	{
-		$tableau = filter_var_array($tableau, Vote::$filtres);
+		$tableau = filter_var_array($tableau, Commentaire::$filtres);
 
 		$this->id = $tableau['id'] ?? null;
 		$this->id_album = $tableau['id_album'] ?? null;
 		$this->id_utilisateur = $tableau['id_utilisateur'] ?? null;
-		$this->note = $tableau['note'] ?? null;
+		$this->message = $tableau['message'] ?? '';
 		$this->date = $tableau['date'] ?? '';
-		$this->moyenne = isset($tableau['moyenne']) ? round($tableau['moyenne'], 1) : null;
-		$this->total_votes = $tableau['total_votes'] ?? null;
 	}
 
     public function __set($propriete, $valeur)
@@ -46,17 +40,11 @@ class Vote
 			case 'id_utilisateur':
 				$this->id_utilisateur = $valeur;
 			break;
-			case 'note':
-				$this->note = $valeur;
+			case 'message':
+				$this->message = $valeur;
 			break;
 			case 'date':
 				$this->date = $valeur;
-			break;
-			case 'moyenne':
-				$this->moyenne = round($valeur, 1);
-			break;
-			case 'total_votes':
-				$this->total_votes = $valeur;
 			break;
 		}
 	}

@@ -30,7 +30,6 @@ document.querySelectorAll('.zone-rating').forEach(zone => {
                 // console.error('Non-JSON response:', text);
 
                 const resultat = await response.json();
-
                 if (!resultat.reussite) {
                     console.error('Server error:', resultat.message);
                     
