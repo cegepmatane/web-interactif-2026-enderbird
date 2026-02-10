@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 /* Variables - Thème néon violet/bleu */
 :root {
     --couleur-fond: #0d0d1a;
@@ -22,6 +23,7 @@
 html {
     scroll-behavior: smooth;
 }
+
 body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     background: var(--couleur-fond);
@@ -43,6 +45,7 @@ body {
     z-index: 100;
     backdrop-filter: blur(10px);
 }
+
 .lien-navigation {
     padding: 0.6rem 1.2rem;
     background: rgba(255,255,255,0.05);
@@ -54,16 +57,16 @@ body {
     color: var(--couleur-texte);
     transition: all 0.3s ease;
 }
+
 .lien-navigation:hover {
     background: rgba(139,92,246,0.3);
     border-color: var(--couleur-violet);
     box-shadow: var(--ombre-neon);
 }
-.lien-navigation.accueil { border-color: var(--couleur-texte); }
-.lien-navigation.splash { border-color: var(--couleur-cyan); }
-.lien-navigation.liste { border-color: var(--couleur-violet); }
+
+.lien-navigation.accueil { border-color: var(--couleur-violet); }
 .lien-navigation.blog { border-color: var(--couleur-bleu); }
-.lien-navigation.espace { border-color: var(--couleur-violet-clair); }
+.lien-navigation.application { border-color: var(--couleur-cyan); }
 .lien-navigation.admin { border-color: var(--couleur-rose); }
 
 /* En-tête */
@@ -72,6 +75,7 @@ body {
     padding: 3rem 1rem 2rem;
     position: relative;
 }
+
 #titre-site {
     font-size: 3.5rem;
     font-weight: 800;
@@ -81,6 +85,7 @@ body {
     background-clip: text;
     text-shadow: 0 0 60px rgba(139,92,246,0.5);
 }
+
 #slogan {
     color: var(--couleur-texte-secondaire);
     font-size: 1.1rem;
@@ -93,6 +98,7 @@ body {
     max-width: 500px;
     margin: 2rem auto 0;
 }
+
 #champ-recherche {
     width: 100%;
     padding: 1rem 1.5rem 1rem 3.5rem;
@@ -104,13 +110,16 @@ body {
     outline: none;
     transition: all 0.3s ease;
 }
+
 #champ-recherche::placeholder {
     color: var(--couleur-texte-secondaire);
 }
+
 #champ-recherche:focus {
     border-color: var(--couleur-violet);
     box-shadow: var(--ombre-neon);
 }
+
 #icone-recherche {
     position: absolute;
     left: 1.3rem;
@@ -118,6 +127,7 @@ body {
     transform: translateY(-50%);
     font-size: 1.2rem;
 }
+
 #liste-suggestions {
     position: absolute;
     top: 100%;
@@ -131,10 +141,12 @@ body {
     display: none;
     z-index: 50;
 }
+
 #liste-suggestions.active {
     display: block;
     animation: derouler 0.3s ease;
 }
+
 @keyframes derouler {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -148,57 +160,38 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
 }
+
 .suggestion:hover {
     background: rgba(139,92,246,0.2);
 }
+
 .suggestion-pochette {
     width: 40px;
     height: 40px;
     border-radius: 8px;
     background: var(--degrade-neon);
 }
-.suggestion-pochette img { width: 100%; }
+.suggestion-pochette img {
+    width: 100%;
+}
+
 .suggestion-info {
     flex: 1;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-items: center;
 }
+
 .suggestion-titre {
-    width: 100%;
     font-weight: 600;
     font-size: 0.9rem;
 }
+
 .suggestion-artiste {
-    text-align: end;
-    flex: 8;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-.suggestion-point {
-    flex: 1;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-.suggestion-annee {
-    text-align: start;
-    flex: 8;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-.suggestion-type {
-    position: absolute;
-    text-align: end;
-    flex: 1;
     font-size: 0.75rem;
     color: var(--couleur-texte-secondaire);
 }
 
 /* Conteneur principal */
 #contenu-principal {
-    max-width: 90%; 
+    max-width: 1200px; 
     margin: 0 auto;
     padding: 2rem 1rem;
 }
@@ -264,11 +257,13 @@ body {
     overflow: hidden;
     box-shadow: var(--ombre-neon);
 }
+
 .pochette-album img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .pochette-album .overlay-personnaliser {
     position: absolute;
     inset: 0;
@@ -281,13 +276,16 @@ body {
     transition: opacity 0.3s ease;
     cursor: pointer;
 }
+
 .pochette-album:hover .overlay-personnaliser {
     opacity: 1;
 }
+
 .overlay-personnaliser span {
     font-size: 2rem;
     margin-bottom: 0.5rem;
 }
+
 .overlay-personnaliser p {
     font-size: 0.9rem;
     color: var(--couleur-violet-clair);
@@ -301,24 +299,29 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
 .artiste-vedette {
     color: var(--couleur-texte-secondaire);
     font-size: 1.1rem;
     margin-bottom: 1rem;
 }
+
 .stats-album {
     display: flex;
     gap: 2rem;
     margin-bottom: 1.5rem;
 }
+
 .stat-item {
     text-align: center;
 }
+
 .stat-nombre {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--couleur-violet-clair);
 }
+
 .stat-label {
     font-size: 0.8rem;
     color: var(--couleur-texte-secondaire);
@@ -334,10 +337,12 @@ body {
     border-radius: 15px;
     margin-bottom: 1rem;
 }
+
 .etoiles {
     display: flex;
     gap: 0.3rem;
 }
+
 .etoile {
     font-size: 1.5rem;
     cursor: pointer;
@@ -345,11 +350,14 @@ body {
     filter: grayscale(100%);
     opacity: 0.4;
 }
+
 .etoile:hover { transform: scale(1.2); }
+
 .etoile.active {
     filter: grayscale(0%);
     opacity: 1;
 }
+
 .moyenne-rating {
     margin-left: auto;
     font-weight: 700;
@@ -370,10 +378,12 @@ body {
     align-items: center;
     gap: 0.5rem;
 }
+
 .bouton-bookmark:hover {
     background: var(--couleur-violet);
     color: white;
 }
+
 .bouton-bookmark.actif {
     background: var(--couleur-violet);
     color: white;
@@ -387,6 +397,7 @@ body {
     margin-bottom: 2rem;
     border: 1px solid rgba(255,255,255,0.1);
 }
+
 .titre-section {
     font-size: 1.3rem;
     margin-bottom: 1rem;
@@ -394,6 +405,7 @@ body {
     align-items: center;
     gap: 0.5rem;
 }
+
 .piste {
     display: grid;
     grid-template-columns: 40px 60px 1fr auto auto;
@@ -405,6 +417,7 @@ body {
     opacity: 0;
     transform: translateX(-20px);
 }
+
 .piste.visible {
     animation: glisser-droite 0.4s ease forwards;
 }
@@ -412,43 +425,53 @@ body {
 @keyframes glisser-droite {
     to { opacity: 1; transform: translateX(0); }
 }
+
 .piste:hover {
     background: rgba(139,92,246,0.15);
 }
+
 .piste-numero {
     font-size: 1rem;
     color: var(--couleur-texte-secondaire);
     text-align: center;
 }
+
 .piste:hover .piste-numero {
     color: var(--couleur-violet-clair);
 }
+
 .piste-pochette {
     width: 50px;
     height: 50px;
     border-radius: 8px;
     overflow: hidden;
 }
+
 .piste-pochette img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .piste-info {
     flex: 1;
 }
+
 .piste-titre {
     font-weight: 600;
     margin-bottom: 0.2rem;
 }
+
 .piste-artiste {
     font-size: 0.85rem;
     color: var(--couleur-texte-secondaire);
 }
+
 .piste-duree {
     color: var(--couleur-texte-secondaire);
     font-size: 0.9rem;
 }
+
 .piste-actions {
     display: flex;
     gap: 0.5rem;
@@ -465,10 +488,12 @@ body {
     transition: all 0.2s ease;
     font-size: 1rem;
 }
+
 .bouton-piste:hover {
     background: var(--couleur-violet);
     transform: scale(1.1);
 }
+
 .bouton-piste.favori.actif {
     background: var(--couleur-rose);
 }
@@ -480,11 +505,13 @@ body {
     padding: 1.5rem;
     border: 1px solid rgba(255,255,255,0.1);
 }
+
 .liste-commentaires {
     max-height: 300px;
     overflow-y: auto;
     margin-bottom: 1rem;
 }
+
 .commentaire {
     display: flex;
     gap: 1rem;
@@ -495,9 +522,11 @@ body {
     opacity: 0;
     transform: translateY(10px);
 }
+
 .commentaire.visible {
     animation: apparition 0.3s ease forwards;
 }
+
 .avatar-commentaire {
     width: 45px;
     height: 45px;
@@ -509,21 +538,26 @@ body {
     font-size: 1.2rem;
     flex-shrink: 0;
 }
+
 .contenu-commentaire { flex: 1; }
+
 .auteur-commentaire {
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--couleur-violet-clair);
 }
+
 .texte-commentaire {
     font-size: 0.9rem;
     color: var(--couleur-texte-secondaire);
     margin-top: 0.3rem;
 }
+
 .formulaire-commentaire {
     display: flex;
     gap: 0.8rem;
 }
+
 .champ-commentaire {
      flex: 1;
     padding: 0.8rem 1.2rem;
@@ -534,6 +568,7 @@ body {
     font-size: 0.9rem;
     outline: none;
 }
+
 .champ-commentaire:focus {
     border-color: var(--couleur-violet);
 }
@@ -548,6 +583,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 .bouton-commenter:hover {
     transform: scale(1.05);
     box-shadow: var(--ombre-neon);

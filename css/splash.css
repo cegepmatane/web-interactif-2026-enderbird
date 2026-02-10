@@ -1,154 +1,49 @@
-/* Reset CSS */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Variables - Thème néon violet/bleu */
-:root {
-    --couleur-fond: #0d0d1a;
-    --couleur-fond-carte: #1a1a2e;
-    --couleur-violet: #8b5cf6;
-    --couleur-violet-clair: #a78bfa;
-    --couleur-bleu: #3b82f6;
-    --couleur-cyan: #06b6d4;
-    --couleur-rose: #ec4899;
-    --couleur-texte: #f8fafc;
-    --couleur-texte-secondaire: #94a3b8;
-    --degrade-neon: linear-gradient(135deg, var(--couleur-violet), var(--couleur-bleu), var(--couleur-cyan));
-    --ombre-neon: 0 0 30px rgba(139, 92, 246, 0.3);
-}
-html {
-    scroll-behavior: smooth;
-}
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--couleur-fond);
-    min-height: 100vh;
-    color: var(--couleur-texte);
-    line-height: 1.6;
-}
-
-/* Navigation projet */
-#navigation-projet {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    background: linear-gradient(90deg, rgba(139,92,246,0.2), rgba(59,130,246,0.2), rgba(6,182,212,0.2));
-    border-bottom: 1px solid rgba(139,92,246,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-}
-.lien-navigation {
-    padding: 0.6rem 1.2rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--couleur-texte);
-    transition: all 0.3s ease;
-}
-.lien-navigation:hover {
-    background: rgba(139,92,246,0.3);
-    border-color: var(--couleur-violet);
-    box-shadow: var(--ombre-neon);
-}
-.lien-navigation.accueil { border-color: var(--couleur-violet); }
-.lien-navigation.blog { border-color: var(--couleur-bleu); }
-.lien-navigation.application { border-color: var(--couleur-cyan); }
-.lien-navigation.admin { border-color: var(--couleur-rose); }
-
-/* En-tête */
-#entete-principal {
-    text-align: center;
-    padding: 3rem 1rem 2rem;
-    position: relative;
-}
-#titre-site {
-    font-size: 3.5rem;
-    font-weight: 800;
-    background: var(--degrade-neon);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 0 60px rgba(139,92,246,0.5);
-}
-#slogan {
-    color: var(--couleur-texte-secondaire);
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
-}
-
-/* Conteneur principal */
 #contenu-principal {
-    max-width: 1200px; 
-    margin: 0 auto;
-    padding: 2rem 1rem;
-}
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-/* Légende Ajax */
-#legende-ajax { 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
+    justify-content: space-around;
 }
-.item-legende {
-    background: var(--couleur-fond-carte);
-    padding: 1rem;
-    border-radius: 15px;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.1);
-    opacity: 0;
-    transform: translateY(20px);
-}
-.item-legende.visible {
-    animation: apparition 0.5s ease forwards;
-}
-@keyframes apparition {
-    to { opacity: 1; transform: translateY(0); }
-}
-.item-legende:nth-child(1) { border-top: 3px solid var(--couleur-violet); }
-.item-legende:nth-child(2) { border-top: 3px solid var(--couleur-bleu); }
-.item-legende:nth-child(3) { border-top: 3px solid var(--couleur-cyan); }
-.item-legende:nth-child(4) { border-top: 3px solid var(--couleur-rose); }
-.icone-legende { font-size: 1.8rem; margin-bottom: 0.5rem; }
-.titre-legende { font-weight: 700; font-size: 0.85rem; }
-.desc-legende { font-size: 0.7rem; color: var(--couleur-texte-secondaire); }
 
 /* Section album */
-.album-vedette {
+.album-splash {
+    width: calc(25% - 1rem);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 2rem;
     background: var(--couleur-fond-carte);
     border-radius: 25px;
-    padding: 2rem;
+    padding: 1rem;
     margin-bottom: 2rem;
     border: 1px solid rgba(255,255,255,0.1);
     opacity: 0;
     transform: translateX(-1000px);
-}
-.album-vedette > :nth-child(1) { flex: 1 1 20%; }
-.album-vedette > :nth-child(2) { flex: 5 1 20%; }
-.album-vedette > :nth-child(n+3) { flex: 1 1 100%; }
 
-.album-vedette.visible {
+    transition: padding 0.4s;
+}
+.album-splash.actif {
+    width: 100%;
+    padding: 2rem;
+    transition: padding 0.8s;
+}
+.album-splash.actif > .pochette-album {
+    transition: all 1s;
+}
+
+.album-splash > :nth-child(1) { flex: 1 1 4%; }
+.album-splash > :nth-child(2) { flex: 5 1 20%; }
+.album-splash > :nth-child(n+3) { flex: 1 1 100%; }
+
+.album-splash.visible {
     animation: apparition 0.6s ease forwards;
 }
 
 /* SPLASH : Afficher morceaux avec pochette */
 .pochette-album {
     position: relative;
-    width: 300px;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: var(--ombre-neon);
@@ -190,6 +85,7 @@ body {
 .splash-morceaux.actif {
     display: block;
 }
+
 /* Liste des pistes dans le splash-morceaux */
 .piste {
     display: flex;
@@ -235,38 +131,23 @@ body {
     color: var(--couleur-texte-secondaire);
     font-size: 0.9rem;
 }
-.piste-actions {
-    display: flex;
-    gap: 0.4rem;
-}
-.bouton-piste {
-    width: 35px;
-    height: 35px;
-    border: none;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50%;
-    color: var(--couleur-texte);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.9rem;
-}
-.bouton-piste:hover {
-    background: var(--couleur-violet);
-    transform: scale(1.1);
-}
-.bouton-piste.favori.actif {
-    background: var(--couleur-rose);
-}
 
 /* Autres infos */
-.info-album-vedette h2 {
+.info-album-splash {
+    display: none;
+}
+.info-album-splash.actif {
+    display: block;
+}
+
+.info-album-splash h2 {
     font-size: 2rem;
     background: var(--degrade-neon);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
-.artiste-vedette {
+.artiste-splash {
     color: var(--couleur-texte-secondaire);
     font-size: 1.1rem;
 }
@@ -286,83 +167,4 @@ body {
 .stat-label {
     font-size: 0.8rem;
     color: var(--couleur-texte-secondaire);
-}
-
-/* Zone rating pour album */
-.zone-rating {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background: rgba(139,92,246,0.1);
-    border-radius: 15px;
-    margin-bottom: 1rem;
-}
-.etoiles {
-    display: flex;
-    gap: 0.3rem;
-}
-.etoile {
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    filter: grayscale(100%);
-    opacity: 0.4;
-}
-.etoile:hover { transform: scale(1.2); }
-.etoile.active {
-    filter: grayscale(0%);
-    opacity: 1;
-}
-.moyenne-rating {
-    margin-left: auto;
-    font-weight: 700;
-    color: var(--couleur-cyan);
-}
-
-/* Bouton bookmark */
-.bouton-bookmark {
-    padding: 0.8rem 1.5rem;
-    border: 2px solid var(--couleur-violet);
-    background: transparent;
-    color: var(--couleur-violet-clair);
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.bouton-bookmark:hover {
-    background: var(--couleur-violet);
-    color: white;
-}
-.bouton-bookmark.actif {
-    background: var(--couleur-violet);
-    color: white;
-}
-
-
-/* Pied de page */
-#pied-page {
-    text-align: center;
-    padding: 2rem;
-    color: var(--couleur-texte-secondaire);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    #album-vedette {
-        grid-template-columns: 1fr;
-    }
-    #legende-ajax {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .piste {
-        grid-template-columns: 30px 50px 1fr auto;
-    }
-    .piste-duree {
-        display: none;
-    }
 }

@@ -12,7 +12,7 @@ $image = ImageDAO::detaillerImage($album->id_image);
 <html lang="fr">
 <head>
 	<title>Panneau d'administration d'album à tout</title>
-	<link rel="stylesheet" type="text/css" href="formulaire.css">	
+	<link rel="stylesheet" type="text/css" href="css/formulaire.css">	
 
 </head>
 <body>

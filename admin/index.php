@@ -1,15 +1,14 @@
 <?php
-	include "action/gerer-action.php";
-	include_once "../accesseur/AlbumDAO.php";
+	require_once "action/gerer-action.php";
+	include_once "accesseur/AlbumDAO.php";
 	$albums = AlbumDAO::listerAlbums();
 
     // AFFICHAGE
-    require_once "../header.php";
+    include_once "header.php";
 ?>
     <title>SoundWave - Liste d'albums</title>
-	<link rel="stylesheet" type="text/css" href="albums.css">	
-
-    <link rel="stylesheet" href="../css/general.css">
+	<link rel="stylesheet" type="text/css" href="css/albums.css">	
+    <link rel="stylesheet" href="css/general.css">
 </head>
 <body>
 	
@@ -41,5 +40,5 @@
 
 <!-- Pied de page -->
 <?php
-require_once "../footer.php";
+include_once "footer.php";
 ?>

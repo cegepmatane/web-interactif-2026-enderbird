@@ -6,9 +6,9 @@ class Morceau
 		'id' => FILTER_VALIDATE_INT,
 		'id_album' => FILTER_VALIDATE_INT,
 		'ordre' => FILTER_VALIDATE_INT,
-		'titre' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-		'artiste' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-		'duree' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
+		'titre' => FILTER_UNSAFE_RAW,
+		'artiste' => FILTER_UNSAFE_RAW,
+		'duree' => FILTER_UNSAFE_RAW
 	);
 
 	protected $id;
@@ -22,12 +22,12 @@ class Morceau
 	{
 		$tableau = filter_var_array($tableau, Morceau::$filtres);
 
-		$this->id = $tableau['id'] ?? null;
-		$this->id_album = $tableau['id_album'] ?? null;
-		$this->ordre = $tableau['ordre'] ?? null;
-		$this->titre = $tableau['titre'] ?? '';
-		$this->artiste = $tableau['artiste'] ?? '';
-		$this->duree = isset($tableau['duree']) ? preg_replace('/^00:/', '', $tableau['duree']) : '0:00';
+		$this->id = $tableau['id'];
+		$this->id_album = $tableau['id_album'];
+		$this->ordre = $tableau['ordre'];
+		$this->titre = $tableau['titre'];
+		$this->artiste = $tableau['artiste'];
+		$this->duree = preg_replace('/^00:/', '', $tableau['duree']); //POUR LE FORMAT
 	}
   
 	public function __set($propriete, $valeur)
@@ -50,14 +50,15 @@ class Morceau
 				$this->artiste = $valeur;
 			break;
 			case 'duree':
-				$this->duree = preg_replace('/^00:/', '', $valeur);
+				$this->duree = $valeur;
 			break;
 		}
 	}
 
 	public function __get($propriete)
 	{
-    	return property_exists($this, $propriete) ? $this->$propriete : null;
+		$self = get_object_vars($this);
+		return $self[$propriete];
 	}
 }
 ?>

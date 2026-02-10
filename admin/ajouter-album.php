@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Panneau d'administration de Contrat à tout</title>
-	<link rel="stylesheet" type="text/css" href="formulaire.css">	
+	<link rel="stylesheet" type="text/css" href="css/formulaire.css">	
 </head>
 <body>
 	<header>

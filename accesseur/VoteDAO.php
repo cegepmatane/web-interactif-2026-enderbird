@@ -1,5 +1,5 @@
 <?php 
-	include_once "../modele/Vote.php";
+	include_once "modele/Vote.php";
 	include_once "VoteSQL.php";
 	require_once "BaseDeDonnees.php";
 

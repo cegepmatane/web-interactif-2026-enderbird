@@ -1,5 +1,5 @@
 <?php 
-	include_once "../modele/Image.php";
+	include_once "modele/Image.php";
 	include_once "ImageSQL.php";
 	require_once "BaseDeDonnees.php";
 
