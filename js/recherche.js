@@ -37,12 +37,13 @@ function rechercher(recherche){
             });
         });
 }
+champRecherche.addEventListener('input', () => {
+    rechercher(champRecherche.value.trim());
+});
+
 document.addEventListener('click', (e) => {
     if (!e.target.closest('#zone-recherche')) {
         listeSuggestions.classList.remove('active');
     }
 });
 
-champRecherche.addEventListener('input', () => {
-    rechercher(champRecherche.value.trim());
-});

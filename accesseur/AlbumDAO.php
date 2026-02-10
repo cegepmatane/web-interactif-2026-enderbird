@@ -14,7 +14,6 @@
 			foreach($albumsTableau as $albumTableau) {
 				$albums[] = new Album($albumTableau);
 			}
-
 			return $albums;
 		}
 		

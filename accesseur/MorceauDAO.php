@@ -14,7 +14,6 @@
 			foreach($morceauxTableau as $morceauTableau) {
 				$morceaux[] = new Morceau($morceauTableau);
 			}
-
 			return $morceaux;
 		}
 		

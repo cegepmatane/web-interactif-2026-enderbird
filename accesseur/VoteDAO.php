@@ -5,44 +5,64 @@
 
 	class VoteDAO extends BaseDeDonnees implements VoteSQL
 	{	
-		public static function detaillerVote($id)
+		public static function listerVotesAlbum(Album $album)
 		{
+			$idAlbum = $album->id;
+
+			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_LISTER_VOTES_ALBUM);
+			$requete->bindParam(':id_album', $idAlbum, PDO::PARAM_INT);
+			$requete->execute();
+
+			$votesTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($votesTableau as $voteTableau) {
+				$votes[] = new Vote($voteTableau);
+			}
+			return $votes;
+		}
+		
+		public static function detaillerVote(Vote $vote)
+		{
+			$idVote = $vote->id;
+
 			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_DETAILLER_VOTE);
-			$requete->bindParam(':id', $id, PDO::PARAM_INT);
+			$requete->bindParam(':id', $idVote, PDO::PARAM_INT);
 			$requete->execute();
 			$vote = $requete->fetch(PDO::FETCH_ASSOC);
+
+		    if (!$vote) return null;
+
 			return new Vote($vote);
 		}
 
-        // - - - - - ADMIN - - - - - 
 		public static function ajouterVote($vote)
 		{
-			$baseDeDonnees = BaseDeDonnees::getConnexion();
+			$idAlbum = $vote->id_album;
+			$idUtilisateur = $vote->id_utilisateur;
+			$note = $vote->note;
 
-			$demandeAjout = $baseDeDonnees->prepare(ImageDAO::SQL_AJOUTER_IMAGE);
-			$demandeAjout->bindValue(':nom_fichier',$vote->nom_fichier, PDO::PARAM_STR);
+			$demandeAjout = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_AJOUTER_VOTE);
+			$demandeAjout->bindValue(':id_album', $idAlbum, PDO::PARAM_INT);
+			$demandeAjout->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+			$demandeAjout->bindParam(':note', $note, PDO::PARAM_INT);
 
-			$demandeAjout->execute();
-
-			$vote->id = $baseDeDonnees->lastInsertId(); //Donne l'id à l'élément
-    		return $vote;
+			$reussite = $demandeAjout->execute();
+    		return $reussite; // Réussi ou pas
 		}
 		
-		public static function editerVote($vote)
-		{
-			$demandeEdition = BaseDeDonnees::getConnexion()->prepare(ImageDAO::SQL_EDITER_IMAGE);
-			$demandeEdition->bindValue(':id',$vote->id, PDO::PARAM_INT);
-			$demandeEdition->bindValue(':nom_fichier',$vote->nom_fichier, PDO::PARAM_STR);
+		// public static function editerVote($vote)
+		// {
+		// 	$demandeEdition = BaseDeDonnees::getConnexion()->prepare(ImageDAO::SQL_EDITER_IMAGE);
+		// 	$demandeEdition->bindValue(':id',$vote->id, PDO::PARAM_INT);
+		// 	$demandeEdition->bindValue(':nom_fichier',$vote->nom_fichier, PDO::PARAM_STR);
 			
-			$demandeEdition->execute();
-		}
-		
-		public static function effacerVote($id)
-		{
-			$demandeEffacement = BaseDeDonnees::getConnexion()->prepare(ImageDAO::SQL_EFFACER_IMAGE);
-			$demandeEffacement->bindParam(':id', $id, PDO::PARAM_INT);
-			$demandeEffacement->execute();
-		}
+		// 	$demandeEdition->execute();
+		// }
+		// public static function effacerVote($id)
+		// {
+		// 	$demandeEffacement = BaseDeDonnees::getConnexion()->prepare(ImageDAO::SQL_EFFACER_IMAGE);
+		// 	$demandeEffacement->bindParam(':id', $id, PDO::PARAM_INT);
+		// 	$demandeEffacement->execute();
+		// }
 
 		public static function formater($texte)
 		{

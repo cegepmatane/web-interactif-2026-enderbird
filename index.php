@@ -7,11 +7,16 @@
     $morceauxAlbumVedette = MorceauDAO::detaillerMorceauxAlbum($albumVedette);
 
     require_once "accesseur/VoteDAO.php";
+    $votes = VoteDAO::listerVotesAlbum($albumVedette);
+    $premierVote = $votes[0];
 
     // AFFICHAGE
     include_once "header.php";
 ?>
     <title>SoundWave - Ma Musique</title>
+
+    <!-- #3 - Ajax -->
+    <script src="js/vote.js" defer></script>
 
     <main id="contenu-principal">
         <!-- Légende Ajax -->
@@ -67,16 +72,16 @@
                 </div>
 
                 <!-- AJAX #3 : Rating -->
-                <div class="zone-rating">
+                <div class="zone-rating" data-item-id="<?= $albumVedette->id ?>" data-user-id="0">
                     <span>Votre note :</span>
                     <div class="etoiles">
-                        <span class="etoile active" data-note="1">⭐</span>
-                        <span class="etoile active" data-note="2">⭐</span>
-                        <span class="etoile active" data-note="3">⭐</span>
-                        <span class="etoile active" data-note="4">⭐</span>
+                        <span class="etoile" data-note="1">⭐</span>
+                        <span class="etoile" data-note="2">⭐</span>
+                        <span class="etoile" data-note="3">⭐</span>
+                        <span class="etoile" data-note="4">⭐</span>
                         <span class="etoile" data-note="5">⭐</span>
                     </div>
-                    <span class="moyenne-rating">4.3 / 5</span>
+                    <span class="moyenne-rating"><?= $premierVote->moyenne ?> / 5</span>
                 </div>
 
                 <!-- AJAX #2 : Bookmark -->

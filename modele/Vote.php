@@ -7,7 +7,9 @@ class Vote
 		'id_album' => FILTER_VALIDATE_INT,
 		'id_utilisateur' => FILTER_VALIDATE_INT,
 		'note' => FILTER_VALIDATE_INT,
-		'date' => FILTER_UNSAFE_RAW,
+		'date' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		'moyenne' => FILTER_VALIDATE_FLOAT,
+		'total_votes' => FILTER_VALIDATE_INT
 	);
 
     protected $id;
@@ -15,16 +17,20 @@ class Vote
 	protected $id_utilisateur;
 	protected $note;
 	protected $date;
+	protected $moyenne;
+	protected $total_votes;
 
     public function __construct($tableau)
 	{
-		$tableau = filter_var_array($tableau, Image::$filtres);
+		$tableau = filter_var_array($tableau, Vote::$filtres);
 
-		$this->id = $tableau['id'];
-		$this->id_album = $tableau['id_album'];
-		$this->id_utilisateur = $tableau['id_utilisateur'];
-		$this->note = $tableau['note'];
-		$this->date = $tableau['date'];
+		$this->id = $tableau['id'] ?? null;
+		$this->id_album = $tableau['id_album'] ?? null;
+		$this->id_utilisateur = $tableau['id_utilisateur'] ?? null;
+		$this->note = $tableau['note'] ?? null;
+		$this->date = $tableau['date'] ?? '';
+		$this->moyenne = round($tableau['moyenne'], 1) ?? null;
+		$this->total_votes = $tableau['total_votes'] ?? null;
 	}
 
     public function __set($propriete, $valeur)
@@ -46,13 +52,18 @@ class Vote
 			case 'date':
 				$this->date = $valeur;
 			break;
+			case 'moyenne':
+				$this->moyenne = round($valeur, 1);
+			break;
+			case 'total_votes':
+				$this->total_votes = $valeur;
+			break;
 		}
 	}
 
 	public function __get($propriete)
 	{
-		$self = get_object_vars($this);
-		return $self[$propriete];
+    	return property_exists($this, $propriete) ? $this->$propriete : null;
 	}
 }
 ?>
