@@ -3,7 +3,6 @@
     if(isset($_GET['albumvedette'])) {
         $id = filter_var($_GET['albumvedette'], FILTER_VALIDATE_INT);
     }
-    
     // Album par défaut si $id null
     require_once "accesseur/AlbumDAO.php";
     $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id])) ?? AlbumDAO::detaillerAlbum(new Album(['id' => 1]));
@@ -16,8 +15,7 @@
     $votes = VoteDAO::listerVotesAlbum($albumVedette);
     if ($votes) {
         $vote = $votes[0];
-    }
-    else {
+    } else {
         $vote = VoteDAO::listerVotes()[0];
         $vote->moyenne = 0;
     }
@@ -26,13 +24,37 @@
     require_once "accesseur/CommentaireDAO.php";
     $commentaires = CommentaireDAO::listerCommentairesAlbum($albumVedette);
 
+    // Utilisateur
+    require_once "accesseur/UtilisateurDAO.php";
+    $id = $_SESSION['user_id'] ?? 1;
+    $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $id]));
+
+    // Collection
+    require_once "accesseur/CollectionDAO.php";
+    $collections = CollectionDAO::listerCollectionsUtilisateur($utilisateur) ?? [];
+
+    $albumDansCollection = false;
+    foreach($collections as $collection) {
+        if ($collection->id_album == $albumVedette->id) {
+            $albumDansCollection = true;
+            break;
+        }
+    }
+
+    // Favori (presque pareil que collection)
+    require_once "accesseur/FavoriDAO.php";
+    $favoris = FavoriDAO::listerFavorisUtilisateur($utilisateur) ?? [];
+
     include_once "header.php";
 ?>
+
     <title>SoundWave - Ma Musique</title>
 
+    <!-- #2 - Ajax -->
+    <script src="js/collection.js" defer></script>
+    <script src="js/favori.js" defer></script>
     <!-- #3 - Ajax -->
     <script src="js/vote.js" defer></script>
-
     <!-- #4 - Ajax -->
     <script src="js/commentaire.js" defer></script>
 
@@ -90,7 +112,9 @@
                 </div>
 
                 <!-- AJAX #3 : Rating -->
-                <div class="zone-rating" data-item-id="<?= $albumVedette->id ?>" data-user-id="0">
+                <div class="zone-rating" 
+                    data-item-id="<?= $albumVedette->id ?>" 
+                    data-user-id="<?= $utilisateur->id ?>">
                     <span>Votre note :</span>
                     <div class="etoiles">
                         <span class="etoile" data-note="1">⭐</span>
@@ -103,8 +127,15 @@
                 </div>
 
                 <!-- AJAX #2 : Bookmark -->
-                <button class="bouton-bookmark">
+                <button class="bouton-bookmark <?php echo $albumDansCollection ? 'actif' : ''; ?>" 
+                    data-item-id="<?= $albumVedette->id ?>" 
+                    data-user-id="<?= $utilisateur->id ?>">
+                    
+                    <?php if($albumDansCollection) { ?>
+                    <span>✓</span> Dans ma collection
+                    <?php } else { ?>
                     <span>🔖</span> Ajouter à ma collection
+                    <?php } ?>
                 </button>
             </div>
         </section>
@@ -113,7 +144,15 @@
         <section id="liste-pistes">
             <h2 class="titre-section">🎵 Pistes de l'album</h2>
 
-            <?php foreach($morceauxAlbumVedette as $morceau) { ?>
+            <?php foreach($morceauxAlbumVedette as $morceau) { 
+                $morceauDansFavori = false;
+                foreach($favoris as $favori) {
+                    if ($favori->id_morceau == $morceau->id) {
+                        $morceauDansFavori = true;
+                        break;
+                    }
+                }
+            ?>
 
             <article class="piste">
                 <span class="piste-numero"><?=$morceau->ordre?></span>
@@ -126,7 +165,9 @@
                 </div>
                 <span class="piste-duree"><?=$morceau->duree?></span>
                 <div class="piste-actions">
-                    <button class="bouton-piste favori" title="Favoris">❤️</button>
+                    <button class="bouton-piste favori <?php echo $morceauDansFavori ? 'actif' : ''; ?>" title="Favoris" 
+                    data-item-id="<?= $morceau->id ?>" 
+                    data-user-id="<?= $utilisateur->id ?>">❤️</button>
                     <button value="<?=$morceau->artiste?> <?=$morceau->titre?>" class="bouton-piste jouer" title="Jouer">▶️</button>
                 </div>
             </article>
@@ -139,19 +180,24 @@
         <section id="section-commentaires">
             <h2 class="titre-section">💬 Commentaires (<?= count($commentaires ?? 0) ?>)</h2>
 
-            <div class="liste-commentaires" data-user-avatar="<?= $utilisateur->fichier_image ?? 'defaut.jpg' ?>" data-item-id="<?= $albumVedette->id ?>" data-user-id="0">
+            <div class="liste-commentaires" 
+                data-user-avatar="<?= htmlspecialchars($utilisateur->fichier_image) ?>" 
+                data-item-id="<?= $albumVedette->id ?>" 
+                data-user-id="<?= $utilisateur->id ?>"
+                data-user-pseudo="<?= htmlspecialchars($utilisateur->pseudo) ?>">
             
-                <?php foreach($commentaires as $commentaire) { ?>
-
-                <div class="commentaire">
-                    <div class="avatar-commentaire">
-                        <img src="images/utilisateurs/<?= $utilisateur->fichier_image ?? "defaut.jpg" ?>" alt="avatar">
+                <?php foreach($commentaires as $commentaire) { 
+                    $utilisateurCommentaire = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $commentaire->id_utilisateur]));
+                ?>
+                    <div class="commentaire">
+                        <div class="avatar-commentaire">
+                            <img src="images/utilisateurs/<?= $utilisateurCommentaire->fichier_image ?>" alt="avatar">
+                        </div>
+                        <div class="contenu-commentaire">
+                            <div class="auteur-commentaire"><?= $utilisateurCommentaire->pseudo ?></div>
+                            <div class="texte-commentaire"><?= $commentaire->message ?></div>
+                        </div>
                     </div>
-                    <div class="contenu-commentaire">
-                        <div class="auteur-commentaire"><?= $commentaire->id_utilisateur ?></div>
-                        <div class="texte-commentaire"><?= $commentaire->message ?></div>
-                    </div>
-                </div>
             
                 <?php } ?>
             </div>

@@ -34,6 +34,22 @@
 			return $votes;
 		}
 
+		public static function listerVotesUtilisateur(Utilisateur $utilisateur)
+		{
+			$idUtilisateur = $utilisateur->id;
+
+			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_LISTE_VOTES_UTILISATEUR);
+			$requete->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+			$requete->execute();
+
+			$votes = [];
+			$votesTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($votesTableau as $voteTableau) {
+				$votes[] = new Vote($voteTableau);
+			}
+			return $votes;
+		}
+
 		public static function detaillerVote(Vote $vote)
 		{
 			$idVote = $vote->id;

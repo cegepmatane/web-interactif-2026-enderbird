@@ -1,65 +1,62 @@
 <?php 
-	require_once "modele/Vote.php";
-	require_once "VoteSQL.php";
+	require_once "modele/Favori.php";
+	require_once "FavoriSQL.php";
 	require_once "BaseDeDonnees.php";
 
-	class VoteDAO extends BaseDeDonnees implements VoteSQL
+	class FavoriDAO extends BaseDeDonnees implements FavoriSQL
 	{	
-		public static function listerVotes()
+		public static function listerFavoris()
 		{
-			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_LISTE_VOTE);
+			$requete = BaseDeDonnees::getConnexion()->prepare(FavoriDAO::SQL_LISTE_FAVORI);
 			$requete->execute();
 
-			$votes = [];
-			$votesTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
-			foreach($votesTableau as $voteTableau) {
-				$votes[] = new Vote($voteTableau);
+			$favoris = [];
+			$favorisTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($favorisTableau as $favoriTableau) {
+				$favoris[] = new Favori($favoriTableau);
 			}
-			return $votes;
+			return $favoris;
 		}
 
-		public static function listerVotesAlbum(Album $album)
+		public static function listerFavorisUtilisateur(Utilisateur $utilisateur)
 		{
-			$idAlbum = $album->id;
+			$idUtilisateur = $utilisateur->id;
 
-			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_LISTE_VOTES_ALBUM);
-			$requete->bindParam(':id_album', $idAlbum, PDO::PARAM_INT);
+			$requete = BaseDeDonnees::getConnexion()->prepare(FavoriDAO::SQL_LISTE_FAVORIS_UTILISATEUR);
+			$requete->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
 			$requete->execute();
 
-			$votes = [];
-			$votesTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
-			foreach($votesTableau as $voteTableau) {
-				$votes[] = new Vote($voteTableau);
+			$favoris = [];
+			$favorisTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($favorisTableau as $favoriTableau) {
+				$favoris[] = new Favori($favoriTableau);
 			}
-			return $votes;
+			return $favoris;
 		}
 
-		public static function detaillerVote(Vote $vote)
+		public static function ajouterFavori(Favori $favori)
 		{
-			$idVote = $vote->id;
+			$idMorceau = $favori->id_morceau;
+			$idUtilisateur = $favori->id_utilisateur;
 
-			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_DETAIL_VOTE);
-			$requete->bindParam(':id', $idVote, PDO::PARAM_INT);
-			$requete->execute();
-			$vote = $requete->fetch(PDO::FETCH_ASSOC);
-
-		    if (!$vote) return null;
-			
-			return new Vote($vote);
-		}
-
-		public static function ajouterVote(Vote $vote)
-		{
-			$idAlbum = $vote->id_album;
-			$idUtilisateur = $vote->id_utilisateur;
-			$note = $vote->note;
-
-			$demandeAjout = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_AJOUTER_VOTE);
-			$demandeAjout->bindValue(':id_album', $idAlbum, PDO::PARAM_INT);
+			$demandeAjout = BaseDeDonnees::getConnexion()->prepare(FavoriDAO::SQL_AJOUTER_FAVORI);
+			$demandeAjout->bindValue(':id_morceau', $idMorceau, PDO::PARAM_INT);
 			$demandeAjout->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
-			$demandeAjout->bindParam(':note', $note, PDO::PARAM_INT);
 
 			$reussite = $demandeAjout->execute();
+    		return $reussite; // Réussi ou pas
+		}
+
+		public static function effacerFavori(Favori $favori)
+		{
+			$idMorceau = $favori->id_morceau;
+			$idUtilisateur = $favori->id_utilisateur;
+
+			$demandeEfface = BaseDeDonnees::getConnexion()->prepare(FavoriDAO::SQL_EFFACER_FAVORI);
+			$demandeEfface->bindValue(':id_morceau', $idMorceau, PDO::PARAM_INT);
+			$demandeEfface->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+
+			$reussite = $demandeEfface->execute();
     		return $reussite; // Réussi ou pas
 		}
 	}

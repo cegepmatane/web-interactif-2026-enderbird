@@ -10,7 +10,7 @@ function rechercher(recherche){
         return;
     }
 
-    fetch('../recherche-album-morceau.php?recherche=' + encodeURIComponent(recherche))
+    fetch('../ajax-rechercher-album-morceau.php?recherche=' + encodeURIComponent(recherche))
         .then(resultat => resultat.json())
         .then(donnees => {
             listeSuggestions.innerHTML = '';

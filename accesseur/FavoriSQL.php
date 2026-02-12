@@ -3,34 +3,23 @@ interface FavoriSQL
 {
 	public const SQL_LISTE_FAVORI = "
 		SELECT
-    		id,
-    		id_album,
+    		id_morceau,
     		id_utilisateur,
     		date
 		FROM favori
-		ORDER BY id_album, date DESC
 	";
 	
-	public const SQL_LISTE_FAVORIS_ALBUM = "
+	public const SQL_LISTE_FAVORIS_UTILISATEUR = "
 		SELECT
-    		id,
-    		id_album,
+    		id_morceau,
     		id_utilisateur,
     		date
 		FROM favori
-		WHERE id_album = :id_album;
+		WHERE id_utilisateur = :id_utilisateur;
 	";
+	
+	public const SQL_AJOUTER_FAVORI = "INSERT INTO favori (id_morceau, id_utilisateur, date) VALUES (:id_morceau, :id_utilisateur, NOW())";
 
-    public const SQL_DETAIL_FAVORI = "
-		SELECT
-    		id,
-    		id_album,
-    		id_utilisateur,
-    		date
-		FROM favori
-		WHERE id = :id;
-	";
-	
-	public const SQL_AJOUTER_FAVORI = "INSERT INTO favori (id_album, id_utilisateur, date) VALUES (:id_album, :id_utilisateur, NOW())";
+	public const SQL_EFFACER_FAVORI = "DELETE FROM favori WHERE id_morceau = :id_morceau AND id_utilisateur = :id_utilisateur";
 }
 ?>

@@ -20,6 +20,7 @@ interface CommentaireSQL
             date 
         FROM commentaire
         WHERE id_album = :id_album
+        ORDER BY date DESC
     ";
 
     public const SQL_DETAIL_COMMENTAIRE = "

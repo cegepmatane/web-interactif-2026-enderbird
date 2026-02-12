@@ -5,6 +5,7 @@ document.querySelectorAll('.bouton-commenter').forEach(bouton => {
         const avatarFichierImage = liste.dataset.userAvatar;
         const idAlbum = liste.dataset.itemId;
         const idUtilisateur = liste.dataset.userId;
+        const pseudo = liste.dataset.userPseudo;
 
         const champ = this.previousElementSibling;
         const texte = champ.value.trim();
@@ -12,7 +13,7 @@ document.querySelectorAll('.bouton-commenter').forEach(bouton => {
         if (texte) {
             try {
                 // Attendre la réponse
-                const response = await fetch('../commenter.php', {
+                const response = await fetch('../ajax-commenter.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id_album: idAlbum, id_utilisateur: idUtilisateur, message: texte })
@@ -26,18 +27,27 @@ document.querySelectorAll('.bouton-commenter').forEach(bouton => {
                 if (!resultat.reussite) {
                     console.error('Server error:', resultat.message);
                 } else {
+                    const titre = this.closest('section').querySelector('.titre-section');
+                    const match = titre.textContent.match(/\((\d+)\)/);
+                    if (match) {
+                        const currentCount = parseInt(match[1], 10);
+                        const newCount = currentCount + 1;
+                    
+                        titre.textContent = titre.textContent.replace(/\(\d+\)/, `(${newCount})`);
+                    }
+
                     const nouveau = document.createElement('div');
                     nouveau.className = 'commentaire visible';
                     nouveau.innerHTML = `
                         <div class="avatar-commentaire">
-                            <img src="image/utilisateurs/${avatarFichierImage}" alt="avatar">
+                            <img src="images/utilisateurs/${avatarFichierImage}" alt="avatar">
                         </div>
                         <div class="contenu-commentaire">
-                            <div class="auteur-commentaire">${idUtilisateur}</div>
+                            <div class="auteur-commentaire">${pseudo}</div>
                             <div class="texte-commentaire">${texte}</div>
                         </div>
                     `;
-                    this.closest('section').querySelector('.liste-commentaires').appendChild(nouveau);
+                    this.closest('section').querySelector('.liste-commentaires').prepend(nouveau);
                     champ.value = '';
                 }
             } catch (erreur) {
