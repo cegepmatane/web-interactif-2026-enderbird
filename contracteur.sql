@@ -183,14 +183,13 @@ DROP TABLE IF EXISTS `vote`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vote` (
-  `id` int NOT NULL AUTO_INCREMENT,
   `id_album` int NOT NULL,
   `id_utilisateur` int NOT NULL,
   `note` tinyint NOT NULL,
   `date` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id_album`,`id_utilisateur`),
   CONSTRAINT `vote_chk_1` CHECK ((`note` between 1 and 5))
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +198,7 @@ CREATE TABLE `vote` (
 
 LOCK TABLES `vote` WRITE;
 /*!40000 ALTER TABLE `vote` DISABLE KEYS */;
-INSERT INTO `vote` VALUES (1,2,0,4,'2026-02-10 04:12:45'),(2,2,0,5,'2026-02-10 04:14:02'),(3,2,0,5,'2026-02-10 13:06:55'),(4,1,0,5,'2026-02-10 14:09:08'),(5,10,0,5,'2026-02-10 15:11:21'),(6,1,0,4,'2026-02-10 17:02:57'),(7,1,0,5,'2026-02-10 17:03:03'),(8,1,0,5,'2026-02-10 22:10:13'),(9,1,0,5,'2026-02-10 22:10:19'),(10,1,0,5,'2026-02-10 22:10:21'),(11,1,0,5,'2026-02-10 22:10:23'),(12,1,0,2,'2026-02-11 15:56:50'),(13,1,2,4,'2026-02-11 16:33:36'),(14,1,1,5,'2026-02-11 19:29:30');
+INSERT INTO `vote` VALUES (1,1,2,'2026-02-12 03:57:55');
 /*!40000 ALTER TABLE `vote` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -212,4 +211,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-12  2:48:12
+-- Dump completed on 2026-02-12  3:59:30

@@ -1,21 +1,14 @@
 // AJAX #3 : Rating
 document.querySelectorAll('.zone-rating').forEach(zone => {
-    let dejaVote = false; // Un click seulement
-
     const etoiles = zone.querySelectorAll('.etoile');
     etoiles.forEach(etoile => {
         etoile.addEventListener('click', async function() {
-            if (dejaVote) return; // Rien faire si déjà clické
-            dejaVote = true;
+            const moyenneSpan = this.closest('.zone-rating').querySelector('.moyenne-rating');
 
             // Get PHP values from the zone itself
             const idAlbum = zone.dataset.itemId;
             const idUtilisateur = zone.dataset.userId;
             const note = parseInt(this.dataset.note);
-
-            etoiles.forEach((e, i) => {
-                e.classList.toggle('active', i < note);
-            });
 
             try {
                 // Attendre la réponse
@@ -30,19 +23,27 @@ document.querySelectorAll('.zone-rating').forEach(zone => {
                 // console.error('Non-JSON response:', text);
 
                 const resultat = await response.json();
-                if (!resultat.reussite) {
-                    console.error('Server error:', resultat.message);
+                if (resultat.reussite && resultat.type) {
+                    moyenneSpan.textContent = resultat.moyenne + " / 5";
                     
-                    // Donner le droit de voter
-                    dejaVote = false;
-                    etoiles.forEach(e => e.classList.remove('active'));
+                    if (resultat.type == "Ajouter") {
+                        etoiles.forEach((e, i) => { e.classList.toggle('active', i < note); });
+                    }
+                    if (resultat.type == "Editer") {
+                        etoiles.forEach(e => e.classList.remove('active'));
+
+                        if (note != resultat.ancienneNote) etoiles.forEach((e, i) => { e.classList.toggle('active', i < note); });
+                        else etoiles.forEach(e => e.classList.remove('active'));
+                    }
+                    if (resultat.type == "Effacer") {
+                        etoiles.forEach(e => e.classList.remove('active'));
+                    }
+                } else {
+                    console.error('Server error:', resultat.message);
                 }
+                    
             } catch (erreur) {
                 console.error('Fetch error:', erreur);
-
-                // Donner le droit de voter
-                dejaVote = false;
-                etoiles.forEach(e => e.classList.remove('active'));
             }
         });
     });

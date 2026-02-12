@@ -52,10 +52,12 @@
 
 		public static function detaillerVote(Vote $vote)
 		{
-			$idVote = $vote->id;
+			$idAlbum = $vote->id_album;
+			$idUtilisateur = $vote->id_utilisateur;
 
 			$requete = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_DETAIL_VOTE);
-			$requete->bindParam(':id', $idVote, PDO::PARAM_INT);
+			$requete->bindParam(':id_album', $idAlbum, PDO::PARAM_INT);
+			$requete->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
 			$requete->execute();
 			$vote = $requete->fetch(PDO::FETCH_ASSOC);
 
@@ -76,6 +78,34 @@
 			$demandeAjout->bindParam(':note', $note, PDO::PARAM_INT);
 
 			$reussite = $demandeAjout->execute();
+    		return $reussite; // Réussi ou pas
+		}
+
+		public static function editerVote(Vote $vote)
+		{
+			$idAlbum = $vote->id_album;
+			$idUtilisateur = $vote->id_utilisateur;
+			$note = $vote->note;
+
+			$demandeEdit = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_EDITER_VOTE);
+			$demandeEdit->bindValue(':id_album', $idAlbum, PDO::PARAM_INT);
+			$demandeEdit->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+			$demandeEdit->bindParam(':note', $note, PDO::PARAM_INT);
+
+			$reussite = $demandeEdit->execute();
+    		return $reussite; // Réussi ou pas
+		}
+
+		public static function effacerVote(Vote $vote)
+		{
+			$idAlbum = $vote->id_album;
+			$idUtilisateur = $vote->id_utilisateur;
+
+			$demandeEfface = BaseDeDonnees::getConnexion()->prepare(VoteDAO::SQL_EFFACER_VOTE);
+			$demandeEfface->bindValue(':id_album', $idAlbum, PDO::PARAM_INT);
+			$demandeEfface->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+
+			$reussite = $demandeEfface->execute();
     		return $reussite; // Réussi ou pas
 		}
 	}

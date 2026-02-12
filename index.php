@@ -10,25 +10,26 @@
     require_once "accesseur/MorceauDAO.php";
     $morceauxAlbumVedette = MorceauDAO::detaillerMorceauxAlbum($albumVedette);
 
-    // Votes
-    require_once "accesseur/VoteDAO.php";
-    $votes = VoteDAO::listerVotesAlbum($albumVedette);
-    if ($votes) {
-        $vote = $votes[0];
-    } else {
-        $vote = VoteDAO::listerVotes()[0];
-        $vote->moyenne = 0;
-    }
-
     // Commentaires
     require_once "accesseur/CommentaireDAO.php";
     $commentaires = CommentaireDAO::listerCommentairesAlbum($albumVedette);
-
+    
     // Utilisateur
     require_once "accesseur/UtilisateurDAO.php";
     $id = $_SESSION['user_id'] ?? 1;
     $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $id]));
 
+    // Votes
+    require_once "accesseur/VoteDAO.php";
+    $votes = VoteDAO::listerVotesAlbum($albumVedette);
+
+    $vote = new Vote(['id_utilisateur' => $utilisateur->id, 'id_album' => $albumVedette->id, 'moyenne' => ($votes[0]->moyenne ?? 0)]);
+    if ($votes) {
+        foreach($votes as $voteTemp) {
+            if ($voteTemp->id_utilisateur == $utilisateur->id) $vote = VoteDAO::detaillerVote($vote);
+        }
+    }
+    
     // Collection
     require_once "accesseur/CollectionDAO.php";
     $collections = CollectionDAO::listerCollectionsUtilisateur($utilisateur) ?? [];
@@ -117,11 +118,9 @@
                     data-user-id="<?= $utilisateur->id ?>">
                     <span>Votre note :</span>
                     <div class="etoiles">
-                        <span class="etoile" data-note="1">⭐</span>
-                        <span class="etoile" data-note="2">⭐</span>
-                        <span class="etoile" data-note="3">⭐</span>
-                        <span class="etoile" data-note="4">⭐</span>
-                        <span class="etoile" data-note="5">⭐</span>
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <span class="etoile <?= ($vote->note >= $i) ? 'active' : '' ?>" data-note="<?= $i ?>">⭐</span>
+                        <?php endfor; ?>
                     </div>
                     <span class="moyenne-rating"><?= $vote->moyenne ?> / 5</span>
                 </div>

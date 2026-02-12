@@ -3,7 +3,6 @@
 class Vote
 {
     public static $filtres = array(
-		'id' => FILTER_VALIDATE_INT,
 		'id_album' => FILTER_VALIDATE_INT,
 		'id_utilisateur' => FILTER_VALIDATE_INT,
 		'note' => FILTER_VALIDATE_INT,
@@ -12,7 +11,6 @@ class Vote
 		'total_votes' => FILTER_VALIDATE_INT
 	);
 
-    protected $id;
 	protected $id_album;
 	protected $id_utilisateur;
 	protected $note;
@@ -24,7 +22,6 @@ class Vote
 	{
 		$tableau = filter_var_array($tableau, Vote::$filtres);
 
-		$this->id = $tableau['id'] ?? null;
 		$this->id_album = $tableau['id_album'] ?? null;
 		$this->id_utilisateur = $tableau['id_utilisateur'] ?? null;
 		$this->note = $tableau['note'] ?? null;
@@ -37,9 +34,6 @@ class Vote
 	{
 		switch($propriete)
 		{
-			case 'id':
-				$this->id = $valeur;
-			break;
 			case 'id_album':
 				$this->id_album = $valeur;
 			break;
