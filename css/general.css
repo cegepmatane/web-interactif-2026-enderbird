@@ -65,11 +65,10 @@ body {
 
 #navigation-utilisateur a img {
     background-color: rgb(255, 255, 255);
-    border: 2px solid black;
     width: 30px;
     aspect-ratio: 1 / 1;
 
-    border-radius: 15%;
+    border-radius: 20%;
 }
 #navigation-utilisateur a span {
     font-size: 0.9em;

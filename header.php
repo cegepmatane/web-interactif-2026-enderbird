@@ -1,29 +1,11 @@
 <?php
-session_start(); // toujours en premier
-
-require_once "accesseur/UtilisateurDAO.php";
-
-// Si l’utilisateur est passé via GET ?user=ID
-if (isset($_GET['user']) && (int)$_GET['user'] > 0) {
-    $utilisateur = UtilisateurDAO::detaillerUtilisateur(
-        new Utilisateur(['id' => (int)$_GET['user']])
-    );
-
-    if ($utilisateur) {
-        // Mettre à jour la session
-        $_SESSION['id_utilisateur'] = $utilisateur->id;
-        $_SESSION['pseudo'] = $utilisateur->pseudo;
-        $_SESSION['email'] = $utilisateur->email;
-        $_SESSION['fichier_image'] = $utilisateur->fichier_image;
-    }
-}
+session_start(); // Pour avoir $_SESSION
 
 // Si pas d’utilisateur en session prendre un utilisateur par défaut
-if (!isset($_SESSION['id_utilisateur'])) {
-    $_SESSION['id_utilisateur'] = 1;
-}
+if (!isset($_SESSION['id_utilisateur'])) $_SESSION['id_utilisateur'] = 1;
 
 // Charger l’utilisateur actif - IMPORTANT
+require_once "accesseur/UtilisateurDAO.php";
 $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_SESSION['id_utilisateur']]));
 ?>
 
@@ -35,7 +17,6 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_S
 
     <!-- #1 AJAX  -->
     <script src="js/recherche.js" defer></script>
-
     <!-- #6 AJAx -->
     <script src="js/utilisateur.js" defer></script>
 
@@ -44,8 +25,7 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_S
 </head>
 <body>
     <!-- Navigation des utilisateurs -->
-    <div id="navigation-utilisateur">
-        <?php
+    <div id="navigation-utilisateur"> <?php 
         $idUtilisateurActuel = $utilisateur->id;
 
         $utilisateurs = UtilisateurDAO::listerUtilisateurs();
@@ -55,8 +35,7 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_S
             echo '    <img src="images/utilisateurs/' . htmlspecialchars($utilisateurTemp->fichier_image) . '" alt="avatar">';
             echo '    <span>' . htmlspecialchars($utilisateurTemp->pseudo) . '</span>';
             echo '</a>';
-        }
-        ?>
+        } ?>
     </div>
 
     <!-- Navigation du projet -->

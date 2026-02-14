@@ -13,8 +13,8 @@ setInterval(() => {
 
 async function updaterCommentaire(listeCommentaires) {
     try {
-        const response = await fetch(`ajax-commenter.php?id_album=${listeCommentaires.dataset.itemId}`);
-        const donnees = await response.json();
+        const reponse = await fetch(`ajax-commenter.php?id_album=${listeCommentaires.dataset.itemId}`);
+        const donnees = await reponse.json();
 
         if (!donnees.reussite) return;
 
@@ -33,7 +33,7 @@ async function updaterCommentaire(listeCommentaires) {
                     <div class="texte-commentaire">${commentaire.message}</div>
                 </div>
             `;
-            listeCommentaires.prepend(nouveau);
+            listeCommentaires.append(nouveau);
         });
         
         // Updater la moyenne (visuel)
@@ -57,7 +57,7 @@ document.querySelectorAll('.bouton-commenter').forEach(bouton => {
         if (texte) {
             try {
                 // Attendre la réponse
-                const response = await fetch('../ajax-commenter.php', {
+                const reponse = await fetch('../ajax-commenter.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id_album: idAlbum, id_utilisateur: idUtilisateur, message: texte })
@@ -67,7 +67,7 @@ document.querySelectorAll('.bouton-commenter').forEach(bouton => {
                 // const text = await response.text();
                 // console.error('Non-JSON response:', text);
 
-                const resultat = await response.json();
+                const resultat = await reponse.json();
                 if (!resultat.reussite) {
                     console.error('Serveur erreur:', resultat.message);
                 } else {

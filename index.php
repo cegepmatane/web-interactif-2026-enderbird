@@ -1,6 +1,5 @@
 <?php
-    include_once "header.php";
-
+    require_once "header.php";
     //$utilisateur est créé dans le header
 
     //https://web.wavesofsounds.space/index.php?albumvedette=7
@@ -8,7 +7,6 @@
     if(isset($_GET['albumvedette'])) {
         $id = filter_var($_GET['albumvedette'], FILTER_VALIDATE_INT);
     }
-
     // Album par défaut si $id null
     require_once "accesseur/AlbumDAO.php";
     $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id]));
