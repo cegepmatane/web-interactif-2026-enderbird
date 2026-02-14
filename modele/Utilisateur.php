@@ -24,7 +24,7 @@ class Utilisateur
 		$this->pseudo = $tableau['pseudo'] ?? '';
 		$this->email = $tableau['email'] ?? '';
 		$this->mot_de_passe = $tableau['mot_de_passe'] ?? '';
-		$this->fichier_image = $tableau['fichier_image'] ?? 'defaut.jpg';
+		$this->fichier_image = !empty($tableau['fichier_image']) ? $tableau['fichier_image'] : 'defaut.jpg';
 	}
 
     public function __set($propriete, $valeur)

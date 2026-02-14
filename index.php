@@ -1,11 +1,17 @@
 <?php
+    include_once "header.php";
+
+    //$utilisateur est créé dans le header
+
     //https://web.wavesofsounds.space/index.php?albumvedette=7
+    $id = 1;
     if(isset($_GET['albumvedette'])) {
         $id = filter_var($_GET['albumvedette'], FILTER_VALIDATE_INT);
     }
+
     // Album par défaut si $id null
     require_once "accesseur/AlbumDAO.php";
-    $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id])) ?? AlbumDAO::detaillerAlbum(new Album(['id' => 1]));
+    $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id]));
 
     require_once "accesseur/MorceauDAO.php";
     $morceauxAlbumVedette = MorceauDAO::detaillerMorceauxAlbum($albumVedette);
@@ -14,11 +20,6 @@
     require_once "accesseur/CommentaireDAO.php";
     $commentaires = CommentaireDAO::listerCommentairesAlbum($albumVedette);
     
-    // Utilisateur
-    require_once "accesseur/UtilisateurDAO.php";
-    $id = $_SESSION['user_id'] ?? 1;
-    $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $id]));
-
     // Votes
     require_once "accesseur/VoteDAO.php";
     $votes = VoteDAO::listerVotesAlbum($albumVedette);
@@ -45,8 +46,6 @@
     // Favori (presque pareil que collection)
     require_once "accesseur/FavoriDAO.php";
     $favoris = FavoriDAO::listerFavorisUtilisateur($utilisateur) ?? [];
-
-    include_once "header.php";
 ?>
 
     <title>SoundWave - Ma Musique</title>
@@ -172,7 +171,6 @@
             </article>
             
             <?php } ?>
-    
         </section>
 
         <!-- AJAX #4 : Commentaires -->
@@ -180,15 +178,13 @@
             <h2 class="titre-section">💬 Commentaires (<?= count($commentaires ?? 0) ?>)</h2>
 
             <div class="liste-commentaires" 
-                data-user-avatar="<?= htmlspecialchars($utilisateur->fichier_image) ?>" 
                 data-item-id="<?= $albumVedette->id ?>" 
-                data-user-id="<?= $utilisateur->id ?>"
-                data-user-pseudo="<?= htmlspecialchars($utilisateur->pseudo) ?>">
+                data-user-id="<?= $utilisateur->id ?>">
             
                 <?php foreach($commentaires as $commentaire) { 
                     $utilisateurCommentaire = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $commentaire->id_utilisateur]));
                 ?>
-                    <div class="commentaire">
+                    <div class="commentaire" data-item-id="<?= $commentaire->id ?>">
                         <div class="avatar-commentaire">
                             <img src="images/utilisateurs/<?= $utilisateurCommentaire->fichier_image ?>" alt="avatar">
                         </div>

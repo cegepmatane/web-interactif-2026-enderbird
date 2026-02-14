@@ -1,11 +1,55 @@
 // AJAX #4 : Commentaires
+
+const listesCommentaires = document.querySelectorAll('.liste-commentaires');
+// Update les commentaires toutes les 15 secondes
+setInterval(() => {
+    try {
+        listesCommentaires.forEach(listeCommentaires => updaterCommentaire(listeCommentaires));
+    }
+    catch (erreur) {
+        console.error('Fetch erreur:', erreur);
+    }
+}, 15000);
+
+async function updaterCommentaire(listeCommentaires) {
+    try {
+        const response = await fetch(`ajax-commenter.php?id_album=${listeCommentaires.dataset.itemId}`);
+        const donnees = await response.json();
+
+        if (!donnees.reussite) return;
+
+        listeCommentaires.replaceChildren();
+
+        donnees.commentaires.forEach(commentaire => {
+            const nouveau = document.createElement('div');
+            nouveau.className = 'commentaire visible';
+            nouveau.dataset.itemId = commentaire.id;
+            nouveau.innerHTML = `
+                <div class="avatar-commentaire">
+                    <img src="images/utilisateurs/${commentaire.fichier_image}" alt="avatar">
+                </div>
+                <div class="contenu-commentaire">
+                    <div class="auteur-commentaire">${commentaire.pseudo}</div>
+                    <div class="texte-commentaire">${commentaire.message}</div>
+                </div>
+            `;
+            listeCommentaires.prepend(nouveau);
+        });
+        
+        // Updater la moyenne (visuel)
+        const titre = listeCommentaires.closest('section').querySelector('.titre-section');
+        titre.textContent = titre.textContent.replace(/\(\d+\)/, `(${listeCommentaires.children.length})`);
+
+    } catch (erreur) {
+        console.error('Fetch erreur:', erreur);
+    }
+}
+
 document.querySelectorAll('.bouton-commenter').forEach(bouton => {
     bouton.addEventListener('click', async function() {
-        const liste = this.closest('section').querySelector('.liste-commentaires');
-        const avatarFichierImage = liste.dataset.userAvatar;
-        const idAlbum = liste.dataset.itemId;
-        const idUtilisateur = liste.dataset.userId;
-        const pseudo = liste.dataset.userPseudo;
+        let listeCommentaires = this.closest('section').querySelector('.liste-commentaires');
+        const idAlbum = listeCommentaires.dataset.itemId;
+        const idUtilisateur = listeCommentaires.dataset.userId;
 
         const champ = this.previousElementSibling;
         const texte = champ.value.trim();
@@ -25,33 +69,14 @@ document.querySelectorAll('.bouton-commenter').forEach(bouton => {
 
                 const resultat = await response.json();
                 if (!resultat.reussite) {
-                    console.error('Server error:', resultat.message);
+                    console.error('Serveur erreur:', resultat.message);
                 } else {
-                    const titre = this.closest('section').querySelector('.titre-section');
-                    const match = titre.textContent.match(/\((\d+)\)/);
-                    if (match) {
-                        const currentCount = parseInt(match[1], 10);
-                        const newCount = currentCount + 1;
-                    
-                        titre.textContent = titre.textContent.replace(/\(\d+\)/, `(${newCount})`);
-                    }
-
-                    const nouveau = document.createElement('div');
-                    nouveau.className = 'commentaire visible';
-                    nouveau.innerHTML = `
-                        <div class="avatar-commentaire">
-                            <img src="images/utilisateurs/${avatarFichierImage}" alt="avatar">
-                        </div>
-                        <div class="contenu-commentaire">
-                            <div class="auteur-commentaire">${pseudo}</div>
-                            <div class="texte-commentaire">${texte}</div>
-                        </div>
-                    `;
-                    this.closest('section').querySelector('.liste-commentaires').prepend(nouveau);
+                    listeCommentaires = this.closest('section').querySelector('.liste-commentaires');
+                    updaterCommentaire(listeCommentaires);
                     champ.value = '';
                 }
             } catch (erreur) {
-                console.error('Fetch error:', erreur);
+                console.error('Fetch erreur:', erreur);
             }
         }
     });

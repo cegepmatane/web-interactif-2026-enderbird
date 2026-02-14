@@ -13,7 +13,7 @@
 			$utilisateurs = [];
 			$utilisateursTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
 			foreach($utilisateursTableau as $utilisateurTableau) {
-				$votes[] = new Vote($utilisateurTableau);
+				$utilisateurs[] = new Utilisateur($utilisateurTableau);
 			}
 			return $utilisateurs;
 		}
