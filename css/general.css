@@ -73,11 +73,12 @@ body {
 /* Navigation utilisateur */
 #navigation-utilisateur {
     position: absolute;  /* stick to left */
-    left: 1rem;
+    right: 1rem;
     top: 1em;          /* align to top of parent */
     bottom: 1em;
 
-    padding: 0.4rem 0.5rem;
+    gap: 0.4rem;
+    padding: 0.4rem 0.4rem;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     border-color: var(--couleur-violet-clair);
@@ -88,7 +89,6 @@ body {
     display: flex;
     flex-direction: column;
 
-    gap: 0.5rem;
     
     border-radius: 25px;
 
@@ -111,6 +111,8 @@ body {
     align-items: center;
 
     transition: all 500ms;
+
+    justify-content: space-between;
 }
 #navigation-utilisateur a.utilisateur.actif {
     background-color: var(--couleur-cyan);
@@ -127,10 +129,11 @@ body {
     aspect-ratio: 1 / 1;
 }
 #navigation-utilisateur a span {
+    flex: 1;
     font-weight: 600;
     color: var(--couleur-texte);
 
-    font-size: 0.9em;
+    font-size: 0.7em;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
 }

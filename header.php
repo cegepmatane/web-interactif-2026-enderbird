@@ -42,6 +42,7 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_S
                 echo '<a href="#" class="utilisateur ' . $actif . '" data-user-id="' . $utilisateurTemp->id . '">';
                 echo '    <img src="images/utilisateurs/' . htmlspecialchars($utilisateurTemp->fichier_image) . '" alt="avatar">';
                 echo '    <span>' . htmlspecialchars($utilisateurTemp->pseudo) . '</span>';
+                echo '    <span>' . htmlspecialchars($utilisateurTemp->email) . '</span>';
                 echo '</a>';
             } ?>
         </div>
