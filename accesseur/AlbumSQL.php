@@ -13,6 +13,24 @@ interface AlbumSQL
     	FROM album
     	LEFT JOIN morceau ON album.id = morceau.id_album
     	GROUP BY album.id, album.nom, album.artiste, album.type, album.date_sortie, album.fichier_image
+		ORDER BY album.date_sortie DESC
+	";
+
+	public const SQL_LISTE_ALBUM_VEDETTE = "
+	    SELECT
+	        album.id,
+	        album.nom, 
+	        album.artiste, 
+	        album.type, 
+	        album.date_sortie, 
+	        album.fichier_image, 
+	        SEC_TO_TIME(SUM(TIME_TO_SEC(morceau.duree))) AS duree,
+	        COUNT(DISTINCT collection.id_utilisateur) AS nb_utilisateurs
+	    FROM album
+	    LEFT JOIN morceau ON album.id = morceau.id_album
+	    JOIN collection ON collection.id_album = album.id
+	    GROUP BY album.id, album.nom, album.artiste, album.type, album.date_sortie, album.fichier_image
+	    ORDER BY nb_utilisateurs DESC, album.date_sortie DESC
 	";
 
     public const SQL_DETAIL_ALBUM = "

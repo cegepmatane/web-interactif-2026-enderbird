@@ -16,6 +16,19 @@
 			}
 			return $albums;
 		}
+
+		public static function listerAlbumVedette()
+		{
+			$requete = BaseDeDonnees::getConnexion()->prepare(AlbumDAO::SQL_LISTE_ALBUM_VEDETTE);
+			$requete->execute();
+
+			$albumsTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($albumsTableau as $albumTableau) {
+				$albums[] = new Album($albumTableau);
+			}
+
+			return $albums;
+		}
 		
 		public static function detaillerAlbum(Album $album)
 		{

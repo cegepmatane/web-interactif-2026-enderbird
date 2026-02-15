@@ -1,12 +1,6 @@
 <?php
-    $id = 1;
-    if(isset($_GET['albumvedette'])) {
-        $id = filter_var($_GET['albumvedette'], FILTER_VALIDATE_INT);
-    }
-    
-    // Album par défaut si $id null
     require_once "accesseur/AlbumDAO.php";
-    $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id]));
+    $albumVedette = AlbumDAO::listerAlbumVedette()[0];
 
     require_once "accesseur/MorceauDAO.php";
     $morceauxAlbumVedette = MorceauDAO::detaillerMorceauxAlbum($albumVedette);

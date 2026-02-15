@@ -21,7 +21,7 @@ document.querySelectorAll('.album-splash').forEach(album => {
         }
 
         // Pour que ça soit beau
-        let albumTop = album.getBoundingClientRect().top + window.scrollY - document.querySelector('nav').offsetHeight - 10;
+        let albumTop = album.getBoundingClientRect().top + window.scrollY - document.querySelector('nav').offsetHeight;
         window.scrollTo({ top: albumTop, behavior: 'smooth' });
     });
 });
