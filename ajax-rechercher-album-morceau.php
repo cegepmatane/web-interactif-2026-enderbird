@@ -8,7 +8,7 @@ try {
     // Valider si vraiment JSON
     echo json_encode(AlbumDAO::rechercherAlbumMorceau($recherche) ?: []);
 
-} catch (PDOException $e) {
+} catch (PDOException $erreur) {
     echo json_encode([]); // Si erreurs 
 }
 ?>

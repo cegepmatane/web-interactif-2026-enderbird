@@ -16,30 +16,36 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_S
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- #1 AJAX  -->
-    <script src="js/recherche.js" defer></script>
+    <script src="js/ajax-recherche.js" defer></script>
     <!-- #6 AJAx -->
-    <script src="js/utilisateur.js" defer></script>
+    <script src="js/ajax-utilisateur.js" defer></script>
 
     <script src="js/general.js" defer></script>
     <link rel="stylesheet" href="css/general.css">
 </head>
 <body>
-    <!-- Navigation des utilisateurs -->
-    <div id="navigation-utilisateur"> <?php 
-        $idUtilisateurActuel = $utilisateur->id;
-
-        $utilisateurs = UtilisateurDAO::listerUtilisateurs();
-        foreach ($utilisateurs as $utilisateurTemp) {
-            $actif = ($utilisateurTemp->id === $idUtilisateurActuel) ? 'actif' : '';
-            echo '<a href="#" class="utilisateur ' . $actif . '" data-user-id="' . $utilisateurTemp->id . '">';
-            echo '    <img src="images/utilisateurs/' . htmlspecialchars($utilisateurTemp->fichier_image) . '" alt="avatar">';
-            echo '    <span>' . htmlspecialchars($utilisateurTemp->pseudo) . '</span>';
-            echo '</a>';
-        } ?>
-    </div>
 
     <!-- Navigation du projet -->
     <nav id="navigation-projet">
+         <!-- Navigation des utilisateurs -->
+        <div id="navigation-utilisateur"> <?php
+            $idUtilisateurActuel = $utilisateur->id;
+        
+            $utilisateurs = UtilisateurDAO::listerUtilisateurs();
+            // Mettre au début l'utilisateur actif
+            usort($utilisateurs, function($utilisateur1, $utilisateur2) use ($idUtilisateurActuel) {
+                return ($utilisateur2->id === $idUtilisateurActuel) <=> ($utilisateur1->id === $idUtilisateurActuel);
+            });
+        
+            foreach ($utilisateurs as $utilisateurTemp) {
+                $actif = ($utilisateurTemp->id === $idUtilisateurActuel) ? 'actif' : '';
+                echo '<a href="#" class="utilisateur ' . $actif . '" data-user-id="' . $utilisateurTemp->id . '">';
+                echo '    <img src="images/utilisateurs/' . htmlspecialchars($utilisateurTemp->fichier_image) . '" alt="avatar">';
+                echo '    <span>' . htmlspecialchars($utilisateurTemp->pseudo) . '</span>';
+                echo '</a>';
+            } ?>
+        </div>
+
         <a href="index.php" class="lien-navigation accueil">🏠 Accueil</a>
         <a href="splash.php" class="lien-navigation splash">🫟 Splash</a>
         <a href="liste-albums.php" class="lien-navigation liste">🎵 Albums</a>

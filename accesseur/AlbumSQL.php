@@ -32,7 +32,8 @@ interface AlbumSQL
 
 	public const SQL_RECHERCHER_ALBUM_MORCEAU = "
         (
-            SELECT 
+            SELECT
+				id,
                 nom, 
                 artiste,
                 fichier_image,
@@ -44,6 +45,7 @@ interface AlbumSQL
         UNION
         (
             SELECT 
+				morceau.id as id,
                 morceau.titre AS nom,
                 morceau.artiste AS artiste,
                 album.fichier_image,

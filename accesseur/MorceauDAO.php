@@ -39,10 +39,30 @@
 			$requete->bindParam(':id_album', $idAlbum, PDO::PARAM_INT);
 			$requete->execute();
 
+			$morceaux = [];
 			$morceauxTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
 			foreach($morceauxTableau as $morceauTableau) {
 				$morceaux[] = new Morceau($morceauTableau);
 			}
+
+			return $morceaux;
+		}
+
+		public static function detaillerMorceauxFavoris(Utilisateur $utilisateur)
+		{
+			$idUtilisateur = $utilisateur->id;
+
+			$requete = BaseDeDonnees::getConnexion()->prepare(MorceauDAO::SQL_DETAIL_MORCEAUX_FAVORIS);
+			$requete->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+			$requete->execute();
+
+			$morceaux = [];
+			$morceauxTableau = $requete->fetchAll(PDO::FETCH_ASSOC);
+			foreach($morceauxTableau as $morceauTableau) {
+				$morceaux[] = new Morceau($morceauTableau);
+			}
+
+		    if (!$morceaux) return null;
 
 			return $morceaux;
 		}

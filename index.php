@@ -1,12 +1,9 @@
 <?php
-    require_once "header.php";
-    //$utilisateur est créé dans le header
-
-    //https://web.wavesofsounds.space/index.php?albumvedette=7
     $id = 1;
     if(isset($_GET['albumvedette'])) {
         $id = filter_var($_GET['albumvedette'], FILTER_VALIDATE_INT);
     }
+    
     // Album par défaut si $id null
     require_once "accesseur/AlbumDAO.php";
     $albumVedette = AlbumDAO::detaillerAlbum(new Album(['id' => $id]));
@@ -17,11 +14,13 @@
     // Commentaires
     require_once "accesseur/CommentaireDAO.php";
     $commentaires = CommentaireDAO::listerCommentairesAlbum($albumVedette);
-    
+
+    // IMPORTANT - $utilisateur est créé dans le header
+    require_once "header.php";
+
     // Votes
     require_once "accesseur/VoteDAO.php";
     $votes = VoteDAO::listerVotesAlbum($albumVedette);
-
     $vote = new Vote(['id_utilisateur' => $utilisateur->id, 'id_album' => $albumVedette->id, 'moyenne' => ($votes[0]->moyenne ?? 0)]);
     if ($votes) {
         foreach($votes as $voteTemp) {
@@ -48,13 +47,14 @@
 
     <title>SoundWave - Ma Musique</title>
 
-    <!-- #2 - Ajax -->
-    <script src="js/collection.js" defer></script>
-    <script src="js/favori.js" defer></script>
     <!-- #3 - Ajax -->
-    <script src="js/vote.js" defer></script>
+    <script src="js/ajax-vote.js" defer></script>
+    <!-- #2 - Ajax -->
+    <script src="js/ajax-collection.js" defer></script>
+    <!-- #5 - Ajax -->
+    <script src="js/ajax-favori.js" defer></script>
     <!-- #4 - Ajax -->
-    <script src="js/commentaire.js" defer></script>
+    <script src="js/ajax-commentaire.js" defer></script>
 
     <main id="contenu-principal">
         <!-- Légende Ajax -->

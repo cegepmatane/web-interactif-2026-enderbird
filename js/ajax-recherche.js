@@ -16,10 +16,15 @@ function rechercher(recherche){
             listeSuggestions.innerHTML = '';
 
             donnees.forEach(donnee => {
-                const div = document.createElement('div');
-                div.className = 'suggestion';
+                const aElement = document.createElement('a');
+                aElement.className = 'suggestion';
 
-                div.innerHTML = `
+                if (donnee.type)
+                    aElement.href = `liste-morceaux.php?id-album=${donnee.id}`;
+                else
+                    aElement.href = `liste-morceaux.php?id-morceau=${donnee.id}`;
+
+                aElement.innerHTML = `
                     <div class="suggestion-pochette">
                         <img src="../images/albums/${donnee.fichier_image ?? "defaut.png"}" alt="Pochette album">
                     </div>
@@ -33,7 +38,7 @@ function rechercher(recherche){
                     
                 `;
 
-                listeSuggestions.appendChild(div);
+                listeSuggestions.appendChild(aElement);
             });
         });
 }
