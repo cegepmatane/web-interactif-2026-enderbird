@@ -13,7 +13,7 @@ Sections du [Ajax.md](Ajax.md) :
 ## Lien vers les pages
 
 > [!IMPORTANT]
-> On peut changer d'utilisateur en haut à droite (c'est un petit scoll)
+> On peut changer l'utilisateur en haut à droite (c'est un petit scroll) 
 
 - **Accueil** (Template Modifié) : https://web.wavesofsounds.space
 
