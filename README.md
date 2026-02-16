@@ -2,7 +2,18 @@
 
 Template : https://web.wavesofsounds.space/template/index.html
 
+## Splash + Ajaxs
+Sections du [Ajax.md](Ajax.md) :
+- [Splash](Ajax.md#page-splash-dhtml)
+- [Autocomplete](Ajax.md#autocomplete)
+- [Marque-page / like](Ajax.md#marque-page--like)
+- [Notation par étoiles](Ajax.md#notation-par-étoiles)
+- [Commentaires](Ajax.md#commentaires)
+
 ## Lien vers les pages
+
+> [!IMPORTANT]
+> On peut changer d'utilisateur en haut à droite (c'est un petit scoll)
 
 - **Accueil** (Template Modifié) : https://web.wavesofsounds.space
 
@@ -10,14 +21,10 @@ Template : https://web.wavesofsounds.space/template/index.html
 
 - **Liste d'albums** (et morceaux) : https://web.wavesofsounds.space/liste-albums.php
 
-- **Journal** (Blog) : https://web.wavesofsounds.space/journal.php
+- **Journal** (Vide) : https://web.wavesofsounds.space/journal.php
 
 - **Espace Membre** : https://web.wavesofsounds.space/espace-membre.php
 
 - **Admin**[^admin] : https://web.wavesofsounds.space/admin/index.php
-
-## abc
-
-abc
 
 [^admin]: **Accès restreint** - Il faut le nom d'utilisateur et son mot de passe de la base de donnée (contracteur) pour accéder aux pages admin
