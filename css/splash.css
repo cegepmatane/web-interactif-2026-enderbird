@@ -96,6 +96,9 @@
     transition: all 0.2s ease;
     opacity: 0;
     transform: translateX(-100px);
+
+    color: white;
+    text-decoration: none;
 }
 .piste.visible {
     animation: glisser-droite 0.4s ease forwards;

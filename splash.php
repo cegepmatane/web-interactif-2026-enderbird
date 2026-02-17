@@ -54,14 +54,14 @@
             <!-- Container caché -->
             <div class="splash-morceaux">
                 <?php foreach($morceaux as $morceau) { ?>
-                    <article class="piste">
+                    <a class="piste" href="liste-morceaux.php?id-morceau=<?= $morceau->id ?>">
                         <span class="piste-numero"><?=$morceau->ordre?></span>
                         <div class="piste-info">
                             <div class="piste-titre"><?=$morceau->titre?></div>
                             <div class="piste-artiste"><?=$morceau->artiste?></div>
                         </div>
                         <span class="piste-duree"><?=$morceau->duree?></span>
-                    </article>
+                    </a>
                 <?php } ?>
             </div>
         </section>
