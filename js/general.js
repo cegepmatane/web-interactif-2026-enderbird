@@ -1,34 +1,55 @@
 // Descendre vers l'élement (ANCHOR)
-const selectionne = document.querySelector(".selectionne");
-if (selectionne) {
-    let ancre = selectionne.getBoundingClientRect().top + window.scrollY - document.querySelector('nav').offsetHeight - 32;
-    window.scrollTo({ top: ancre, behavior: 'smooth' });
+const elementSelectionne = document.querySelector(".selectionne");
 
-    // Du css
-    selectionne.classList.add("flash");
-    setTimeout(() => {
-        selectionne.classList.remove("flash");
-    }, 3000);
+if (elementSelectionne) {
+    descendreVersElementSelectionne(elementSelectionne);
+    appliquerEffetFlash(elementSelectionne);
+}
+function descendreVersElementSelectionne(elementSelectionne) {
+    const navigation = document.querySelector('nav');
+    const positionAncre = elementSelectionne.getBoundingClientRect().top + window.scrollY - navigation.offsetHeight - 32;
+
+    window.scrollTo({ top: positionAncre, behavior: 'smooth' });
+}
+function appliquerEffetFlash(elementSelectionne) {
+    elementSelectionne.classList.add("flash");
+    setTimeout(retirerEffetFlash, 3000, elementSelectionne);
+}
+function retirerEffetFlash(elementSelectionne) {
+    elementSelectionne.classList.remove("flash");
 }
 
 // Observateur pour animations au scroll
-const observateur = new IntersectionObserver((entrees) => {
-    entrees.forEach((entree, index) => {
-        if (entree.isIntersecting) {
-            setTimeout(() => {
-                entree.target.classList.add('visible');
-            }, index * 80);
-        }
-    });
-}, { threshold: 0.1 });
+function gererIntersection(entrees, observateur) {
+    entrees.forEach(gererEntreeIntersection);
+}
+function gererEntreeIntersection(entree, index) {
+    if (entree.isIntersecting) {
+        setTimeout(appliquerClasseVisible, index * 80, entree.target);
+    }
+}
+function appliquerClasseVisible(element) {
+    element.classList.add('visible');
+}
+const observateur = new IntersectionObserver(gererIntersection, { threshold: 0.1 });
+
+
 // Observer les éléments
-document.querySelectorAll('.item-legende, #album-vedette, .piste, .commentaire, .album').forEach(el => {
-    observateur.observe(el);
-});
+const elementsAObserver = document.querySelectorAll('.item-legende, #album-vedette, .piste, .commentaire, .album');
+function observerElement(element) {
+    observateur.observe(element);
+}
+elementsAObserver.forEach(observerElement);
+
 
 // Jouer pistes
-document.querySelectorAll('.bouton-piste.jouer').forEach(bouton => {
-    bouton.addEventListener('click', function() {
-        window.open("https://open.spotify.com/search/" + bouton.value, '_blank');
-    });
-});
+const boutonsJouerPiste = document.querySelectorAll('.bouton-piste.jouer');
+function initialiserEvenementBoutonJouer(bouton) {
+    bouton.addEventListener('click', gererClicBoutonJouer);
+}
+boutonsJouerPiste.forEach(initialiserEvenementBoutonJouer);
+
+function gererClicBoutonJouer(evenement) {
+    const bouton = evenement.currentTarget;
+    window.open("https://open.spotify.com/search/" + bouton.value, '_blank');
+}

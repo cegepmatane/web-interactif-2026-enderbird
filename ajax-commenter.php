@@ -8,19 +8,14 @@ try {
 
     // GET → LISTE COMMENTAIRES
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $idAlbum = filter_input(INPUT_GET, 'id_album', FILTER_VALIDATE_INT);
+        $idAlbum = $_GET['id_album'];
 
         if ($idAlbum) {
-            $commentaires = CommentaireDAO::listerCommentairesAlbum(
-                new Album(['id' => $idAlbum])
-            );
+            $commentaires = CommentaireDAO::listerCommentairesAlbum(new Album(['id' => $idAlbum]));
 
             $resultat = [];
-
             foreach ($commentaires as $commentaire) {
-                $utilisateur = UtilisateurDAO::detaillerUtilisateur(
-                    new Utilisateur(['id' => $commentaire->id_utilisateur])
-                );
+                $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $commentaire->id_utilisateur]));
 
                 $resultat[] = [
                     'id' => $commentaire->id,
@@ -36,14 +31,6 @@ try {
                 'commentaires' => $resultat
             ]);
         }
-        else
-        {
-            echo json_encode([
-                'reussite' => false,
-                'message' => 'ID album invalide'
-            ]);
-        }
-
     } // POST → AJOUTER COMMENTAIRE
     else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $donnees = json_decode(file_get_contents('php://input'), true);
@@ -65,26 +52,10 @@ try {
                 'reussite' => (bool)$reussite
             ]);
         }
-        else
-        {
-            echo json_encode([
-                'reussite' => false,
-                'message' => 'JSON invalide'
-            ]);
-        }
-
-    } // Si pas valide
-    else
-    {
-        echo json_encode([
-            'reussite' => false,
-            'message' => 'Méthode non autorisée'
-        ]);
     }
-
 } catch (PDOException $erreur) {
     echo json_encode([
         'reussite' => false,
-        'message' => 'Erreur serveur'
+        'message' => 'Erreur'
     ]);
 }
