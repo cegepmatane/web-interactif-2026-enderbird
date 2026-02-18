@@ -15,12 +15,13 @@
     // Votes
     require_once "accesseur/VoteDAO.php";
     $votes = VoteDAO::listerVotesAlbum($albumVedette);
-    $vote = new Vote(['id_utilisateur' => $utilisateur->id, 'id_album' => $albumVedette->id, 'moyenne' => ($votes[0]->moyenne ?? 0)]);
+    $vote = new Vote(['id_utilisateur' => $utilisateur->id, 'id_album' => $albumVedette->id]);
     if ($votes) {
         foreach($votes as $voteTemp) {
             if ($voteTemp->id_utilisateur == $utilisateur->id) $vote = VoteDAO::detaillerVote($vote);
         }
     }
+    $vote->moyenne = ($votes[0]->moyenne ?? 0);
     
     // Collection
     require_once "accesseur/CollectionDAO.php";
