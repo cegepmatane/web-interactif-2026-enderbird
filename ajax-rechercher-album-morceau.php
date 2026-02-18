@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 require_once "accesseur/AlbumDAO.php";
 
 try {
-    $recherche = $_GET['recherche'] ?? '';
+    $recherche = filter_input(INPUT_GET, 'recherche', FILTER_SANITIZE_SPECIAL_CHARS) ?? '';
 
     // Valider si vraiment JSON
     echo json_encode(AlbumDAO::rechercherAlbumMorceau($recherche) ?: []);
