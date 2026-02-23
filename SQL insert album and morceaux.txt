@@ -1,0 +1,17 @@
+INSERT INTO album (id, type, nom, date_sortie, artiste, fichier_image)
+VALUES (9, 'Album', 'The Open Door', '2006-09-25', 'Evanescence', '9.jpg');
+
+INSERT INTO morceau (id, id_album, ordre, titre, artiste, duree) VALUES
+(NULL, 9, 1,  'Sweet Sacrifice',                      'Evanescence', '00:03:05'),
+(NULL, 9, 2,  'Call Me When You''re Sober',          'Evanescence', '00:03:34'),
+(NULL, 9, 3,  'Weight Of The World',                  'Evanescence', '00:03:37'),
+(NULL, 9, 4,  'Lithium',                             'Evanescence', '00:03:44'),
+(NULL, 9, 5,  'Cloud Nine',                          'Evanescence', '00:04:22'),
+(NULL, 9, 6,  'Snow White Queen',                    'Evanescence', '00:04:22'),
+(NULL, 9, 7,  'Lacrymosa',                           'Evanescence', '00:03:37'),
+(NULL, 9, 8,  'Like You',                            'Evanescence', '00:04:16'),
+(NULL, 9, 9,  'Lose Control',                        'Evanescence', '00:04:50'),
+(NULL, 9, 10, 'The Only One',                        'Evanescence', '00:04:40'),
+(NULL, 9, 11, 'Your Star',                           'Evanescence', '00:04:43'),
+(NULL, 9, 12, 'All That I''m Living For',            'Evanescence', '00:03:48'),
+(NULL, 9, 13, 'Good Enough',                         'Evanescence', '00:05:31');
