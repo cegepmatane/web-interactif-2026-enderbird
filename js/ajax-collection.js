@@ -14,7 +14,7 @@ async function gererClicBoutonBookmark(evenement) {
 
     try {
         // Attendre la réponse
-        const response = await fetch('../ajax-collectionner.php', {
+        const response = await fetch('ajax-collectionner.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_album: idAlbum, id_utilisateur: idUtilisateur })
