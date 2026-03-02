@@ -1,13 +1,18 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "private": true,
+  "description": "Projet APP en NodeJS",
+  "main": "index.js",
+  "private": false,
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "prod": "next build && next start",
     "lint": "eslint"
   },
+  "author": "Cédric Simard",
   "dependencies": {
     "next": "16.1.6",
     "react": "19.2.3",
