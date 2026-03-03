@@ -7,7 +7,8 @@ export default function App({ Component, pageProps })
   return (
     <>
       <Navigation />
-      <main id="contenu-principal">
+      {/* CSS POSSIBLE (id) */}
+      <main>
         <Component {...pageProps} />
       </main>
     </>

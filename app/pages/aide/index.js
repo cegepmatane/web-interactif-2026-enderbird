@@ -8,7 +8,7 @@ export default function PageAideIndex() {
         Centre d'aide
       </h1>
       <p style={{margin:0}}>
-        Tout savoir sur la Cheatsheet Interactive
+        Les choses à savoir à propos des musiques
       </p>
 
       <div className="aide-grille">
