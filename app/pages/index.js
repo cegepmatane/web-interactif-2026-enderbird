@@ -1,19 +1,46 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useRouter } from 'next/router';
 import styles from "@/styles/Home.module.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const DISCOGRAPHIES = [
+  {
+    cle: 'album',
+    nom: 'Albums',
+    icone: '⚛️',
+    couleur: '#fcff64',
+    description: 'Une release officiel d\'un groupe de musique.',
+  },
+  {
+    cle: 'ep',
+    nom: 'EPs',
+    icone: '▲',
+    couleur: '#fc4d7f',
+    description: 'Presque un album, un chapitre d\'une histoire.',
+  },
+  {
+    cle: 'single',
+    nom: 'Singles',
+    icone: '💚',
+    couleur: '#5d3bd0',
+    description: 'La lumière d\'un album ou une étincelle dans un le spectacle de la créativité musicale.',
+  },
+  {
+    cle: 'demo',
+    nom: 'Demos',
+    icone: '💚',
+    couleur: '#90cd3b',
+    description: 'Projet souvent pas terminé et la lumière d\'un projet polie.',
+  }
+]
 
 export default function Home() {
+  const routeur = useRouter();
+
+  function choisirDiscographie(cle) {
+    localStorage.setItem('discographieChoisie', cle);
+    routeur.push('/album');
+  }
+
   return (
     <>
       <Head>
@@ -22,40 +49,37 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
-        <main className={styles.main}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js logo"
-            width={100}
-            height={20}
-            priority
-          />
-          <div className={styles.intro}>
-            <h1>To get started, edit the index.js file.</h1>
-            <p>
-              Looking for a starting point or more instructions? Head over to{" "}
-              <a
-                href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Templates
-              </a>{" "}
-              or the{" "}
-              <a
-                href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learning
-              </a>{" "}
-              center.
+
+      <div className="accueil-grille">
+        {DISCOGRAPHIES.map((discographie, i) => (
+          <div
+            key={discographie.cle}
+            className={styles.main}
+            onClick={() => choisirDiscographie(discographie.cle)}
+            style={{
+              background: discographie.fondGradient,
+              animation: `monterDouceur 0.6s ease-out ${i * 0.15}s both`
+            }}
+          >
+            <div className="accueil-carte-icone" style={{ color: discographie.couleur }}>
+              {discographie.icone}
+            </div>
+            <h2 className="accueil-carte-nom" style={{ color: discographie.couleur }}>
+              {discographie.nom}
+            </h2>
+            <p className="accueil-carte-description">
+              {discographie.description}
             </p>
+            <div className="accueil-carte-action" style={{ borderColor: discographie.couleur, color: discographie.couleur }}>
+              Explorer les fiches →
+            </div>
           </div>
+        ))}
+      </div>
+
+      <div className={`${styles.page}`}>
+        <main className={styles.main}>
+          <div className={styles.intro}> </div>
           <div className={styles.ctas}>
             <a
               className={styles.primary}
@@ -63,13 +87,6 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Image
-                className={styles.logo}
-                src="/vercel.svg"
-                alt="Vercel logomark"
-                width={16}
-                height={16}
-              />
               Deploy Now
             </a>
             <a

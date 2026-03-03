@@ -7,6 +7,14 @@ First, run the development server:
 ```bash
 npm run dev
 ```
+DONC runner ça si sur le serveur
+```bash
+./dev.sh
+```
+ET pour le debug aussi
+```bash
+sudo journalctl -fu web-projet-app.service
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
