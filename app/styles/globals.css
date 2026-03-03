@@ -1,13 +1,15 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "Segoe UI Variable";
+  src: url("https://db.onlinewebfonts.com/t/d33f4ed55868f7d505a1390fbb283be6.woff2") format("woff2"), url("https://db.onlinewebfonts.com/t/d33f4ed55868f7d505a1390fbb283be6.woff") format("woff");
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #110a31;
-    --foreground: #ffffff;
-  }
+:root {
+  --background: #110a31;
+  --foreground: rgb(0, 0, 0);
+  /* --foreground: rgb(54, 255, 88); */
+  --default-primairy: #ff78b0;
+  --default-secondairy: black;
 }
 
 html,
@@ -19,7 +21,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Segoe UI Variable", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -35,8 +37,44 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* - - - Navigation - - - */
+#navigation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#navigation ul {
+  list-style: none;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+  width: 60%;
+}
+
+#navigation ul li {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+#navigation ul a {
+  background-color: var(--default-secondairy);
+  color: var(--default-primairy);
+  border-radius: 5vh;
+  font-size: 0.8em;
+  font-weight: bold;
+  border: 1px solid;
+
+  align-content: center;
+  text-align: center;
+
+  padding: 0.5em 4em;
+}
+
+#navigation ul a:hover {
+  box-shadow: 0px 0px 2px 1px;
 }
