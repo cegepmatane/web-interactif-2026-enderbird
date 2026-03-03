@@ -7,10 +7,7 @@ export default function App({ Component, pageProps })
   return (
     <>
       <Navigation/>
-      {/* CSS POSSIBLE (id) */}
-      <main>
         <Component {...pageProps} />
-      </main>
     </>
   );
 }

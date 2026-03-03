@@ -31,7 +31,7 @@ export default function Home() {
 
   function choisirType(cle) {
     localStorage.setItem('typeChoisi', cle);
-    routeur.push('/sample');
+    routeur.push('/interactive');
   }
 
   return (
@@ -44,20 +44,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-
-      <div className="accueil-grille">
-        {TYPES.map((type, i) => (
-          <div
-            key={type.cle}
-            className={styles.main}
-            onClick={() => choisirType(type.cle)}
-          >
-            allo
-          </div>
-        ))}
-      </div>
-
-      {/* <div className={`${styles.page}`}>
+      
+      {
+      /* - - - LE CORPS - - - */
+      }
+      <main className={`${styles.main}`}>
+        <div className="accueil-grille">
+          {TYPES.map((type, i) => (
+            <div
+              key={type.cle}
+              className={styles.main}
+              onClick={() => choisirType(type.cle)}
+            >
+              allo
+            </div>
+          ))}
+        </div>
+      </main>
+      
+      {/* 
         <main className={styles.main}>
           <div className={styles.intro}> </div>
           <div className={styles.ctas}>

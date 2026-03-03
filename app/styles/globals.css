@@ -5,22 +5,23 @@
 }
 
 :root {
-  --background: #110a31;
-  --foreground: rgb(0, 0, 0);
+  --background: rgb(0, 0, 0);
+  --foreground: #170d43;
   /* --foreground: rgb(54, 255, 88); */
-  --default-primairy: #ff78b0;
+  --default-primairy: #ff769a;
   --default-secondairy: black;
 }
 
-html,
-body {
+html, body {
   max-width: 100vw;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+  
   font-family: "Segoe UI Variable", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,10 +39,16 @@ a {
 }
 
 /* - - - Navigation - - - */
+
 #navigation {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  background-attachment: fixed;
+  background-position: center;
+  background-image: url(/background-arbres.png);
 }
 
 #navigation ul {
@@ -51,30 +58,48 @@ a {
   flex-direction: row;
   justify-content: center;
   align-items: stretch;
-  height: 100%;
+  height: 5em;
   width: 60%;
-}
 
+  background-position: bottom;
+  background-image: url(/background-arbres.png);
+
+  border: 0.3em solid #ff769b7d;
+  margin-top: 10em;
+  border-radius: 2vh;
+
+  transition: border 4s ease;
+}
+#navigation ul:hover {
+  border: 0.3em solid rgba(105, 27, 172, 0.541);
+  transition: border 0.5s;
+}
 #navigation ul li {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
-
 #navigation ul a {
   background-color: var(--default-secondairy);
   color: var(--default-primairy);
   border-radius: 5vh;
-  font-size: 0.8em;
   font-weight: bold;
   border: 1px solid;
 
+  height: max-content;
   align-content: center;
   text-align: center;
 
-  padding: 0.5em 4em;
+  font-size: 0.8em;
+  box-shadow: 0px 0px 0px 0px;
+  padding: 0.8em 4em;
+  transition: box-shadow 5s ease, font-size 1s ease, padding 4s ease;
 }
-
 #navigation ul a:hover {
-  box-shadow: 0px 0px 2px 1px;
+  position: absolute;
+  font-size: 0.9em;
+  box-shadow: 0px 0px 5px 2px;
+  padding: 0.9em 6em;
+  transition: box-shadow 0.5s, font-size 0.5s, padding 0.5s;
 }

@@ -5,7 +5,7 @@ function Navigation() {
     <nav id="navigation">
       <ul>
         <li><Link href="/">Accueil</Link></li>
-        <li><Link href="/sample">Samples</Link></li>
+        <li><Link href="/interactive">Samples</Link></li>
         <li><Link href="/aide">Aide</Link></li>
       </ul>
     </nav>
