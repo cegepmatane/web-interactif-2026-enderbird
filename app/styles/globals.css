@@ -20,8 +20,13 @@ html, body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  
+
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(/background-arbres.png);
+
   font-family: "Segoe UI Variable", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,10 +50,6 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  background-attachment: fixed;
-  background-position: center;
-  background-image: url(/background-arbres.png);
 }
 
 #navigation ul {
@@ -58,10 +59,12 @@ a {
   flex-direction: row;
   justify-content: center;
   align-items: stretch;
-  height: 5em;
+  height: 4em;
   width: 60%;
 
   background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-image: url(/background-arbres.png);
 
   border: 0.3em solid #ff769b7d;
@@ -93,13 +96,13 @@ a {
 
   font-size: 0.8em;
   box-shadow: 0px 0px 0px 0px;
-  padding: 0.8em 4em;
+  padding: 0.7em 3em;
   transition: box-shadow 4s ease, font-size 1s ease, padding 3s ease;
 }
 #navigation ul a:hover {
   position: absolute;
   font-size: 0.9em;
   box-shadow: 0px 0px 5px 2px;
-  padding: 0.9em 6em;
+  padding: 0.9em 5em;
   transition: box-shadow 0.25s, font-size 0.25s, padding 0.25s;
 }
