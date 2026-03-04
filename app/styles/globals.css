@@ -68,11 +68,11 @@ a {
   margin-top: 10em;
   border-radius: 2vh;
 
-  transition: border 4s ease;
+  transition: border 3s ease;
 }
 #navigation ul:hover {
   border: 0.3em solid rgba(105, 27, 172, 0.541);
-  transition: border 0.5s;
+  transition: border 0.25s;
 }
 #navigation ul li {
   flex: 1;
@@ -94,12 +94,12 @@ a {
   font-size: 0.8em;
   box-shadow: 0px 0px 0px 0px;
   padding: 0.8em 4em;
-  transition: box-shadow 5s ease, font-size 1s ease, padding 4s ease;
+  transition: box-shadow 4s ease, font-size 1s ease, padding 3s ease;
 }
 #navigation ul a:hover {
   position: absolute;
   font-size: 0.9em;
   box-shadow: 0px 0px 5px 2px;
   padding: 0.9em 6em;
-  transition: box-shadow 0.5s, font-size 0.5s, padding 0.5s;
+  transition: box-shadow 0.25s, font-size 0.25s, padding 0.25s;
 }

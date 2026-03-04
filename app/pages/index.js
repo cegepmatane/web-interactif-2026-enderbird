@@ -4,25 +4,32 @@ import styles from "@/styles/Accueil.module.css";
 
 const TYPES = [
   {
-    cle: 'one-shots'
+    cle: 'one-shots',
+    nom: 'One-shot'
   },
   {
-    cle: 'musiques'
+    cle: 'morceaux',
+    nom: 'Morceau'
   },
   {
-    cle: 'loops'
+    cle: 'loops',
+    nom: 'Loops'
   },
   {
-    cle: 'multi-samples'
+    cle: 'multi-samples',
+    nom: 'Multi-samples'
   },
   {
-    cle: 'fxs'
+    cle: 'fxs',
+    nom: 'FX'
   },
   {
-    cle: 'vocals'
+    cle: 'vocals',
+    nom: 'Vocal'
   },
   {
-    cle: 'remix'
+    cle: 'remix',
+    nom: 'Remix'
   }
 ]
 
@@ -48,15 +55,15 @@ export default function Home() {
       {
       /* - - - LE CORPS - - - */
       }
-      <main className={`${styles.main}`}>
-        <div className="accueil-grille">
+      <main className={styles.main}>
+        <div className={styles.types}>
           {TYPES.map((type, i) => (
             <div
               key={type.cle}
-              className={styles.main}
+              className={styles.type}
               onClick={() => choisirType(type.cle)}
             >
-              allo
+              {type.nom}
             </div>
           ))}
         </div>
