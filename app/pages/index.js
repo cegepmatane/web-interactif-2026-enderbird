@@ -1,66 +1,81 @@
 import Head from "next/head";
-import { useRouter } from 'next/router';
 import styles from "@/styles/Accueil.module.css";
+import { useRouter } from 'next/router';
+import { useRef, useState } from "react";
 
 const TYPES = [
-  {
-    cle: 'one-shots',
+  { cle: 'one-shot',
     icone: '🔊',
     nom: 'One-shot',
     description: 'Son court et unique (kick, snare, hit, stab...).',
-    couleur: '#ff0000'
+    couleur: '#00ff95'
   },
   {
-    cle: 'morceaux',
+    cle: 'morceau',
     icone: '🎵',
     nom: 'Morceau',
     description: 'Track complet prêt à écouter ou télécharger.',
-    couleur: '#ff00e6'
+    couleur: '#004cff'
   },
   {
-    cle: 'loops',
-    icone: '🔁',
-    nom: 'Loops',
-    description: 'Boucle audio répétable et synchronisable au tempo.',
-    couleur: '#4000ff'
-  },
-  {
-    cle: 'multi-samples',
-    icone: '🎹',
-    nom: 'Multi-samples',
-    description: 'Instrument échantillonné sur plusieurs notes.',
-    couleur: '#0088ff'
-  },
-  {
-    cle: 'fxs',
+    cle: 'fx',
     icone: '✨',
     nom: 'FX',
     description: 'Effets sonores : impacts, transitions, ambiances.',
-    couleur: '#00fbff'
+    couleur: '#ff5100'
   },
   {
-    cle: 'vocals',
+    cle: 'loop',
+    icone: '🔁',
+    nom: 'Loop',
+    description: 'Boucle audio répétable et synchronisable au tempo.',
+    couleur: '#00ffa6'
+  },
+  {
+    cle: 'vocal',
     icone: '🎤',
     nom: 'Vocal',
     description: 'Voix chantée, parlée ou phrases vocales.',
-    couleur: '#15ff00'
+    couleur: '#0011ff'
   },
   {
     cle: 'remix',
     icone: '🎛️',
     nom: 'Remix',
     description: 'Version retravaillée ou réinterprétée d’un morceau.',
-    couleur: '#f2ff00'
+    couleur: '#00ffae'
   }
 ]
 
-export default function Home() {
+export default function Accueil() {
   const routeur = useRouter();
 
   function choisirType(cle) {
     localStorage.setItem('typeChoisi', cle);
     routeur.push('/interactive');
   }
+
+  // Scroll pour centrer l'élément (Carousel)
+  const referenceConteneur = useRef(null);
+  const [centerIndex, setCenterIndex] = useState(0);
+
+  function scrollToElement(index) {
+    if (index === centerIndex) return;
+
+    const conteneur = referenceConteneur.current;
+    if (!conteneur) return;
+
+    const el = conteneur.children[index];
+    if (!el) return;
+
+    const rectConteneur = conteneur.getBoundingClientRect();
+    const rectElement = el.getBoundingClientRect();
+
+    const decalage = rectElement.left - rectConteneur.left - (rectConteneur.width / 2) + (rectElement.width / 2);
+    conteneur.scrollBy({ left: decalage, behavior: "smooth" });
+
+    setCenterIndex(index);
+  };
 
   return (
     <>
@@ -77,45 +92,24 @@ export default function Home() {
       /* - - - LE CORPS - - - */
       }
       <main className={styles.main}>
-        <div className={styles.types}>
+        <div className={styles.typesCarousel} ref={referenceConteneur}>
           {TYPES.map((type, i) => (
             <div
               key={type.cle}
-              className={styles.type}
+              className={`${styles.type} ${centerIndex === i ? 'focus' : ''}`}
               onClick={() => choisirType(type.cle)}
-              style={{color: type.couleur, boxShadow: "0px 0px 16px 0px" + type.couleur}}
+              onMouseEnter={() => scrollToElement(i)} // centrer au hover
+              style={{color: type.couleur, boxShadow: "0px 0px 16px 0px " + type.couleur}}
             >
-              <h1>{type.nom}</h1>
-              <div>{type.icone}</div>
-              <p>{type.description}</p>
+              <div className={styles.nom}>{type.nom}</div>
+              <div className={styles.iconeParent} style={{border: "3px solid" + type.couleur}}>
+                <div className={styles.icone}>{type.icone}</div>
+              </div>
+              <div className={styles.description}>{type.description}</div>
             </div>
           ))}
         </div>
       </main>
-      
-      {/* 
-        <main className={styles.main}>
-          <div className={styles.intro}> </div>
-          <div className={styles.ctas}>
-            <a
-              className={styles.primary}
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Deploy Now
-            </a>
-            <a
-              className={styles.secondary}
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Documentation
-            </a>
-          </div>
-        </main>
-      </div> */}
     </>
   );
 }
