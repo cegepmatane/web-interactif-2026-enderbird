@@ -1,18 +1,25 @@
 import Head from "next/head";
-import styles from "@/styles/Interactive.module.css";
+import styles from "@/styles/Sample.module.css";
 
-export default function Interactive() {
+const CATEGORIES = {
+
+};
+
+const TYPES = {
+  
+};
+
+
+export default function Sample() {
   return (
     <>
       {
-      /* - - - Nom de la page - - - */
+      /* - - - SAMPLE - - - */
       }
       <Head>
-        <title>Interactive</title>
+        <title>Sample</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      
       {
       /* - - - LE CORPS - - - */
       }

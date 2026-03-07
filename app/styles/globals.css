@@ -5,21 +5,25 @@
 }
 
 :root {
-  --background: rgb(0, 0, 0);
-  --foreground: #170d43;
-  /* --foreground: rgb(54, 255, 88); */
   --default-primairy: #ff769a;
-  --default-secondairy: black;
+  --default-secondairy: #76d8ff;
+  --primairy-transparent: rgba(255, 118, 155, 0.5);
+  --secondairy-transparent: rgba(81, 0, 255, 0.5);
+
+  --background-light: white;
+  --background-dark: black;
 }
 
 html, body {
+  /* = POSITIONING = */
   max-width: 100vw;
+  /* = STYLING = */
   scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-
+  /* = POSITIONING = */
+  /* = STYLING = */
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -45,63 +49,76 @@ a {
 /* - - - Navigation - - - */
 
 #navigation {
+  /* = POSITIONING = */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  margin-top: 2em;
+  margin-bottom: 8em;
+  /* = STYLING = */
 }
 
 #navigation ul {
-  list-style: none;
-
+  /* = POSITIONING = */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: stretch;
+
   height: 4em;
-  width: 60%;
+  width: 50%;
+  /* = STYLING = */
+  list-style: none;
+  user-select: none;
 
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url(/background-arbres.png);
+  background: linear-gradient(-45deg, var(--primairy-transparent) 0%, var(--secondairy-transparent) 100%);
 
-  border: 0.3em solid #ff769b7d;
-  margin-top: 8em;
-  border-radius: 2vh;
+  border: 0.3em solid var(--primairy-transparent);
+  border-radius: 5vh;
 
   transition: border 3s ease;
 }
 #navigation ul:hover {
-  border: 0.3em solid rgba(105, 27, 172, 0.541);
+  /* = POSITIONING = */
+  /* = STYLING = */
+  border: 0.3em solid var(--secondairy-transparent);
   transition: border 0.25s;
 }
 #navigation ul li {
+  /* = POSITIONING = */
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin: 0.5em;
+  /* = STYLING = */
 }
 #navigation ul a {
-  background-color: var(--default-secondairy);
-  color: var(--default-primairy);
-  border-radius: 5vh;
-  font-weight: bold;
-  border: 1px solid;
-
-  height: max-content;
+  /* = POSITIONING = */
+  height: 100%;
+  width: 100%;
   align-content: center;
   text-align: center;
 
+  /* = STYLING = */
+  background-color: var(--background-dark);
+  font-weight: bold;
   font-size: 0.8em;
-  box-shadow: 0px 0px 0px 0px;
-  padding: 0.7em 3em;
-  transition: box-shadow 4s ease, font-size 1s ease, padding 3s ease;
+  color: var(--default-primairy);
+  box-shadow: 0px 0px 0px 0px var(--default-primairy);
+  border: 1px solid var(--default-primairy);
+  border-radius: 4vh;
+  transition: all 2s ease;
 }
 #navigation ul a:hover {
-  position: absolute;
+  /* = POSITIONING = */
+  /* = STYLING = */
   font-size: 0.9em;
-  box-shadow: 0px 0px 5px 2px;
-  padding: 0.9em 5em;
-  transition: box-shadow 0.25s, font-size 0.25s, padding 0.25s;
+  color: var(--default-secondairy);
+  box-shadow: 0px 0px 5px 2px var(--default-secondairy);
+  border: 1px solid var(--default-secondairy);
+  transition: all 0.25s;
 }

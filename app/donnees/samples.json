@@ -1,20 +1,22 @@
 [
   {
-    "id": "1",
+    "id": "morceau",
     "titre": "Afterlife (from the Netflix Series \"Devil May Cry\")",
     "album": "",
     "artiste": "Evanescence",
-    "dateCreation": "28 mars 2025"
+    "dateCreation": "28 mars 2025",
+    "resume": "",
+    "description": ""
   },
   {
-    "id": "2",
+    "id": "morceau",
     "titre": "Sunny Disposition",
     "album": "The Stage",
     "artiste": "Avenged Sevenfold",
     "dateCreation": "28 octobre 2016"
   },
   {
-    "id": "3",
+    "id": "morceau",
     "titre": "Sunny Disposition",
     "album": "The Stage",
     "artiste": "Avenged Sevenfold",

@@ -8,42 +8,42 @@ const TYPES = [
     icone: '🔊',
     nom: 'One-shot',
     description: 'Son court et unique (kick, snare, hit, stab...).',
-    couleur: '#00ff95'
+    couleur: '#ff004c'
   },
   {
     cle: 'morceau',
     icone: '🎵',
     nom: 'Morceau',
-    description: 'Track complet prêt à écouter ou télécharger.',
-    couleur: '#004cff'
+    description: 'Piste complète et prête à écouter.',
+    couleur: '#ffae00'
   },
   {
     cle: 'fx',
     icone: '✨',
     nom: 'FX',
     description: 'Effets sonores : impacts, transitions, ambiances.',
-    couleur: '#ff5100'
+    couleur: '#0088ff'
   },
   {
     cle: 'loop',
     icone: '🔁',
     nom: 'Loop',
     description: 'Boucle audio répétable et synchronisable au tempo.',
-    couleur: '#00ffa6'
+    couleur: '#ff006a'
   },
   {
     cle: 'vocal',
     icone: '🎤',
     nom: 'Vocal',
     description: 'Voix chantée, parlée ou phrases vocales.',
-    couleur: '#0011ff'
+    couleur: '#fbff00'
   },
   {
     cle: 'remix',
     icone: '🎛️',
     nom: 'Remix',
     description: 'Version retravaillée ou réinterprétée d’un morceau.',
-    couleur: '#00ffae'
+    couleur: '#ff0000'
   }
 ]
 
@@ -52,7 +52,7 @@ export default function Accueil() {
 
   function choisirType(cle) {
     localStorage.setItem('typeChoisi', cle);
-    routeur.push('/interactive');
+    routeur.push('/sample');
   }
 
   // Scroll pour centrer l'élément (Carousel)
@@ -80,14 +80,12 @@ export default function Accueil() {
   return (
     <>
       {
-      /* - - - Nom de la page - - - */
+      /* - - - ACCUEIL - - - */
       }
       <Head>
         <title>Accueil</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      
       {
       /* - - - LE CORPS - - - */
       }
