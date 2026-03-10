@@ -1,25 +1,44 @@
 [
   {
-    "id": "morceau",
+    "id": "1",
     "titre": "Afterlife (from the Netflix Series \"Devil May Cry\")",
     "album": "",
     "artiste": "Evanescence",
     "dateCreation": "28 mars 2025",
     "resume": "",
-    "description": ""
+    "description": "",
+
+    "type": "morceau",
+    "categorie": "court"
   },
   {
-    "id": "morceau",
+    "id": "2",
     "titre": "Sunny Disposition",
     "album": "The Stage",
     "artiste": "Avenged Sevenfold",
-    "dateCreation": "28 octobre 2016"
+    "dateCreation": "28 octobre 2016",
+
+    "type": "morceau",
+    "categorie": "long"
   },
   {
-    "id": "morceau",
+    "id": "3",
     "titre": "Sunny Disposition",
     "album": "The Stage",
     "artiste": "Avenged Sevenfold",
-    "dateCreation": "28 octobre 2016"
+    "dateCreation": "28 octobre 2016",
+
+    "type": "morceau",
+    "categorie": "court"
+  },
+  {
+    "id": "4",
+    "titre": "Afterlife (from the Netflix Series \"Devil May Cry\")",
+    "album": "",
+    "artiste": "Evanescence",
+    "dateCreation": "2025",
+
+    "type": "vocal",
+    "categorie": "long"
   }
 ]
