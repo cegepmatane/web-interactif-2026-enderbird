@@ -53,14 +53,30 @@ export default function Sample() {
   /* Filtrer les samples - RECHERCHE EN TEMPS RÉEL */
 
 const samplesFiltres = useMemo(() => {
-  return samples.filter((concept) => {
-    const correspondRecherche =
-      concept.titre.toLowerCase().includes(recherche.toLowerCase()) ||
-      concept.description.toLowerCase().includes(recherche.toLowerCase());
-    const correspondCategorie = !categorieActive || concept.categorie === categorieActive;
-    const correspondType = !typeActif || concept.type === typeActif;
-    return correspondRecherche && correspondCategorie && correspondType;
-  });
+  return samples
+    .filter((concept) => {
+      const correspondRecherche =
+        concept.titre.toLowerCase().includes(recherche.toLowerCase()) ||
+        concept.description.toLowerCase().includes(recherche.toLowerCase());
+
+      const correspondCategorie =
+        !categorieActive || concept.categorie === categorieActive;
+
+      const correspondType =
+        !typeActif || concept.type === typeActif;
+
+      return correspondRecherche && correspondCategorie && correspondType;
+    })
+    .sort((a, b) => {
+      const dateA = parseInt(a.dateCreation);
+      const dateB = parseInt(b.dateCreation);
+
+      if (isNaN(dateA) && isNaN(dateB)) return 0;
+      if (isNaN(dateA)) return 1;
+      if (isNaN(dateB)) return -1;
+
+      return dateA - dateB; // récent → ancien
+    });
 }, [recherche, categorieActive, typeActif]);
 
 useEffect(() => {
@@ -147,33 +163,26 @@ useEffect(() => {
               <div
                 key={`${concept.id}-${cleAnimation}`} // force React to remount
                 className={styles.apparitionBloc}
-                style={{ 
-                  animationDelay: `${indexConcept * 0.05}s`,
-                }}
               >
                 <BlocSample
+                  style={{ 
+                    animationDelay: `${indexConcept * 0.05}s`
+                  }}
                   concept={concept}
                   typeActif={typeActif}
                   surClic={definirConceptActif}
                   couleurCategorie={CATEGORIES[concept.categorie]?.couleur || '#888'}
                   etiquetteCategorie={CATEGORIES[concept.categorie]?.etiquette || concept.categorie}
-                  variante="complet"
                 />
               </div>
             ))}
           </div>
-        ) : (
-          <div className={styles.messageVide}>
-            <span className={styles.messageVideIcone}>🔍</span>
-            <p>Aucun concept trouvé pour cette recherche.</p>
-          </div>
-        )}
-        {/* ) : (
-          <div className={styles.messageVide}>
-            <span className={styles.messageVideIcone}>🔍</span>
-            <p>Aucun concept trouvé pour cette recherche.</p>
-          </div>
-        )} */}
+          ) : (
+            <div className={styles.messageVide}>
+              <span className={styles.messageVideIcone}>🔍</span>
+              <p>Aucun concept trouvé pour cette recherche.</p>
+            </div>
+          )}
 
         {/* Popup du concept sélectionné */}
         {conceptActif && (

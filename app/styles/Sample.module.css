@@ -236,7 +236,7 @@
 .grilleSamples {
   /* = POSITIONING = */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1em;
 
   align-items: center;
@@ -264,9 +264,10 @@
   aspect-ratio: 5 / 3;
   height: 100%;
   width: 100%;
-  border-radius: 1vw;
+  border-radius: 2vh;
   transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
   cursor: pointer;
+  background-color: black;
 
   display: flex;
   flex-direction: column;
@@ -275,9 +276,11 @@
   box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
   border: 0.2em solid var(--primairy-transparent);
 }
-.grilleSamples > div:hover {
+.grilleSamples > div div {
+  transition: all .25s ease;
+}
+.grilleSamples > div > div:hover {
   transform: scale(1.05) rotateZ(1deg);
-  box-shadow: 0px 8px 20px rgba(0,0,0,0.5);
   filter: saturate(150%);
 }
 
@@ -353,46 +356,4 @@
   box-shadow: 0px 0px 5px 2px var(--default-secondairy);
   border: 0.2em solid var(--default-secondairy);
   transition: all 0.25s;
-}
-
-/*  POP UP AAAAAAAAAAAAAAA */
-
-.popup-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.popup-contenu {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 600px;
-  width: 90%;
-  max-height: 90%;
-  overflow-y: auto;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  position: relative;
-}
-
-.popup-fermer {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.popup-code {
-  margin-top: 1rem;
-  background: #f7f7f7;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
 }

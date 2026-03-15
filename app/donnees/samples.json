@@ -6,7 +6,7 @@
     "artiste": "Avenged Sevenfold",
     "dateCreation": "2007",
     "resume": "Solo et orchestration emblématique.",
-    "description": "Morceau metal symphonique avec solo rapide et ambiance dramatique.",
+    "description":"Morceau metal symphonique avec solo rapide et ambiance dramatique. La chanson mélange guitare électrique virtuose, arrangements orchestraux et une énergie intense qui caractérise le style du groupe. Le solo central est devenu emblématique pour sa vitesse et sa précision, soutenu par une batterie dynamique et une atmosphère cinématographique.",
     "type": "morceau",
     "categorie": "melodie"
   },
@@ -17,7 +17,7 @@
     "artiste": "Avenged Sevenfold",
     "dateCreation": "2016",
     "resume": "Groove progressif.",
-    "description": "Rythmiques complexes et passages jazzy.",
+    "description":"Titre progressif avec une rythmique complexe et des influences jazz inhabituelles pour le metal moderne. Les guitares alternent entre riffs groovy et passages techniques tandis que la batterie joue avec des signatures rythmiques variées. L'ensemble crée une sensation expérimentale et énergique qui distingue le morceau dans l’album.",
     "type": "morceau",
     "categorie": "drums"
   },
@@ -28,7 +28,7 @@
     "artiste": "Avenged Sevenfold",
     "dateCreation": "2016",
     "resume": "Metal progressif moderne.",
-    "description": "Structure progressive avec solos et thèmes spatiaux.",
+    "description":"Composition progressive aux thèmes inspirés par l’espace et la technologie. Le morceau développe lentement ses motifs mélodiques avec des riffs lourds et des passages atmosphériques. Les solos de guitare et les changements de tempo apportent une dimension narrative, créant une expérience musicale immersive et dynamique.",
     "type": "morceau",
     "categorie": "melodie"
   },
@@ -39,7 +39,7 @@
     "artiste": "Evanescence",
     "dateCreation": "2003",
     "resume": "Fusion metal et chant lyrique.",
-    "description": "Un des titres les plus connus du rock gothique moderne.",
+    "description":"Titre emblématique du rock gothique moderne combinant chant lyrique puissant et instrumentation metal. La voix expressive domine le morceau, soutenue par des guitares lourdes et un piano dramatique. Le contraste entre passages calmes et refrains explosifs contribue à l’impact émotionnel qui a marqué toute une génération.",
     "type": "morceau",
     "categorie": "voix"
   },
@@ -50,7 +50,7 @@
     "artiste": "Evanescence",
     "dateCreation": "2003",
     "resume": "Ballade piano émotionnelle.",
-    "description": "Morceau atmosphérique centré sur la voix.",
+    "description":"Ballade piano très émotionnelle centrée sur une interprétation vocale intense. L’atmosphère mélancolique se construit progressivement avec des cordes et une orchestration subtile. Le morceau explore la perte et la nostalgie à travers une mélodie simple mais profondément touchante qui reste l’une des plus reconnaissables.",
     "type": "morceau",
     "categorie": "ambiance"
   },
@@ -61,7 +61,7 @@
     "artiste": "Evanescence",
     "dateCreation": "2025",
     "resume": "Titre sombre et intense.",
-    "description": "Voix puissantes avec ambiance dramatique.",
+    "description":"Titre sombre porté par une voix puissante et une ambiance dramatique inspirée par un univers fantastique. Les instruments construisent une tension constante avec des harmonies mélancoliques et une production dense. L’ensemble crée un climat intense qui renforce l’émotion et la profondeur du morceau.",
     "type": "morceau",
     "categorie": "voix"
   },
@@ -72,7 +72,7 @@
     "artiste": "Spiritbox",
     "dateCreation": "2021",
     "resume": "Metalcore brutal.",
-    "description": "Breakdowns massifs et voix saturées.",
+    "description":"Morceau metalcore très agressif caractérisé par des breakdowns massifs et une production moderne. Les guitares saturées créent un mur sonore tandis que la batterie martèle un rythme lourd et constant. Les voix alternent entre cris puissants et passages plus contrôlés, donnant une énergie brute et intense.",
     "type": "morceau",
     "categorie": "drums"
   },
@@ -83,7 +83,7 @@
     "artiste": "Spiritbox",
     "dateCreation": "2021",
     "resume": "Metal moderne mélodique.",
-    "description": "Alternance chant clair et scream.",
+    "description":"Titre metal moderne mêlant passages mélodiques et sections lourdes. La chanson joue sur l’alternance entre chant clair et scream pour créer une dynamique émotionnelle forte. Les guitares offrent des textures riches tandis que la production moderne met en valeur chaque élément de l’arrangement.",
     "type": "morceau",
     "categorie": "melodie"
   },
@@ -94,7 +94,7 @@
     "artiste": "Linkin Park",
     "dateCreation": "2003",
     "resume": "Rock électronique.",
-    "description": "Synthés et guitare mélodique.",
+    "description":"Chanson rock électronique construite autour d’une mélodie simple mais mémorable. Les synthétiseurs et la guitare se complètent pour créer une atmosphère mélancolique et introspective. Les paroles et la structure progressive renforcent l’impact émotionnel, faisant du morceau un classique du rock alternatif moderne.",
     "type": "morceau",
     "categorie": "melodie"
   },
@@ -105,7 +105,7 @@
     "artiste": "Linkin Park",
     "dateCreation": "2000",
     "resume": "Classique nu-metal.",
-    "description": "Piano iconique et rap rock.",
+    "description":"Titre emblématique du nu-metal avec un riff de piano immédiatement reconnaissable. Le morceau combine rap énergique, guitare lourde et refrains mélodiques puissants. Sa structure accessible et son énergie intense en ont fait l’un des titres les plus populaires et influents du groupe.",
     "type": "morceau",
     "categorie": "melodie"
   },

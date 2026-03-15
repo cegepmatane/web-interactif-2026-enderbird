@@ -1,14 +1,12 @@
 function BlocSample({
   concept,
-  typeActif,
   surClic,
   couleurCategorie,
   etiquetteCategorie,
   variante
 }) {
   const estCompact = variante === 'compact';
-  const codeCourt = concept[typeActif] || '';
-  const premiereLigne = codeCourt.split('\n')[0];
+  const premiereLigne = concept.resume;
 
   return (
     <div
@@ -17,7 +15,7 @@ function BlocSample({
       style={{
         borderLeftColor: couleurCategorie,
         '--couleur-categorie': couleurCategorie,
-        background: `linear-gradient(145deg, var(--background-dark) 10%, ${couleurCategorie || '#888'} 50%, var(--background-dark) 90%)`,
+        background: `linear-gradient(145deg, var(--background-dark) 20%, ${couleurCategorie || '#888'} 50%, var(--background-dark) 80%)`,
         width: '100%',
         height: '100%',
         padding: '2em',
@@ -42,7 +40,7 @@ function BlocSample({
         style={{
           fontSize: '1.5em',
         }}
-      >{concept.titre}</div>
+      >{concept.titre}{concept.artiste == "" ? "" : " - " + concept.artiste}</div>
 
       {!estCompact && (
         <div className="bloc-concept-apercu">
