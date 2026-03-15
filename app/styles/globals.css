@@ -19,6 +19,8 @@ html, body {
   max-width: 100vw;
   /* = STYLING = */
   scroll-behavior: smooth;
+
+  scrollbar-width: none;
 }
 
 body {

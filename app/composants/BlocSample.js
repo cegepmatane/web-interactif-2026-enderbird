@@ -16,7 +16,12 @@ function BlocSample({
       onClick={() => surClic && surClic(concept)}
       style={{
         borderLeftColor: couleurCategorie,
-        '--couleur-categorie': couleurCategorie
+        '--couleur-categorie': couleurCategorie,
+        background: `linear-gradient(145deg, var(--background-dark) 10%, ${couleurCategorie || '#888'} 50%, var(--background-dark) 90%)`,
+        width: '100%',
+        height: '100%',
+        padding: '2em',
+        borderRadius: '2vh'
       }}
     >
       <div className="bloc-concept-entete">
@@ -24,6 +29,7 @@ function BlocSample({
         <span
           className="bloc-concept-categorie"
           style={{
+            fontSize: '1em',
             backgroundColor: `${couleurCategorie}15`,
             color: couleurCategorie
           }}
@@ -32,7 +38,11 @@ function BlocSample({
         </span>
       </div>
 
-      <div className="bloc-concept-titre">{concept.titre}</div>
+      <div className="bloc-concept-titre"
+        style={{
+          fontSize: '1.5em',
+        }}
+      >{concept.titre}</div>
 
       {!estCompact && (
         <div className="bloc-concept-apercu">

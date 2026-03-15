@@ -5,7 +5,7 @@
 - **Cadriciel choisi** : [ ] React  [X] Next.js  [ ] Vue.js
 - **Nom de l'application** : ____________
 - **Description en une phrase** : _______________
-- **URL** : `https://web-projet-app.wavesofsounds.space/editeur/`
+- **URL** : `https://web-projet-app.wavesofsounds.space/`
 
 ---
 

@@ -1,24 +1,30 @@
 import { useState, useEffect } from 'react';
 
 const TYPES = {
-  'one-shot':  { etiquette: 'One-shot', couleur: '#ff004c' },
-  morceau:     { etiquette: 'Morceau',  couleur: '#ffae00' },
-  fx:          { etiquette: 'FX',       couleur: '#0088ff' },
-  loop:        { etiquette: 'Loop',     couleur: '#ff006a' },
-  vocal:       { etiquette: 'Vocal',    couleur: '#fbff00' },
-  remix:       { etiquette: 'Remix',    couleur: '#ff0000' }
-}; 
+  'one-shot': { etiquette: 'One-shot', couleur: '#ff004c' },
+  morceau: { etiquette: 'Morceau', couleur: '#ffae00' },
+  fx: { etiquette: 'FX', couleur: '#0088ff' },
+  loop: { etiquette: 'Loop', couleur: '#ff006a' },
+  vocal: { etiquette: 'Vocal', couleur: '#fbff00' },
+  remix: { etiquette: 'Remix', couleur: '#ff0000' }
+};
 
-function PopupSample({
-  concept,
-  typeActif,
-  surFermer,
-  couleurCategorie,
-  etiquetteCategorie
-}) {
-  const [ongletCode, definirOngletCode] = useState(typeActif);
+function PopupSample({ 
+    concept, 
+    ongletInitial, 
+    surFermer, 
+    couleurCategorie, 
+    etiquetteCategorie 
+  }) 
+  {
 
-  /* Fermer avec Escape */
+  const [ongletCode, definirOngletCode] = useState(ongletInitial || '');
+
+  useEffect(() => {
+    definirOngletCode(ongletInitial || '');
+  }, [concept, ongletInitial]);
+
+  // Fermer avec Escape
   useEffect(() => {
     function gererTouche(evenement) {
       if (evenement.key === 'Escape') surFermer();
@@ -34,7 +40,7 @@ function PopupSample({
 
   return (
     <div className="popup-overlay" onClick={surFermer}>
-      <div className="popup-contenu" onClick={(evenement) => evenement.stopPropagation()}>
+      <div className="popup-contenu" onClick={(e) => e.stopPropagation()}>
         <button className="popup-fermer" onClick={surFermer}>✕</button>
 
         {/* En-tête */}
@@ -75,16 +81,18 @@ function PopupSample({
 
         {/* Bloc de code */}
         <div className="popup-code" key={ongletCode}>
-          <pre><code>{concept[ongletCode]}</code></pre>
+          <pre><code>{concept[ongletCode] || ''}</code></pre>
         </div>
 
         {/* Indicateur visuel du sample */}
-        <div
-          className="popup-indicateur-sample"
-          style={{ backgroundColor: TYPES[ongletCode].couleur }}
-        >
-          {TYPES[ongletCode].etiquette}
-        </div>
+        {ongletCode && (
+          <div
+            className="popup-indicateur-sample"
+            style={{ backgroundColor: TYPES[ongletCode].couleur }}
+          >
+            {TYPES[ongletCode].etiquette}
+          </div>
+        )}
       </div>
     </div>
   );

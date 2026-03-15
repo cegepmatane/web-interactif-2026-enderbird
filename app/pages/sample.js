@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "@/styles/Sample.module.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import samples from '../donnees/samples.json';
 import BlocSample from '../composants/BlocSample';
 import PopupSample from '../composants/PopupSample';
@@ -15,21 +15,23 @@ const TYPES = {
 }; 
 
 const CATEGORIES = {
-  court:       { etiquette: 'Court',         couleur: '#6c5ce7' },
-  long:        { etiquette: 'Long',          couleur: '#00b894' },
-  evenements:  { etiquette: 'Événements',    couleur: '#f0932b' },
-  routage:     { etiquette: 'Routage',       couleur: '#e17055' },
-  'cycle-vie': { etiquette: 'Cycle de vie',  couleur: '#0984e3' },
-  styles:      { etiquette: 'Styles',        couleur: '#e84393' },
-  donnees:     { etiquette: 'Données',       couleur: '#00cec9' }
+  drums:        { etiquette: 'Drums',        couleur: '#ff7675' },
+  bass:         { etiquette: 'Bass',         couleur: '#fdcb6e' },
+  melodie:      { etiquette: 'Mélodie',      couleur: '#6c5ce7' },
+  ambiance:     { etiquette: 'Ambiance',     couleur: '#00cec9' },
+  transition:   { etiquette: 'Transition',   couleur: '#e84393' },
+  voix:         { etiquette: 'Voix',         couleur: '#00b894' },
+  experimental: { etiquette: 'Experimental', couleur: '#636e72' }
 };
 
 export default function Sample() {
-  const [typeActif, definirTypeActif] = useState('one-shot');
-  const [categorieActive, definirCategorieActive] = useState('toutes');
+  // Par défaut, pas de type sélectionné -> tout afficher
+  const [typeActif, definirTypeActif] = useState('');
+  const [categorieActive, definirCategorieActive] = useState('');
   const [recherche, definirRecherche] = useState('');
   const [conceptActif, definirConceptActif] = useState(null);
   const [cleAnimation, definirCleAnimation] = useState(0);
+  const [affiches, setAffiches] = useState([]);
 
   /* Charger le sample choisi depuis localStorage */
   useEffect(() => {
@@ -41,43 +43,41 @@ export default function Sample() {
 
   /* Changer de sample avec animation */
   function changersample(cle) {
-    definirTypeActif(cle);
+    // Si le type cliqué est déjà actif, on le déselectionne (affiche tous)
+    const nouveauType = typeActif === cle ? '' : cle;
+    definirTypeActif(nouveauType);
     definirCleAnimation((ancienne) => ancienne + 1);
-    localStorage.setItem('typeChoisi', cle);
+    localStorage.setItem('typeChoisi', nouveauType);
   }
 
   /* Filtrer les samples - RECHERCHE EN TEMPS RÉEL */
-  const samplesFiltres = samples.filter((concept) => {
-    const correspondRecherche = concept.titre.toLowerCase().includes(recherche.toLowerCase()) || concept.description.toLowerCase().includes(recherche.toLowerCase());
 
-    const correspondCategorie = categorieActive === 'toutes' || concept.categorie === categorieActive;
-
-    const correspondType = concept.type === typeActif;
-
+const samplesFiltres = useMemo(() => {
+  return samples.filter((concept) => {
+    const correspondRecherche =
+      concept.titre.toLowerCase().includes(recherche.toLowerCase()) ||
+      concept.description.toLowerCase().includes(recherche.toLowerCase());
+    const correspondCategorie = !categorieActive || concept.categorie === categorieActive;
+    const correspondType = !typeActif || concept.type === typeActif;
     return correspondRecherche && correspondCategorie && correspondType;
   });
+}, [recherche, categorieActive, typeActif]);
+
+useEffect(() => {
+  setAffiches(samplesFiltres);
+}, [samplesFiltres]);
 
   /* samples reliés pour le popup (même catégorie, différent du concept actif) */
   const samplesRelies = conceptActif
-    ? samples
-        .filter((concept) =>
-          concept.categorie === conceptActif.categorie && concept.id !== conceptActif.id
-        )
-        .slice(0, 3)
+    ? samples.filter((concept) => concept.categorie === conceptActif.categorie && concept.id !== conceptActif.id).slice(0, 3)
     : [];
 
   return (
     <>
-      {
-      /* - - - SAMPLE - - - */
-      }
       <Head>
         <title>Sample</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {
-      /* - - - LE CORPS - - - */
-      }
 
       <div className={styles.main}>
         {/* Sélecteur de sample */}
@@ -94,17 +94,17 @@ export default function Sample() {
                 transform: 'scale(1.1)'
               } : {}}
             >
-              <span className="selecteur-onglet-icone">{sample.icone}</span>
+              <span className={styles.selecteurOngletIcone}>{sample.icone}</span>
               {sample.etiquette}
             </button>
           ))}
         </div>
 
         {/* Recherche */}
-        <div id="boite-recherche">
-          <span id="icone-recherche">🔍</span>
+        <div className={styles.zoneRecherche}>
+          <span className={styles.iconeRecherche}>🔍</span>
           <input
-            id="champs-recherche"
+            className={styles.champsRecherche}
             type="text"
             placeholder="Rechercher un concept..."
             value={recherche}
@@ -113,22 +113,16 @@ export default function Sample() {
         </div>
 
         {/* Filtres de catégorie */}
-        <div id="filtres-categorie">
-          <button
-            className={`filtre-categorie ${categorieActive === 'toutes' ? 'filtre-categorie-actif' : ''}`}
-            onClick={() => definirCategorieActive('toutes')}
-          >
-            Toutes
-          </button>
+        <div className={styles.filtresCategorie}>
           {Object.entries(CATEGORIES).map(([cle, categorie]) => (
             <button
               key={cle}
-              className={`filtre-categorie ${categorieActive === cle ? 'filtre-categorie-actif' : ''}`}
-              onClick={() => definirCategorieActive(cle)}
+              className={`${styles.filtreCategorie} ${categorieActive === cle ? styles.filtreCategorieActif : ''}`}
+              onClick={() => definirCategorieActive(cle === categorieActive ? '' : cle)}
               style={categorieActive === cle ? {
-                backgroundColor: categorie.couleur,
                 borderColor: categorie.couleur,
-                color: 'white'
+                backgroundColor: '#fff',
+                color: categorie.couleur
               } : {
                 borderColor: `${categorie.couleur}40`,
                 color: categorie.couleur
@@ -140,25 +134,26 @@ export default function Sample() {
         </div>
 
         {/* Compteur de résultats */}
-        <p className="compteur-resultats">
+        <p className={styles.compteurResultats}>
           {samplesFiltres.length} fiche{samplesFiltres.length > 1 ? 's' : ''}
-          {categorieActive !== 'toutes' && ` · ${CATEGORIES[categorieActive].etiquette}`}
+          {categorieActive && ` · ${CATEGORIES[categorieActive]?.etiquette || 'Toutes'}`}
           {recherche && ` · « ${recherche} »`}
         </p>
 
         {/* Grille de samples */}
-        {samplesFiltres.length > 0 ? (
-          <div className="grille-samples" key={cleAnimation}>
-            {samplesFiltres.map((concept, indexConcept) => (
+        {affiches.length > 0 ? (
+          <div className={styles.grilleSamples}>
+            {affiches.map((concept, indexConcept) => (
               <div
-                key={concept.id}
-                style={{
-                  animation: `apparitionBloc 0.4s ease-out ${indexConcept * 0.05}s both`
+                key={`${concept.id}-${cleAnimation}`} // force React to remount
+                className={styles.apparitionBloc}
+                style={{ 
+                  animationDelay: `${indexConcept * 0.05}s`,
                 }}
               >
                 <BlocSample
                   concept={concept}
-                  cadricicielActif={typeActif}
+                  typeActif={typeActif}
                   surClic={definirConceptActif}
                   couleurCategorie={CATEGORIES[concept.categorie]?.couleur || '#888'}
                   etiquetteCategorie={CATEGORIES[concept.categorie]?.etiquette || concept.categorie}
@@ -168,21 +163,27 @@ export default function Sample() {
             ))}
           </div>
         ) : (
-          <div className="message-vide">
-            <span className="message-vide-icone">🔍</span>
+          <div className={styles.messageVide}>
+            <span className={styles.messageVideIcone}>🔍</span>
             <p>Aucun concept trouvé pour cette recherche.</p>
           </div>
         )}
+        {/* ) : (
+          <div className={styles.messageVide}>
+            <span className={styles.messageVideIcone}>🔍</span>
+            <p>Aucun concept trouvé pour cette recherche.</p>
+          </div>
+        )} */}
 
         {/* Popup du concept sélectionné */}
         {conceptActif && (
           <PopupSample
             concept={conceptActif}
-            cadricicielActif={typeActif}
+            ongletInitial={conceptActif.type}
             surFermer={() => definirConceptActif(null)}
             couleurCategorie={CATEGORIES[conceptActif.categorie]?.couleur || '#888'}
             etiquetteCategorie={CATEGORIES[conceptActif.categorie]?.etiquette || conceptActif.categorie}
-            samplesRelies={samplesRelies} // pas utlisé encore
+            samplesRelies={samplesRelies}
           />
         )}
       </div>
