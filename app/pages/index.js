@@ -90,6 +90,9 @@ export default function Accueil() {
       /* - - - LE CORPS - - - */
       }
       <main className={styles.main}>
+        
+        <h1 className={styles.titrePage}>Découvrez des sons, des chansons et plus encore !!!</h1>
+
         <div className={styles.typesCarousel} ref={referenceConteneur}>
           {TYPES.map((type, i) => (
             <div

@@ -57,7 +57,8 @@ const samplesFiltres = useMemo(() => {
     .filter((concept) => {
       const correspondRecherche =
         concept.titre.toLowerCase().includes(recherche.toLowerCase()) ||
-        concept.description.toLowerCase().includes(recherche.toLowerCase());
+        concept.description.toLowerCase().includes(recherche.toLowerCase()) ||
+        concept.artiste.toLowerCase().includes(recherche.toLowerCase());
 
       const correspondCategorie =
         !categorieActive || concept.categorie === categorieActive;
@@ -77,11 +78,11 @@ const samplesFiltres = useMemo(() => {
 
       return dateA - dateB; // récent → ancien
     });
-}, [recherche, categorieActive, typeActif]);
-
-useEffect(() => {
-  setAffiches(samplesFiltres);
-}, [samplesFiltres]);
+  }, [recherche, categorieActive, typeActif]);
+  
+  useEffect(() => {
+    setAffiches(samplesFiltres);
+  }, [samplesFiltres]);
 
   /* samples reliés pour le popup (même catégorie, différent du concept actif) */
   const samplesRelies = conceptActif
@@ -163,11 +164,11 @@ useEffect(() => {
               <div
                 key={`${concept.id}-${cleAnimation}`} // force React to remount
                 className={styles.apparitionBloc}
+                style={{ 
+                  animationDelay: `${indexConcept * 0.05}s`
+                }}
               >
                 <BlocSample
-                  style={{ 
-                    animationDelay: `${indexConcept * 0.05}s`
-                  }}
                   concept={concept}
                   typeActif={typeActif}
                   surClic={definirConceptActif}
