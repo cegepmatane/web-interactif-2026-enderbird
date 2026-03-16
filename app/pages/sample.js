@@ -52,33 +52,33 @@ export default function Sample() {
 
   /* Filtrer les samples - RECHERCHE EN TEMPS RÉEL */
 
-const samplesFiltres = useMemo(() => {
-  return samples
-    .filter((concept) => {
-      const correspondRecherche =
-        concept.titre.toLowerCase().includes(recherche.toLowerCase()) ||
-        concept.description.toLowerCase().includes(recherche.toLowerCase()) ||
-        concept.artiste.toLowerCase().includes(recherche.toLowerCase());
-
-      const correspondCategorie =
-        !categorieActive || concept.categorie === categorieActive;
-
-      const correspondType =
-        !typeActif || concept.type === typeActif;
-
-      return correspondRecherche && correspondCategorie && correspondType;
-    })
-    .sort((a, b) => {
-      const dateA = parseInt(a.dateCreation);
-      const dateB = parseInt(b.dateCreation);
-
-      if (isNaN(dateA) && isNaN(dateB)) return 0;
-      if (isNaN(dateA)) return 1;
-      if (isNaN(dateB)) return -1;
-
-      return dateA - dateB; // récent → ancien
-    });
-  }, [recherche, categorieActive, typeActif]);
+  const samplesFiltres = useMemo(() => {
+    return samples
+      .filter((concept) => {
+        const correspondRecherche =
+          concept.titre.toLowerCase().includes(recherche.toLowerCase()) ||
+          concept.description.toLowerCase().includes(recherche.toLowerCase()) ||
+          concept.artiste.toLowerCase().includes(recherche.toLowerCase());
+      
+        const correspondCategorie =
+          !categorieActive || concept.categorie === categorieActive;
+      
+        const correspondType =
+          !typeActif || concept.type === typeActif;
+      
+        return correspondRecherche && correspondCategorie && correspondType;
+      })
+      .sort((a, b) => {
+        const dateA = parseInt(a.dateCreation);
+        const dateB = parseInt(b.dateCreation);
+      
+        if (isNaN(dateA) && isNaN(dateB)) return 0;
+        if (isNaN(dateA)) return 1;
+        if (isNaN(dateB)) return -1;
+      
+        return dateA - dateB; // récent → ancien
+      });
+    }, [recherche, categorieActive, typeActif]);
   
   useEffect(() => {
     setAffiches(samplesFiltres);

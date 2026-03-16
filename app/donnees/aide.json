@@ -1,20 +1,80 @@
 [
   {
     "id": "1",
-    "titre": "Musique",
-    "icone": "📝",
-    "contenu": "BLABLABLABLA."
+    "type": "morceau",
+    "titre": "Morceau musical",
+    "icone": "🎵",
+    "description": "Un morceau est une composition musicale complète. Il possède généralement une structure (intro, couplet, refrain, bridge) et combine plusieurs instruments, voix et effets.",
+    "origine": "Les morceaux existent depuis les premières formes de musique écrite. Dans la musique moderne, ils sont souvent enregistrés en studio et publiés dans des albums ou des singles.",
+    "conseils": [
+      "Analyse la structure du morceau pour comprendre comment il évolue.",
+      "Observe les instruments principaux pour identifier le style musical.",
+      "Utilise les morceaux comme référence pour créer tes propres compositions."
+    ]
   },
   {
     "id": "2",
-    "titre": "Musique",
-    "icone": "📝",
-    "contenu": "BLABLABLABLA."
+    "type": "one-shot",
+    "titre": "One-shot",
+    "icone": "🔊",
+    "description": "Un one-shot est un échantillon audio très court qui contient un seul son isolé (kick, snare, clap, bass hit, etc.).",
+    "origine": "Les one-shots viennent du sampling dans les années 80-90 avec les premiers samplers et boîtes à rythmes.",
+    "conseils": [
+      "Utilise-les pour construire tes propres beats.",
+      "Empile plusieurs one-shots pour créer des sons uniques.",
+      "Applique des effets comme la compression ou la saturation pour renforcer l'impact."
+    ]
   },
   {
     "id": "3",
-    "titre": "Musique",
-    "icone": "📝",
-    "contenu": "BLABLABLABLA."
+    "type": "loop",
+    "titre": "Loop",
+    "icone": "🔁",
+    "description": "Une loop est un extrait audio conçu pour se répéter parfaitement. Elle peut contenir une batterie, une mélodie ou une ambiance complète.",
+    "origine": "Les loops sont devenues populaires avec les DAW modernes et la musique électronique, permettant de construire rapidement des morceaux.",
+    "conseils": [
+      "Aligne toujours les loops sur le BPM du projet.",
+      "Combine plusieurs loops pour créer une texture plus riche.",
+      "Coupe ou modifie certaines parties pour éviter un son trop répétitif."
+    ]
+  },
+  {
+    "id": "4",
+    "type": "vocal",
+    "titre": "Sample vocal",
+    "icone": "🎤",
+    "description": "Un sample vocal est un extrait de voix humaine utilisé dans une production musicale. Il peut être chanté, crié, chuchoté ou transformé.",
+    "origine": "Les samples vocaux sont largement utilisés dans le hip-hop, l'EDM et la musique électronique depuis les années 90.",
+    "conseils": [
+      "Utilise le pitch shift pour adapter la voix à la tonalité du morceau.",
+      "Ajoute de la reverb ou du delay pour créer de l’espace.",
+      "Les vocal chops peuvent servir comme instrument mélodique."
+    ]
+  },
+  {
+    "id": "5",
+    "type": "fx",
+    "titre": "Effet sonore (FX)",
+    "icone": "✨",
+    "description": "Les FX sont des effets sonores utilisés pour les transitions, les impacts ou l’ambiance d’un morceau.",
+    "origine": "Les effets sonores viennent du sound design et du cinéma, mais sont aujourd’hui très utilisés en musique électronique.",
+    "conseils": [
+      "Utilise des risers pour créer de la tension avant un drop.",
+      "Les impacts servent à accentuer les moments forts.",
+      "Combine plusieurs FX pour créer des transitions plus naturelles."
+    ]
+  },
+  {
+    "id": "6",
+    "type": "remix",
+    "titre": "Remix",
+    "icone": "🎛️",
+    "description": "Un remix est une nouvelle version d’un morceau existant. Les éléments originaux sont modifiés, réarrangés ou combinés avec de nouveaux sons.",
+    "origine": "Les remixes sont apparus dans la culture DJ et la musique électronique dans les années 70-80.",
+    "conseils": [
+      "Conserve un élément reconnaissable du morceau original.",
+      "Change le rythme ou le style pour donner une nouvelle identité.",
+      "Expérimente avec les effets et les nouvelles structures."
+    ]
   }
 ]

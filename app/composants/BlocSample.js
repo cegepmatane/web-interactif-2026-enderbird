@@ -40,7 +40,7 @@ function BlocSample({
         style={{
           fontSize: '1.5em',
         }}
-      >{concept.titre}{concept.artiste == "" ? "" : " - " + concept.artiste}</div>
+      >{concept.titre}{concept.artiste == null ? "" : (" - " + concept.artiste)}</div>
 
       {!estCompact && (
         <div className="bloc-concept-apercu">
