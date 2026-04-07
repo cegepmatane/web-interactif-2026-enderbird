@@ -1,0 +1,173 @@
+#contenu-principal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-around;
+}
+
+/* Section album */
+.album-splash {
+    width: calc(25% - 1rem);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: var(--couleur-fond-carte);
+    border-radius: 25px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    opacity: 0;
+    transform: translateX(-1000px);
+
+    transition: padding 0.4s;
+}
+.album-splash.actif {
+    width: 100%;
+    padding: 2rem;
+    transition: padding 0.8s;
+}
+.album-splash.actif > .pochette-album {
+    transition: all 1s;
+}
+
+.album-splash > :nth-child(1) { flex: 1 1 4%; }
+.album-splash > :nth-child(2) { flex: 5 1 20%; }
+.album-splash > :nth-child(n+3) { flex: 1 1 100%; }
+
+.album-splash.visible {
+    animation: apparition 0.6s ease forwards;
+}
+
+/* SPLASH : Afficher morceaux avec pochette */
+.pochette-album {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--ombre-neon);
+}
+.pochette-album img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.pochette-album .overlay-afficher {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+.pochette-album:hover .overlay-afficher { opacity: 1; }
+.overlay-afficher span {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+.overlay-afficher p {
+    font-size: 0.9rem;
+    color: var(--couleur-violet-clair);
+}
+.splash-morceaux {
+    background: var(--couleur-fond-carte);
+    border-radius: 25px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: none;
+}
+.splash-morceaux.actif {
+    display: block;
+}
+
+/* Liste des pistes dans le splash-morceaux */
+.piste {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: translateX(-100px);
+
+    color: white;
+    text-decoration: none;
+}
+.piste.visible {
+    animation: glisser-droite 0.4s ease forwards;
+}
+@keyframes glisser-droite {
+    to { opacity: 1; transform: translateX(0); }
+}
+.piste:hover {
+    background: rgba(139,92,246,0.15);
+}
+.piste-numero {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--couleur-texte-secondaire);
+    text-align: center;
+}
+.piste:hover .piste-numero {
+    color: var(--couleur-violet-clair);
+}
+.piste-info {
+    flex: 16;
+}
+.piste-titre {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+.piste-artiste {
+    font-size: 0.85rem;
+    color: var(--couleur-texte-secondaire);
+}
+.piste-duree {
+    color: var(--couleur-texte-secondaire);
+    font-size: 0.9rem;
+}
+
+/* Autres infos */
+.info-album-splash {
+    display: none;
+}
+.info-album-splash.actif {
+    display: block;
+}
+
+.info-album-splash h2 {
+    font-size: 2rem;
+    background: var(--degrade-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.artiste-splash {
+    color: var(--couleur-texte-secondaire);
+    font-size: 1.1rem;
+}
+.stats-album {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+.stat-item {
+    text-align: center;
+}
+.stat-nombre {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--couleur-violet-clair);
+}
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--couleur-texte-secondaire);
+}

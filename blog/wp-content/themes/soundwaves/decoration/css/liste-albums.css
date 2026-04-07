@@ -1,0 +1,105 @@
+/* Liste des pistes */
+#liste-albums {
+    background: var(--couleur-fond-carte);
+    border-radius: 25px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Section album */
+.album {
+    display: flex;
+    background: var(--couleur-fond-carte);
+    border-radius: 25px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    opacity: 0;
+
+    transition: all 0.4s;
+}
+.album:nth-child(even) {
+    transform: translateX(-100px);
+}
+.album:nth-child(odd) {
+    transform: translateX(100px);
+}
+
+.album.visible {
+    animation: apparition 0.6s ease forwards;
+}
+.album a {
+    width: 100%;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+
+    text-decoration: none;
+}
+
+.album:hover {
+    background: black;
+}
+
+.album div.pochette-album {
+    height: 80px;
+    aspect-ratio: 1 / 1;
+    transition: all 0.5s;
+}
+.album:nth-child(even) div.pochette-album:hover {
+    transform: rotate(8deg);
+}
+.album:nth-child(odd) div.pochette-album:hover {
+    transform: rotate(-8deg);
+}
+.album div.pochette-album img {
+    width: 100%;
+}
+
+.album .info-album {
+    flex-grow: 1;
+    padding-bottom: 0;
+}
+
+.album .info-album h2 {
+    color: white;
+    font-size: 1em
+}
+.album .info-album p {
+    color: white;
+    font-size: 0.8em
+}
+
+.album .info-album .stats-album {
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: 0;
+    margin-top: 0.5rem;
+}
+
+.album .info-album .stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.album .info-album .stat-item .stat-label  {
+    flex: 1;
+    font-size: 0.8em;
+}
+.album .info-album .stat-item .stat-nombre  {
+    flex: 1;
+    font-size: 0.8em;
+}
+
+.album button {
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+
+    justify-content: center;
+}
