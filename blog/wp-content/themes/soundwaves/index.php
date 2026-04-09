@@ -10,31 +10,29 @@ get_header();
 <title>SoundWave - Blog</title>
 
 <main id="contenu-principal">
-    <section id="album-vedette">
+    <section class="liste-articles">
+        <?php if ( have_posts() ) : ?>
+            <?php while ( have_posts() ) : the_post(); ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class('article'); ?>>
+                    <div class="article-header">
+                        <h1 class="titre-article"><a href="<?=esc_url(get_permalink())?>"><?=the_title()?></a></h1>
+                        <div class="meta-article">
+                            <span class="meta-date">Publié le <?=get_the_date()?></span>
+                            <span class="meta-auteur">par <?=the_author()?></span>
+                            <span class="meta-categories">dans <?=the_category(', ')?></span>
+                        </div>
+                    </div>
 
-    <?php if ( have_posts() ) :
-        while ( have_posts() ) :
-            the_post(); ?>
-
-            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-                <h1><?php the_title('<a href="'.esc_url(get_permalink()).'">','</a>'); ?></h1>
-
-                <div class="meta">
-                    <span>Publié le <?php the_date(); ?></span>
-                    <span>par <?php the_author(); ?></span>
-                </div>
-
-                <div class="contenu">
-                    <?php the_content(); ?>
-                </div>
-            </article>
-    <?php endwhile;
-    else :
-        get_template_part("content","none");
-    endif; ?>
-
+                    <div class="contenu-article"><?=the_content()?></div>
+                    <div class="tags-article"><?=the_tags('<strong>Tags :</strong> ', ', ')?></div>
+                </article>
+            <?php endwhile; ?>
+        <?php else : ?>
+            <div class="article vide">
+                <p>Aucun article disponible.</p>
+            </div>
+        <?php endif; ?>
     </section>
 </main>
 
-<?=get_footer()?>
+<?php get_footer(); ?>

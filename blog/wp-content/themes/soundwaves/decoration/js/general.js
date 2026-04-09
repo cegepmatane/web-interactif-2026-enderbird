@@ -19,6 +19,10 @@ function retirerEffetFlash(elementSelectionne) {
     elementSelectionne.classList.remove("flash");
 }
 
+
+
+
+
 // Observateur pour animations au scroll
 function gererIntersection(entrees, observateur) {
     entrees.forEach(gererEntreeIntersection);
@@ -35,21 +39,11 @@ const observateur = new IntersectionObserver(gererIntersection, { threshold: 0.1
 
 
 // Observer les éléments
-const elementsAObserver = document.querySelectorAll('.item-legende, #album-vedette, .piste, .commentaire, .album');
+const elementsAObserver = document.querySelectorAll('.item-legende, #album-vedette, .piste, .album, .article');
 function observerElement(element) {
     observateur.observe(element);
 }
 elementsAObserver.forEach(observerElement);
 
 
-// Jouer pistes
-const boutonsJouerPiste = document.querySelectorAll('.bouton-piste.jouer');
-function initialiserEvenementBoutonJouer(bouton) {
-    bouton.addEventListener('click', gererClicBoutonJouer);
-}
-boutonsJouerPiste.forEach(initialiserEvenementBoutonJouer);
 
-function gererClicBoutonJouer(evenement) {
-    const bouton = evenement.currentTarget;
-    window.open("https://open.spotify.com/search/" + bouton.value, '_blank');
-}

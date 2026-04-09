@@ -1,43 +1,68 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html <?php language_attributes(); ?>>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?=get_template_directory_uri()?>/decoration/icon.svg" type="image/x-icon">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/decoration/icon.svg" type="image/x-icon">
+    <!-- Styles -->
+    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css">
+    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/decoration/css/general.css">
+    <!-- Scripts -->
+    <script src="<?php echo get_template_directory_uri(); ?>/decoration/js/general.js" defer></script>
 
-    <!-- <script src="js/general.js" defer></script> -->
-    <script src="<?=get_template_directory_uri()?>/decoration/js/general.js" defer></script>
-    <!-- <link rel="stylesheet" href="css/general.css"> -->
-    <link rel="stylesheet" href="<?=get_template_directory_uri()?>/style.css">
-    <link rel="stylesheet" href="<?=get_template_directory_uri()?>/decoration/css/general.css">
+    <?php wp_head(); ?>
 </head>
-<body>
 
-    <!-- Navigation du projet -->
-    <nav id="navigation-projet">
-        <?php $root_url = 'https://web.wavesofsounds.space'; ?>
+<body <?php body_class(); ?>>
 
-        <a href="<?= $root_url ?>" class="lien-navigation accueil">🏠 Accueil</a>
-        <a href="<?= $root_url ?>/splash.php" class="lien-navigation splash">🫟 Splash</a>
-        <a href="<?= $root_url ?>/liste-albums.php" class="lien-navigation liste">🎵 Albums</a>
-        <a href="https://web-projet-app.wavesofsounds.space" class="lien-navigation accueil">🔊 App</a>
-        <a href="<?=get_home_url()?>/" class="lien-navigation blog">📝 Blog</a>
-        <a href="<?= $root_url ?>/espace-membre.php" class="lien-navigation espace">✨ Mon Espace</a>
-        <a href="<?= $root_url ?>/admin/index.php" class="lien-navigation admin">⚙️ Admin</a>
-    </nav>
+<!-- NAVIGATION PRINCIPALE (MENU WORDPRESS) -->
+<nav id="navigation-projet">
 
-    <nav id="navigation-blog">
-        <a href="<?=get_home_url()?>/" class="lien-navigation accueil">🏠 Accueil</a>
-        <a href="<?=get_home_url()?>/a-propos/" class="lien-navigation propos">✨ À propos</a>
-        <a href="<?=get_home_url()?>/proposition/" class="lien-navigation proposition">🔊 Proposition</a>
-        <a href="<?=get_home_url()?>/curriculum/" class="lien-navigation curriculum">🫟 Curriculum</a>
-        <a href="<?=get_home_url()?>/contact/" class="lien-navigation contact">📝 Contact</a>
-    </nav>
+    <?php
+    wp_nav_menu([
+        'theme_location' => 'primary',
+        'container'      => false,
+        'menu_class'     => 'menu-principal',
+        'fallback_cb'    => false
+    ]);
+    ?>
 
-    <!-- En-tête -->
-    <header id="entete-principal">
+    <!-- LIENS SECONDAIRES (exemple custom) -->
+    <div class="liens-secondaires">
+        <a href="<?=home_url('/')?>" class="lien-navigation accueil">🏠 Accueil</a>
+        <a href="<?=home_url('/a-propos/')?>" class="lien-navigation propos">✨ À propos</a>
+        <a href="<?=home_url('/proposition/')?>" class="lien-navigation proposition">🔊 Proposition</a>
+        <a href="<?=home_url('/contact/')?>" class="lien-navigation contact">📝 Contact</a>
+        <a href="https://web.wavesofsounds.space" class="lien-navigation accueil">🌐 SoundWave (original)</a>
+    </div>
+</nav>
+
+<!-- HEADER -->
+<header id="entete-principal">
         <h1 id="titre-site"><?php bloginfo("title"); ?></h1>
-        <span id="slogan"><?php bloginfo("description"); ?></span>
-    </header>
+    <div class="bloc-logo">
+
+        <!-- LOGO (personnalisable dans WP) -->
+        <?php if (has_custom_logo()) : ?>
+            <div class="logo-site"><?php the_custom_logo(); ?></div>
+        <?php else : ?>
+            <h1 id="titre-site"><a href="<?php echo home_url('/'); ?>"><?php bloginfo('name'); ?></a></h1>
+        <?php endif; ?>
+
+        <!-- SLOGAN -->
+        <span id="slogan"><?php bloginfo('description'); ?></span>
+    </div>
+
+    <!-- BOUTON LOGIN / LOGOUT -->
+    <div class="auth">
+        <?php if (is_user_logged_in()) : ?>
+            <a href="<?php echo admin_url(); ?>" class="bouton-header">⚙️ Admin</a>
+            <a href="<?php echo wp_logout_url(home_url()); ?>" class="bouton-header">🚪 Déconnexion</a>
+        <?php else : ?>
+            <a href="<?php echo wp_login_url(); ?>" class="bouton-header">🔑 Connexion</a>
+        <?php endif; ?>
+    </div>
+</header>
 
 <?=wp_head()?>
