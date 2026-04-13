@@ -5,9 +5,7 @@ accesseur/BaseDeDonnees.php
 admin/accesseur/BaseDeDonnees.php
 
 
-
-blog/wp-content/plugins/.gitignore
-blog/wp-content/plugins/.git
+blog/wp-content/plugins/
 
 # Wordpress - ignore core, configuration, examples, uploads and logs.
 # https://github.com/github/gitignore/blob/main/WordPress.gitignore
