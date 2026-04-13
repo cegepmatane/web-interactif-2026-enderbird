@@ -1,0 +1,8 @@
+# Ignore all
+*
+# Keep gitignore itself
+!.gitignore
+
+# Keep specific files
+!effets-et-categories/
+!README.md
