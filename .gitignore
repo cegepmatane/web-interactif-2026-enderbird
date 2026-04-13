@@ -6,8 +6,8 @@ admin/accesseur/BaseDeDonnees.php
 
 
 
-/blog/wp-content/plugins/.gitignore
-/blog/wp-content/plugins/.git
+blog/wp-content/plugins/.gitignore
+blog/wp-content/plugins/.git
 
 # Wordpress - ignore core, configuration, examples, uploads and logs.
 # https://github.com/github/gitignore/blob/main/WordPress.gitignore
@@ -16,35 +16,35 @@ admin/accesseur/BaseDeDonnees.php
 #
 # Note: if you want to stage/commit WP core files
 # you can delete this whole section/until Configuration.
-/blog/wp-admin/
-/blog/wp-content/index.php
-/blog/wp-content/languages
-/blog/wp-content/plugins/index.php
-/blog/wp-content/themes/index.php
-/blog/wp-includes/
-/blog/index.php
-/blog/license.txt
-/blog/readme.html
-/blog/wp-*.php
-/blog/xmlrpc.php
+blog/wp-admin/
+blog/wp-content/index.php
+blog/wp-content/languages
+blog/wp-content/plugins/index.php
+blog/wp-content/themes/index.php
+blog/wp-includes/
+blog/index.php
+blog/license.txt
+blog/readme.html
+blog/wp-*.php
+blog/xmlrpc.php
 
 # Configuration
-/blog/wp-config.php
+blog/wp-config.php
 
 # Example themes
-/blog/wp-content/themes/twenty*/
+blog/wp-content/themes/twenty*/
 
 # Example plugin
-/blog/wp-content/plugins/hello.php
+blog/wp-content/plugins/hello.php
 
 # Uploads
 /blog/wp-content/uploads/
 
 # Log files
-/blog/*.log
+blog/*.log
 
 # htaccess
-/blog/.htaccess
+blog/.htaccess
 
 # All plugins
 #
