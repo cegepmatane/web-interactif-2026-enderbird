@@ -1,12 +1,14 @@
 <?php get_header(); ?>
 
-<main id="contenu-principal">
+<main id="contenu-principal" class="container">
   <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-  <article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
-    <h1><?php the_title(); ?></h1>
-    <div class="contenu"><?=the_content()?></div>
-  </article>
+    <article id="page-<?php the_ID(); ?>" <?php post_class('page-content'); ?>>
+      <!-- =========================
+           PAGE CONTENT
+      ========================== -->
+      <?php get_template_part('template-parts/content', 'page'); ?>
+    </article>
 
   <?php endwhile; endif; ?>
 </main>

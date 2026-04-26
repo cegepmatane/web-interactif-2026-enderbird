@@ -1,68 +1,110 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
-<head>
+  
+  <head>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/decoration/icon.svg" type="image/x-icon">
-    <!-- Styles -->
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css">
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/decoration/css/general.css">
-    <!-- Scripts -->
-    <script src="<?php echo get_template_directory_uri(); ?>/decoration/js/general.js" defer></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <!-- SEO robots -->
+    <meta name="robots" content="index, follow">
+  
+    <!-- META DESCRIPTION SEO -->
+    <meta name="description" content="<?php
+      if (is_singular()) {
+        echo esc_attr(wp_strip_all_tags(get_the_excerpt()));
+      } else {
+        echo esc_attr(get_bloginfo('description'));
+      }
+    ?>">
+  
+    <!-- WordPress Site Icon || Fallback custom favicon-->
+    <?php if (function_exists('has_site_icon') && has_site_icon()) : ?>
+      <?php wp_site_icon(); ?>
+    <?php else : ?>
+      <link rel="icon" href="<?php echo esc_url(get_template_directory_uri() . '/decoration/icon.svg'); ?>"> 
+    <?php endif; ?>
+  
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" 
+      title="<?php bloginfo('name'); ?> RSS Feed" 
+      href="<?php bloginfo('rss2_url'); ?>"
+    >
+    
     <?php wp_head(); ?>
-</head>
-
-<body <?php body_class(); ?>>
-
-<!-- NAVIGATION PRINCIPALE (MENU WORDPRESS) -->
-<nav id="navigation-projet">
-
-    <?php
-    wp_nav_menu([
-        'theme_location' => 'primary',
-        'container'      => false,
-        'menu_class'     => 'menu-principal',
-        'fallback_cb'    => false
-    ]);
-    ?>
-
-    <!-- LIENS SECONDAIRES (exemple custom) -->
-    <div class="liens-secondaires">
-        <a href="<?=home_url('/')?>" class="lien-navigation accueil">🏠 Accueil</a>
-        <a href="<?=home_url('/a-propos/')?>" class="lien-navigation propos">✨ À propos</a>
-        <a href="<?=home_url('/proposition/')?>" class="lien-navigation proposition">🔊 Proposition</a>
-        <a href="<?=home_url('/contact/')?>" class="lien-navigation contact">📝 Contact</a>
-        <a href="https://web.wavesofsounds.space" class="lien-navigation accueil">🌐 SoundWave (original)</a>
-    </div>
-</nav>
-
-<!-- HEADER -->
-<header id="entete-principal">
-        <h1 id="titre-site"><?php bloginfo("title"); ?></h1>
-    <div class="bloc-logo">
-
-        <!-- LOGO (personnalisable dans WP) -->
-        <?php if (has_custom_logo()) : ?>
-            <div class="logo-site"><?php the_custom_logo(); ?></div>
+  </head>
+  
+  <body <?php body_class(); ?>>
+    <?php wp_body_open(); ?>
+    
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+    <nav id="navigation" aria-label="Menu principal">
+      <?php if (has_nav_menu('primary')) : 
+        wp_nav_menu([
+          'theme_location' => 'primary',
+          'container'      => false,
+          'menu_class'     => 'menu-principal'
+        ]); 
+      endif; ?>
+    
+      <!-- LINKS SECONDAIRES SEO -->
+      <a class="secondary-link" href="<?php echo esc_url(home_url('/')); ?>">🏠 Accueil</a>
+      <a class="secondary-link" href="<?php echo esc_url(home_url('/blog/')); ?>">📝 Blog</a>
+      <a class="secondary-link" href="<?php echo esc_url(home_url('/a-propos/')); ?>">✨ À propos</a>
+      <a class="secondary-link" href="<?php echo esc_url(home_url('/proposition/')); ?>">🫟 Proposition</a>
+      <a class="secondary-link" href="<?php echo esc_url(home_url('/contact/')); ?>">📞 Contact</a>
+      <a class="secondary-link" href="https://web.wavesofsounds.space" rel="noopener noreferrer">🎵 SoundWave</a>
+    </nav>
+    
+    <!-- =========================
+         HEADER SITE
+    ========================= -->
+    <header>
+      <div class="site-branding">
+        <!-- LOGO -->
+        <?php if (has_custom_logo()) :
+          the_custom_logo();
+        endif; ?>
+    
+        <!-- TITLE SEO -->
+        <?php if (is_front_page() || is_home()) : ?>
+          <h1><a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a></h1>
         <?php else : ?>
-            <h1 id="titre-site"><a href="<?php echo home_url('/'); ?>"><?php bloginfo('name'); ?></a></h1>
+          <p><a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a></p>
         <?php endif; ?>
+    
+        <!-- TAGLINE -->
+        <?php if (get_bloginfo('description')) : ?>
+          <p id="slogan"><?php bloginfo('description'); ?></p>
+        <?php endif; ?>
+      </div>
+    
+      <!-- SEARCH -->
+      <form id="header-search" role="search" method="get" action="<?php echo home_url('/'); ?>">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="search" 
+          name="s" 
+          placeholder="Rechercher un article, un mot-clé..." 
+          value="<?php echo get_search_query(); ?>"
+        >
+      </form>
+    
+      <!-- AUTH -->
+      <div class="header-auth">
+        <?php if (is_user_logged_in()) :
 
-        <!-- SLOGAN -->
-        <span id="slogan"><?php bloginfo('description'); ?></span>
-    </div>
+          if (current_user_can('edit_posts')) : ?>
+            <a href="<?php echo esc_url(admin_url()); ?>">Admin</a>
+          <?php endif; ?>
 
-    <!-- BOUTON LOGIN / LOGOUT -->
-    <div class="auth">
-        <?php if (is_user_logged_in()) : ?>
-            <a href="<?php echo admin_url(); ?>" class="bouton-header">⚙️ Admin</a>
-            <a href="<?php echo wp_logout_url(home_url()); ?>" class="bouton-header">🚪 Déconnexion</a>
+          <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">Déconnexion</a>
+
         <?php else : ?>
-            <a href="<?php echo wp_login_url(); ?>" class="bouton-header">🔑 Connexion</a>
-        <?php endif; ?>
-    </div>
-</header>
 
-<?=wp_head()?>
+          <a href="<?php echo esc_url(wp_login_url()); ?>">Connexion</a>
+
+        <?php endif; ?>
+      </div>
+    </header>

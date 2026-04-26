@@ -1,38 +1,106 @@
-<?php
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', true);
-ini_set('display_errors', 1);
+<?php get_header(); ?>
 
-get_header();
-?>
+<div>
 
-<title>SoundWave - Blog</title>
+  <main id="contenu-principal">
 
-<main id="contenu-principal">
-    <section class="liste-articles">
-        <?php if ( have_posts() ) : ?>
-            <?php while ( have_posts() ) : the_post(); ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class('article'); ?>>
-                    <div class="article-header">
-                        <h1 class="titre-article"><a href="<?=esc_url(get_permalink())?>"><?=the_title()?></a></h1>
-                        <div class="meta-article">
-                            <span class="meta-date">Publié le <?=get_the_date()?></span>
-                            <span class="meta-auteur">par <?=the_author()?></span>
-                            <span class="meta-categories">dans <?=the_category(', ')?></span>
-                        </div>
-                    </div>
+    <!-- =========================
+         TITRE ARCHIVE (SEO IMPORTANT)
+    ========================== -->
+    <header>
 
-                    <div class="contenu-article"><?=the_content()?></div>
-                    <div class="tags-article"><?=the_tags('<strong>Tags :</strong> ', ', ')?></div>
-                </article>
-            <?php endwhile; ?>
-        <?php else : ?>
-            <div class="article vide">
-                <p>Aucun article disponible.</p>
-            </div>
-        <?php endif; ?>
+      <h1>
+        <?php
+        if (is_category()) {
+          single_cat_title();
+        } elseif (is_tag()) {
+          single_tag_title();
+        } elseif (is_author()) {
+          the_post();
+          echo 'Articles de ' . get_the_author();
+          rewind_posts();
+        } else {
+          echo 'Archives';
+        }
+        ?>
+      </h1>
+
+      <?php
+      if (is_category() || is_tag()) {
+        the_archive_description('<p>', '</p>');
+      }
+      ?>
+
+    </header>
+
+    <!-- =========================
+         POSTS LIST
+    ========================== -->
+    <section>
+
+      <?php if (have_posts()) : ?>
+
+        <?php while (have_posts()) : the_post(); ?>
+
+          <article>
+
+            <!-- TITRE SEO -->
+            <h2>
+              <a href="<?php the_permalink(); ?>">
+                <?php the_title(); ?>
+              </a>
+            </h2>
+
+            <!-- IMAGE SEO -->
+            <?php if (has_post_thumbnail()) : ?>
+              <a href="<?php the_permalink(); ?>">
+                <?php the_post_thumbnail(); ?>
+              </a>
+            <?php endif; ?>
+
+            <!-- EXCERPT SEO -->
+            <p>
+              <?php the_excerpt(); ?>
+            </p>
+
+            <!-- META SEO -->
+            <p>
+              <?php the_category(', '); ?>
+            </p>
+
+            <?php the_tags('<p>', ', ', '</p>'); ?>
+
+          </article>
+
+        <?php endwhile; ?>
+
+        <!-- =========================
+             PAGINATION SEO
+        ========================== -->
+        <nav aria-label="Pagination des articles">
+
+          <?php the_posts_pagination([
+            'mid_size'  => 2,
+            'prev_text' => '← Précédent',
+            'next_text' => 'Suivant →',
+          ]); ?>
+
+        </nav>
+
+      <?php else : ?>
+
+        <p>
+          <?php echo esc_html(get_theme_mod('no_posts_text', 'Aucun article trouvé.')); ?>
+        </p>
+
+      <?php endif; ?>
+
     </section>
-</main>
+
+  </main>
+
+  <?php get_sidebar(); ?>
+
+</div>
 
 <?php get_footer(); ?>

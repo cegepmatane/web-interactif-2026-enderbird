@@ -47,3 +47,18 @@ elementsAObserver.forEach(observerElement);
 
 
 
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.querySelector(".note-bouton");
+    const content = document.querySelector(".note-contenu");
+
+    if (!btn || !content) return;
+
+    btn.addEventListener("click", function () {
+        btn.classList.toggle("actif");
+        content.classList.toggle("actif");
+    });
+});
+
