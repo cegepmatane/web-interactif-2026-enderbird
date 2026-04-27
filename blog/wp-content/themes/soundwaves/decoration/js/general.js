@@ -39,26 +39,8 @@ const observateur = new IntersectionObserver(gererIntersection, { threshold: 0.1
 
 
 // Observer les éléments
-const elementsAObserver = document.querySelectorAll('.item-legende, #album-vedette, .piste, .album, .article');
+const elementsAObserver = document.querySelectorAll('article, .commentaire');
 function observerElement(element) {
     observateur.observe(element);
 }
 elementsAObserver.forEach(observerElement);
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.querySelector(".note-bouton");
-    const content = document.querySelector(".note-contenu");
-
-    if (!btn || !content) return;
-
-    btn.addEventListener("click", function () {
-        btn.classList.toggle("actif");
-        content.classList.toggle("actif");
-    });
-});
-

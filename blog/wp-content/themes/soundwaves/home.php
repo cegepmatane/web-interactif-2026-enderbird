@@ -8,16 +8,6 @@
     <h1>
       <?php echo esc_html(get_theme_mod('blog_title', 'Blog')); ?>
     </h1>
-
-    <?php if (get_theme_mod('blog_description')) : ?>
-      <p>
-        <?php echo esc_html(get_theme_mod('blog_description')); ?>
-      </p>
-    <?php else : ?>
-      <p>
-        <?php bloginfo('description'); ?>
-      </p>
-    <?php endif; ?>
   </header>
 
   <!-- =========================
@@ -30,12 +20,8 @@
         <?php get_template_part('template-parts/content', get_post_type()); ?>
       <?php endwhile; ?>
 
-      <!-- =========================
-           PAGINATION SEO
-      ========================== -->
       <?php if (get_theme_mod('show_pagination', true)) : ?>
-
-        <nav aria-label="Pagination des articles">
+        <nav id="pagination" aria-label="Pagination des articles">
           <?php the_posts_pagination([
             'mid_size'  => 2,
             'prev_text' => '← Précédent',
@@ -50,7 +36,6 @@
 
     <?php endif; ?>
   </section>
-
 </main>
 
 <?php get_footer(); ?>

@@ -116,42 +116,45 @@ add_filter('body_class', 'mytheme_body_classes');
 /**
  * COMMENT CALLBACK (SAFE + CUSTOM DESIGN)
  */
-function mytheme_comment_callback($comment, $args, $depth) { ?>
+function mytheme_comment_callback($comment, $args, $depth) {
+  ?>
 
-    <div <?php comment_class('comment-card'); ?> id="comment-<?php comment_ID(); ?>">
+  <div <?php comment_class('commentaire'); ?> id="comment-<?php comment_ID(); ?>">
 
-        <div class="comment-avatar">
-            <?php echo get_avatar($comment, 45); ?>
-        </div>
-
-        <div class="comment-body">
-
-            <div class="comment-author">
-                <?php echo get_comment_author_link(); ?>
-            </div>
-
-            <div class="comment-text">
-                <?php comment_text(); ?>
-            </div>
-
-            <div class="comment-meta">
-                <?php echo get_comment_date('', $comment); ?>
-            </div>
-
-            <div class="comment-reply">
-                <?php
-                comment_reply_link([
-                    'depth'     => $depth,
-                    'max_depth' => $args['max_depth']
-                ]);
-                ?>
-            </div>
-
-        </div>
+    <div class="avatar-commentaire">
+      <?php echo get_avatar($comment, 45); ?>
     </div>
 
-<?php }
+    <div class="contenu-commentaire">
 
+      <div class="auteur-commentaire">
+        <p class="nom">
+          <?php echo get_comment_author_link(); ?>
+        </p>
+        <p class="comment-meta">
+          <?php echo get_comment_date(); ?>
+        </p>
+      </div>
+
+      <div class="texte-commentaire">
+        <?php comment_text(); ?>
+      </div>
+
+      <div class="comment-reply">
+        <?php
+        comment_reply_link(array_merge($args, [
+          'depth'     => $depth,
+          'max_depth' => $args['max_depth']
+        ]));
+        ?>
+      </div>
+
+    </div>
+
+  </div>
+
+  <?php
+}
 
 function add_project_note_metabox() {
     add_meta_box(

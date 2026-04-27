@@ -1,38 +1,53 @@
-<section id="comments" class="comments-section" aria-label="Commentaires" role="list">
-  <?php if (have_comments()) : ?>
-    <div class="comments-list">
+<section id="section-commentaires" class="comments-section" aria-label="Commentaires" role="list">
+
+  <ol class="liste-commentaires">
+
+    <?php if (have_comments()) : ?>
+
       <?php
       wp_list_comments([
         'style'       => 'div',
-        'short_ping'  => true,
+        'callback'    => 'mytheme_comment_callback',
         'avatar_size' => 45,
-        'callback'    => 'mytheme_comment_callback'
+        'max_depth'   => 5
       ]);
       ?>
-    </div>
-  <?php endif; ?>
-  
-  <?php
-  the_comments_navigation(); // Pagination des commentaires
-  ?>
-  
-  <?php if (comments_open()) : ?>
-    <div class="comment-form-wrapper">
-      <?php
-      comment_form([
-        'class_form' => 'contact-form',
-        'title_reply' => 'Laisser un commentaire',
-        'label_submit' => 'Envoyer',
-        'comment_field' => '
-            <textarea name="comment" placeholder="Ton commentaire" required></textarea>
-        ',
-        'logged_in_as' => '',
-      ]);
-      ?>
-    </div>
-  <?php endif; ?>
 
-  <?php if (!have_comments()) : ?>
-    <p>Aucun commentaire pour le moment.</p>
-  <?php endif; ?>
+    <?php else : ?>
+      <p>Aucun commentaire pour le moment.</p>
+    <?php endif; ?>
+
+    </ol>
+
+  <?php the_comments_navigation(); ?>
+
+  <?php if (comments_open() && is_user_logged_in()) :
+    comment_form([
+      'class_form' => 'formulaire-commentaire',
+      
+      'title_reply' => '',
+      
+      'label_submit' => 'Envoyer',
+      
+      'class_submit' => 'bouton-commenter',
+      
+      'comment_field' => '
+        <input 
+          name="comment" 
+          class="champ-commentaire" 
+          placeholder="Écris ton commentaire..." 
+          required
+        ></input>
+      ',
+      
+      'logged_in_as' => '',
+    ]);
+  else : ?>
+
+  <a href="<?php echo wp_login_url(get_permalink()); ?>" class="bouton-commenter">
+    Se connecter pour commenter
+  </a>
+
+<?php endif; ?>
+
 </section>

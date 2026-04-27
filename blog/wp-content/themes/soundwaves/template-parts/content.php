@@ -17,7 +17,7 @@
        FEATURED IMAGE SEO
   ========================== -->
   <?php if (has_post_thumbnail() && !is_singular()) : ?>
-    <a href="<?php the_permalink(); ?>">
+    <a class="link-image" href="<?php the_permalink(); ?>">
       <?php the_post_thumbnail('large', [
         'alt' => get_the_title()
       ]); ?>
@@ -27,7 +27,7 @@
   <!-- =========================
        META SEO
   ========================== -->
-  <p>
+  <p class="date">
     <?php echo get_the_date(); ?>
     <?php the_author_posts_link(); ?>
     <?php the_category(', '); ?>
@@ -38,16 +38,15 @@
   ========================== -->
   <?php if (is_singular()) : ?>
     <?php the_content();?>
-
   <?php else : ?>
-    <?php the_excerpt(); ?>
+      <?php the_excerpt(); ?>
   <?php endif; ?>
 
   <!-- =========================
        TAGS SEO LINKING
   ========================== -->
   <?php if (has_tag()) : ?>
-    <p>
+    <p class="tags">
       <?php the_tags('Tags : ', ', '); ?>
     </p>
   <?php endif; ?>

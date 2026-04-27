@@ -1,13 +1,18 @@
       <footer role="contentinfo">
-        <?php get_template_part('template-parts/seo-blocks/categories'); ?>
+        <div>
+          <?php get_template_part('template-parts/seo-blocks/categories'); ?>
+        </div>
+        <div>
+          <?php get_template_part('template-parts/seo-blocks/tags'); ?>
+        </div>
+        <div>
+          <?php get_template_part('template-parts/seo-blocks/recent'); ?>
+        </div>
+        <div>
+          <?php get_template_part('template-parts/seo-blocks/nav'); ?>
+        </div>
       
-        <?php get_template_part('template-parts/seo-blocks/tags'); ?>
-      
-        <?php get_template_part('template-parts/seo-blocks/recent'); ?>
-      
-        <?php get_template_part('template-parts/seo-blocks/nav'); ?>
-      
-        <p>SoundWave © <?php echo date('Y'); ?> • Votre musique, votre univers</p>
+        <p>SoundWave © <?php echo date('Y'); ?> • Profitons de la vie au maximum de nos capacités</p>
       
       </footer>
     <?php wp_footer(); ?>

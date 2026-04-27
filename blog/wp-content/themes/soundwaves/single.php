@@ -25,8 +25,7 @@
          POST NAVIGATION (SEO INTERNAL LINKING)
     ========================== -->
     <?php if (get_theme_mod('show_post_nav', true)) : ?>
-      <nav aria-label="Navigation des articles">
-
+      <nav id="pagination" aria-label="Navigation des articles">
         <div>
           <?php previous_post_link('%link', '← %title'); ?>
         </div>
@@ -34,7 +33,6 @@
         <div>
           <?php next_post_link('%link', '%title →'); ?>
         </div>
-
       </nav>
     <?php endif; ?>
 

@@ -1,5 +1,17 @@
 # Cédric Simard
 
+## Projet Blog
+
+- https://web-projet-app.wavesofsounds.space/blog
+
+---
+
+---
+
+---
+
+
+
 ## Projet APP
 
 - [README.md](app/README.md)
@@ -35,7 +47,7 @@ Sections du [Ajax.md](Ajax.md) :
 - **Accueil** (Template Modifié) : https://web.wavesofsounds.space
 - **Splash** : https://web.wavesofsounds.space/splash.php
 - **Liste d'albums** (et morceaux) : https://web.wavesofsounds.space/liste-albums.php
-- **Journal** (Vide) : https://web.wavesofsounds.space/journal.php
+- **Blog** : https://web.wavesofsounds.space/blog
 - **Espace Membre** : https://web.wavesofsounds.space/espace-membre.php
 - **Admin**[^admin] : https://web.wavesofsounds.space/admin/index.php
 

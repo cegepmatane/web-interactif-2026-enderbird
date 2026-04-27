@@ -94,11 +94,11 @@
       <!-- AUTH -->
       <div class="header-auth">
         <?php if (is_user_logged_in()) :
-
+        
           if (current_user_can('edit_posts')) : ?>
             <a href="<?php echo esc_url(admin_url()); ?>">Admin</a>
           <?php endif; ?>
-
+          
           <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>">Déconnexion</a>
 
         <?php else : ?>
