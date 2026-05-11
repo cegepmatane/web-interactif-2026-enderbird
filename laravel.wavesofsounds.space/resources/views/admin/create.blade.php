@@ -7,6 +7,8 @@
 
 <h1>Ajouter un morceau</h1>
 
+<a href="{{ route('admin.index') }}">← Retour</a>
+
 <form action="{{ url('/admin/store') }}" method="POST">
 
     @csrf
@@ -50,7 +52,7 @@
 
     <div>
         <label>Durée</label>
-        <input type="time" name="duree">
+        <input type="text" name="duree" value="00:00:00">
     </div>
 
     <br>

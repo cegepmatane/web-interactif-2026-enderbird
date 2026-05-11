@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
 
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WizardController;
 
@@ -13,6 +14,7 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
+    // Morceaux
     Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
     Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
 
@@ -20,7 +22,22 @@ Route::prefix('admin')->group(function () {
     Route::put('/update/{id}', [AdminController::class, 'update'])->name('admin.update');
 
     Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+
+    // Albums
+    Route::get('/albums/create', [AdminController::class, 'createAlbum'])->name('admin.albums.create');
+    Route::post('/albums/store', [AdminController::class, 'storeAlbum'])->name('admin.albums.store');
+
+    Route::get('/albums/edit/{id}', [AdminController::class, 'editAlbum'])->name('admin.albums.edit');
+    Route::put('/albums/update/{id}', [AdminController::class, 'updateAlbum'])->name('admin.albums.update');
+
+    Route::delete('/albums/delete/{id}', [AdminController::class, 'destroyAlbum'])->name('admin.albums.destroy');
+
+    // Backup system
+    Route::post('/backup/create', [AdminController::class, 'createBackup'])->name('admin.backup.create');
+    Route::post('/backup/restore', [AdminController::class, 'restoreBackup'])->name('admin.backup.restore');
 });
+
+
 
 Route::prefix('inscription')->group(function () {
     Route::get('/etape-1', [WizardController::class, 'step1']);

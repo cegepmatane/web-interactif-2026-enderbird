@@ -7,6 +7,8 @@
 
 <h1>Modifier un morceau</h1>
 
+<a href="{{ route('admin.index') }}">← Retour</a>
+
 <form action="{{ url('/admin/update/' . $morceau->id) }}" method="POST">
 
     @csrf
@@ -58,9 +60,10 @@
 
     <div>
         <label>Durée</label>
-        <input type="time"
+        <input type="text"
                name="duree"
-               value="{{ $morceau->duree }}">
+               value="{{ $morceau->duree }}"
+               placeholder="00:00:00">
     </div>
 
     <br>

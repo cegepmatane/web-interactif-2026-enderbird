@@ -9,8 +9,7 @@ class Morceau extends Model
     protected $table = 'morceaux';
 
     protected $fillable = [
-        'id_album',
-        'name',
+        'album_id',
         'ordre',
         'titre',
         'artiste',
