@@ -1,0 +1,53 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ContactController;
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WizardController;
+
+Route::get('/', [WelcomeController::class, 'index']);
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+
+    Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
+
+    Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::put('/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+
+    Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+});
+
+Route::prefix('inscription')->group(function () {
+    Route::get('/etape-1', [WizardController::class, 'step1']);
+    Route::post('/etape-1', [WizardController::class, 'postStep1']);
+
+    Route::get('/etape-2', [WizardController::class, 'step2']);
+    Route::post('/etape-2', [WizardController::class, 'postStep2']);
+
+    Route::get('/etape-3', [WizardController::class, 'step3']);
+    Route::post('/etape-3', [WizardController::class, 'finish']);
+});
+
+Route::get('article/{n}', [ArticleController::class, 'show'])->where('n', '[0-9]+');
+
+
+Route::get('gome', function() { return 'Je suis la page 15 !'; });
+Route::get('duc', function() { return 'Je suis la page 16 !'; });
+
+
+Route::controller(UsersController::class)->group(function () {
+    Route::get('users', 'getInfos');
+    Route::post('users', 'postInfos');
+});
+
+Route::controller(ContactController::class)->group(function () {
+    Route::get('contact', 'getForm');
+    Route::post('contact', 'postForm');
+});
+
+// [UsersController::class, 'method']

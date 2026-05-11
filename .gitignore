@@ -1,8 +1,8 @@
-.htaccess
-.htaccess
-.htaccess
-accesseur/BaseDeDonnees.php
-admin/accesseur/BaseDeDonnees.php
+*
+!laravel.wavesofsounds.space/
+!laravel.wavesofsounds.space/**
 
+!web.wavesofsounds.space/
+!web.wavesofsounds.space/**
 
-blog/wp-content/plugins/
+!.gitignore
