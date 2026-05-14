@@ -37,32 +37,32 @@ class AdminController extends Controller
     // -------------------------
     // MORCEAUX
     // -------------------------
-    public function create()
+    public function createMorceau()
     {
-        return view('admin.create', ['albums' => Album::all()]);
+        return view('admin.morceaux.create', ['albums' => Album::all()]);
     }
 
-    public function store(Request $request)
+    public function storeMorceau(Request $request)
     {
         Morceau::create($request->all());
-        return redirect('/admin');
+        return redirect()->route('admin.index');
     }
 
-    public function edit($id)
+    public function editMorceau($id)
     {
-        return view('admin.edit', [
+        return view('admin.morceaux.edit', [
             'morceau' => Morceau::findOrFail($id),
             'albums' => Album::all()
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function updateMorceau(Request $request, $id)
     {
         Morceau::findOrFail($id)->update($request->all());
         return redirect('/admin');
     }
 
-    public function destroy($id)
+    public function destroyMorceau($id)
     {
         Morceau::destroy($id);
         return redirect('/admin');

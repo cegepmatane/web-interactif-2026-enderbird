@@ -9,7 +9,7 @@
 
 <a href="{{ route('admin.index') }}">← Retour</a>
 
-<form action="{{ url('/admin/store') }}" method="POST">
+<form action="{{ route('admin.morceaux.store') }}" method="POST">
 
     @csrf
 
@@ -55,11 +55,7 @@
         <input type="text" name="duree" value="00:00:00">
     </div>
 
-    <br>
-
-    <button type="submit">
-        Ajouter
-    </button>
+    <button type="submit">Ajouter</button>
 
 </form>
 

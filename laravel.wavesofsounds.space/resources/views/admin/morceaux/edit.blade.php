@@ -9,7 +9,7 @@
 
 <a href="{{ route('admin.index') }}">← Retour</a>
 
-<form action="{{ url('/admin/update/' . $morceau->id) }}" method="POST">
+<form action="{{ route('admin.morceaux.update', $morceau->id) }}" method="POST">
 
     @csrf
     @method('PUT')

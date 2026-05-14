@@ -27,7 +27,7 @@
 
   <h1>Liste des albums</h1>
   
-  <a href="{{ url('/admin/create') }}">Ajouter un morceau</a>
+  <a href="{{ url('/admin/morceaux/create') }}">Ajouter un morceau</a>
   <a href="{{ url('/admin/albums/create') }}">Ajouter un album</a>
   
     @foreach($albums as $album)
@@ -51,9 +51,9 @@
           - {{ $morceau->artiste }}
           - {{ $morceau->duree }}
   
-          <a href="{{ url('/admin/edit/' . $morceau->id) }}">Modifier</a>
+          <a href="{{ url('/admin/morceaux/edit/' . $morceau->id) }}">Modifier</a>
   
-          <form action="{{ url('/admin/delete/' . $morceau->id) }}" method="POST">
+          <form action="{{ url('/admin/morceaux/delete/' . $morceau->id) }}" method="POST">
               @csrf
               @method('DELETE')
   
@@ -73,9 +73,9 @@
           - {{ $morceau->artiste }}
           - {{ $morceau->duree }}
   
-          <a href="{{ url('/admin/edit/' . $morceau->id) }}">Modifier</a>
+          <a href="{{ url('/admin/morceaux/edit/' . $morceau->id) }}">Modifier</a>
   
-          <form action="{{ url('/admin/delete/' . $morceau->id) }}" method="POST">
+          <form action="{{ url('/admin/morceaux/delete/' . $morceau->id) }}" method="POST">
             @csrf
             @method('DELETE')
   

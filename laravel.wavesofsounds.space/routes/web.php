@@ -15,13 +15,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
     // Morceaux
-    Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
-    Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/morceaux/create', [AdminController::class, 'createMorceau'])->name('admin.morceaux.create');
+    Route::post('/morceaux/store', [AdminController::class, 'storeMorceau'])->name('admin.morceaux.store');
 
-    Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
-    Route::put('/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+    Route::get('/morceaux/edit/{id}', [AdminController::class, 'editMorceau'])->name('admin.morceaux.edit');
+    Route::put('/morceaux/update/{id}', [AdminController::class, 'updateMorceau'])->name('admin.morceaux.update');
 
-    Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::delete('/morceaux/delete/{id}', [AdminController::class, 'destroyMorceau'])->name('admin.morceaux.destroy');
 
     // Albums
     Route::get('/albums/create', [AdminController::class, 'createAlbum'])->name('admin.albums.create');
