@@ -1,10 +1,8 @@
-*
-!laravel.wavesofsounds.space/
-!laravel.wavesofsounds.space/**
+.htaccess
+.htaccess
+.htaccess
+accesseur/BaseDeDonnees.php
+admin/accesseur/BaseDeDonnees.php
 
-!web.wavesofsounds.space/
-!web.wavesofsounds.space/**
 
-!README.md
-
-!.gitignore
+blog/wp-content/plugins/
