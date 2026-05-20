@@ -9,7 +9,7 @@
   
   <a href="{{ route('index') }}">← Retour</a>
   
-  <form action="{{ route('morceau.store') }}" method="POST">
+  <form action="{{ route('morceau.enregistrerCreation') }}" method="POST">
     @csrf
   
     <div>

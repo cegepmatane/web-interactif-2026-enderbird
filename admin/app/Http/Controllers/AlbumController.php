@@ -1,20 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Models\Album;
 use Illuminate\Http\Request;
 
+
 class AlbumController extends Controller
 {
-  public function create()
-  {
-    return view('album.create');
+  // AJOUTER
+  public function creer(){ 
+    return view('album.creer'); 
   }
-
-  public function store(Request $request)
-  {
+  public function enregistrerCreation(Request $request){
     $request->validate(
       ['nom' => 'required'],
       ['artiste' => 'required'],
@@ -28,17 +26,15 @@ class AlbumController extends Controller
     return redirect()->route('index');
   }
 
-  public function edit($id)
-  {
-    return view('album.edit', 
+  // MODIFIER
+  public function modifier($id){
+    return view('album.modifier', 
       [
         'album' => Album::findOrFail($id)
       ]
     );
   }
-
-  public function update(Request $request, $id)
-  {
+  public function enregistrerModifications(Request $request, $id){
     // Album::findOrFail($id)->update($request->all());
 
     Album::findOrFail($id)->update([
@@ -50,7 +46,8 @@ class AlbumController extends Controller
     return redirect()->route('index');
   }
 
-  public function delete($id)
+  // SUPPRIMER
+  public function supprimer($id)
   {
     Album::destroy($id);
 

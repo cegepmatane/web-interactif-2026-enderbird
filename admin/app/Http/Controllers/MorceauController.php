@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
@@ -9,41 +8,38 @@ use Illuminate\Http\Request;
 
 class MorceauController extends Controller
 {
-  public function create()
-  {
+  // CREER
+  public function creer(){
     return view(
-      'morceau.create', 
+      'morceau.creer', 
       [
         'albums' => Album::orderBy('id', 'desc')->get() // for bonus
       ]
     );
   }
-
-  public function store(Request $request)
-  {
+  public function enregistrerCreation(Request $request){
     Morceau::create($request->all());
     return redirect()->route('index');
   }
 
-  public function edit($id)
-  {
+  // MODIFIER
+  public function modifier($id){
     return view(
-      'morceau.edit', 
+      'morceau.modifier', 
       [
         'morceau' => Morceau::findOrFail($id),
         'albums' => Album::orderBy('id', 'desc')->get() // for bonus
       ]
     );
   }
-
-  public function update(Request $request, $id)
-  {
+  public function enregistrerModifications(Request $request, $id){
     Morceau::findOrFail($id)->update($request->all());
 
     return redirect()->route('index');
   }
 
-  public function delete($id)
+  // SUPPRIMER
+  public function supprimer($id)
   {
     Morceau::destroy($id);
     

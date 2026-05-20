@@ -9,7 +9,7 @@
   
   <a href="{{ route('index') }}">← Retour</a>
   
-  <form action="{{ route('album.update', $album->id) }}" method="POST">
+  <form action="{{ route('album.enregistrerModifications', $album->id) }}" method="POST">
     @csrf
     @method('PUT')
   
@@ -36,7 +36,7 @@
     <button type="submit">Modifier</button>
   </form>
   
-  <form action="{{ route('album.delete', $album->id) }}" method="POST">
+  <form action="{{ route('album.supprimer', $album->id) }}" method="POST">
     @csrf
     @method('DELETE')
 

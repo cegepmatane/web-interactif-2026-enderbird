@@ -59,8 +59,9 @@ Sections du [Ajax.md](Ajax.md) :
 - **Accueil** (Template Modifié) : https://web.wavesofsounds.space
 - **Splash** : https://web.wavesofsounds.space/splash.php
 - **Liste d'albums** (et morceaux) : https://web.wavesofsounds.space/liste-albums.php
-- **Blog** : https://web.wavesofsounds.space/blog
 - **Espace Membre** : https://web.wavesofsounds.space/espace-membre.php
 - **Admin**[^admin] : https://web.wavesofsounds.space/admin/
+- **App** : https://web-projet-app.wavesofsounds.space
+- **Blog** : https://web.wavesofsounds.space/blog
 
 [^admin]: **Accès restreint** - Il faut le nom d'utilisateur (**contracteur**) et son mot de passe (**m'écrire pour l'avoir si problème**) de la base de donnée pour accéder aux pages admin

@@ -16,25 +16,22 @@
 
   <!-- Navigation du projet -->
   <nav id="navigation-projet">
-      <a href="../../../" class="lien-navigation accueil">🏠 Accueil</a>
-      <a href="../../../splash.php" class="lien-navigation splash">🫟 Splash</a>
-      <a href="../../../liste-albums.php" class="lien-navigation liste">🎵 Albums</a>
-      <a href="https://web-projet-app.wavesofsounds.space" class="lien-navigation accueil">🔊 App</a>
-      <a href="../../../blog/" class="lien-navigation blog">📝 Blog</a>
-      <a href="../../../espace-membre.php" class="lien-navigation espace">✨ Mon Espace</a>
-      <a href="{{ route('index') }}" class="lien-navigation admin">⚙️ Admin</a>
+    <a href="../../../" class="lien-navigation accueil">🏠 Accueil</a>
+    <a href="../../../splash.php" class="lien-navigation splash">🫟 Splash</a>
+    <a href="../../../liste-albums.php" class="lien-navigation liste">🎵 Albums</a>
+    <a href="{{ route('index') }}" class="lien-navigation admin">⚙️ Admin</a>
   </nav>
 
   <!-- En-tête -->
   <header id="entete-principal">
-      <h1 id="titre-site">SoundWave</h1>
-      <p id="slogan">Ta musique, ton style</p>
+    <h1 id="titre-site">SoundWave</h1>
+    <p id="slogan">Ta musique, ton style</p>
   </header>
 
   @yield('contenu')
 
   <footer id="pied-page">
-      SoundWave © <?=date('Y')?> • Votre musique, votre univers
+    SoundWave © <?=date('Y')?> • Votre musique, votre univers
   </footer>
 
 </body>

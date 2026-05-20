@@ -9,7 +9,7 @@
   
   <a href="{{ route('index') }}">← Retour</a>
   
-  <form action="{{ route('morceau.update', $morceau->id) }}" method="POST">
+  <form action="{{ route('morceau.enregistrerModifications', $morceau->id) }}" method="POST">
     @csrf
     @method('PUT')
   
@@ -47,7 +47,7 @@
     <button type="submit">Modifier</button>
   </form>
 
-  <form action="{{ route('morceau.delete', $morceau->id) }}" method="POST">
+  <form action="{{ route('morceau.supprimer', $morceau->id) }}" method="POST">
     @csrf
     @method('DELETE')
 

@@ -9,7 +9,7 @@
   
   <a href="{{ route('index') }}">← Retour</a>
   
-  <form action="{{ route('album.store') }}" method="POST">
+  <form action="{{ route('album.enregistrerCreation') }}" method="POST">
     @csrf
   
     <div>

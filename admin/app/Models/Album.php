@@ -18,8 +18,7 @@ class Album extends Model
     'duree'
   ];
 
-  public function morceaux()
-  {
+  public function morceaux(){
     return $this->hasMany(Morceau::class, 'id_album');
   }
 }
