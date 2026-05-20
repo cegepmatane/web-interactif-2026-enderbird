@@ -14,8 +14,7 @@ class Album extends Model
     'artiste',
     'type',
     'date_sortie',
-    'fichier_image',
-    'duree'
+    'fichier_image'
   ];
 
   public function morceaux(){

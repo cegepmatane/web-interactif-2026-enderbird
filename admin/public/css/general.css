@@ -30,6 +30,8 @@ body {
     line-height: 1.6;
 }
 
+
+
 /* Navigation projet */
 #navigation-projet {
     display: flex;
@@ -167,141 +169,11 @@ body {
     margin-top: 0.5rem;
 }
 
-/* Barre de recherche */
-#zone-recherche {
-    position: relative;
-    max-width: 500px;
-    margin: 2rem auto 0;
-}
-#champ-recherche {
-    width: 100%;
-    padding: 1rem 1.5rem 1rem 3.5rem;
-    border: 2px solid rgba(139,92,246,0.3);
-    border-radius: 50px;
-    font-size: 1rem;
-    background: rgba(255,255,255,0.05);
-    color: var(--couleur-texte);
-    outline: none;
-    transition: all 0.3s ease;
-}
-#champ-recherche::placeholder {
-    color: var(--couleur-texte-secondaire);
-}
-#champ-recherche:focus {
-    border-color: var(--couleur-violet);
-    box-shadow: var(--ombre-neon);
-}
-#icone-recherche {
-    position: absolute;
-    left: 1.3rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-}
-#liste-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--couleur-fond-carte);
-    border: 1px solid rgba(139,92,246,0.3);
-    border-radius: 20px;
-    margin-top: 0.5rem;
-    overflow: hidden;
-    display: none;
-    z-index: 50;
-}
-#liste-suggestions.active {
-    display: block;
-    animation: derouler 0.3s ease;
-}
-@keyframes derouler {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.suggestion {
-    text-decoration: none;
-    color: white;
-
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.8rem 1.2rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.suggestion:hover {
-    background: rgba(139,92,246,0.2);
-}
-.suggestion-pochette {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: var(--degrade-neon);
-}
-.suggestion-pochette img { width: 100%; }
-.suggestion-info {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-items: center;
-}
-.suggestion-titre {
-    width: 100%;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-.suggestion-artiste {
-    text-align: end;
-    flex: 8;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-.suggestion-point {
-    flex: 1;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-.suggestion-annee {
-    text-align: start;
-    flex: 8;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-.suggestion-type {
-    position: absolute;
-    text-align: end;
-    flex: 1;
-    font-size: 0.75rem;
-    color: var(--couleur-texte-secondaire);
-}
-
 /* Conteneur principal */
 #contenu-principal {
     max-width: 90%; 
     margin: 0 auto;
     padding: 2rem 1rem;
-}
-
-/* Légende Ajax */
-#legende-ajax { 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.item-legende {
-    background: var(--couleur-fond-carte);
-    padding: 1rem;
-    border-radius: 15px;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.1);
-    opacity: 0;
-    transform: translateY(20px);
 }
 
 .item-legende.visible {
@@ -322,7 +194,7 @@ body {
 .desc-legende { font-size: 0.7rem; color: var(--couleur-texte-secondaire); }
 
 /* Section album en vedette */
-#album-vedette {
+.album-vedette {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 2rem;
@@ -335,7 +207,7 @@ body {
     transform: translateY(30px);
 }
 
-#album-vedette.visible {
+.album-vedette.visible {
     animation: apparition 0.6s ease forwards;
 }
 
@@ -407,63 +279,9 @@ body {
     color: var(--couleur-texte-secondaire);
 }
 
-/* Zone rating pour album */
-.zone-rating {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background: rgba(139,92,246,0.1);
-    border-radius: 15px;
-    margin-bottom: 1rem;
-}
-.etoiles {
-    display: flex;
-    gap: 0.3rem;
-}
-.etoile {
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    filter: grayscale(100%);
-    opacity: 0.4;
-}
-.etoile:hover { transform: scale(1.2); }
-.etoile.active {
-    filter: grayscale(0%);
-    opacity: 1;
-}
-.moyenne-rating {
-    margin-left: auto;
-    font-weight: 700;
-    color: var(--couleur-cyan);
-}
-
-/* Bouton bookmark */
-.bouton-bookmark {
-    padding: 0.8rem 1.5rem;
-    border: 2px solid var(--couleur-violet);
-    background: transparent;
-    color: var(--couleur-violet-clair);
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.bouton-bookmark:hover {
-    background: var(--couleur-violet);
-    color: white;
-}
-.bouton-bookmark.actif {
-    background: var(--couleur-violet);
-    color: white;
-}
 
 /* Liste des pistes */
-#liste-pistes {
+.liste-pistes {
     background: var(--couleur-fond-carte);
     border-radius: 25px;
     padding: 1.5rem;
@@ -556,90 +374,6 @@ body {
     background: var(--couleur-rose);
 }
 
-/* Section commentaires */
-#section-commentaires {
-    background: var(--couleur-fond-carte);
-    border-radius: 25px;
-    padding: 1.5rem;
-    border: 1px solid rgba(255,255,255,0.1);
-}
-.liste-commentaires {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-}
-.commentaire {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    margin-bottom: 0.8rem;
-    background: rgba(255,255,255,0.03);
-    border-radius: 15px;
-    opacity: 0;
-    transform: translateY(10px);
-}
-.commentaire.visible {
-    animation: apparition 0.3s ease forwards;
-}
-.avatar-commentaire {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--degrade-neon);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-.avatar-commentaire img {
-    width: 100%;
-    height: 100%;
-}
-
-.contenu-commentaire { flex: 1; }
-.auteur-commentaire {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--couleur-violet-clair);
-}
-.texte-commentaire {
-    font-size: 0.9rem;
-    color: var(--couleur-texte-secondaire);
-    margin-top: 0.3rem;
-}
-.formulaire-commentaire {
-    display: flex;
-    gap: 0.8rem;
-}
-.champ-commentaire {
-     flex: 1;
-    padding: 0.8rem 1.2rem;
-    border: 2px solid rgba(139,92,246,0.3);
-    border-radius: 25px;
-    background: rgba(255,255,255,0.05);
-    color: var(--couleur-texte);
-    font-size: 0.9rem;
-    outline: none;
-}
-.champ-commentaire:focus {
-    border-color: var(--couleur-violet);
-}
-
-.bouton-commenter {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    background: var(--degrade-neon);
-    color: white;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.bouton-commenter:hover {
-    transform: scale(1.05);
-    box-shadow: var(--ombre-neon);
-}
 
 /* Pied de page */
 #pied-page {
@@ -650,11 +384,8 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    #album-vedette {
+    .album-vedette {
         grid-template-columns: 1fr;
-    }
-    #legende-ajax {
-        grid-template-columns: repeat(2, 1fr);
     }
     .piste {
         grid-template-columns: 30px 50px 1fr auto;

@@ -1,0 +1,33 @@
+ /* CSS reset pour uniformiser les navigateurs */
+* {
+  margin:0;
+  padding:0;
+}
+#contenu {
+  padding:2em;
+}
+form {
+  border:solid #034c7a 2px; 
+  background-color:lightblue;
+  padding:1em;
+}
+form > div {
+  margin-top:1em;
+}
+form > div > label {
+  display:block; 
+  font-weight:bold; 
+  color:#476e87;
+}
+form input, form textarea, form select {
+  width: 39em;
+}
+form input[type=submit] {
+  margin-top:2em;
+}
+form textarea {
+  height:5em;
+}
+img {
+  width: 5em;
+}

@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/icon.svg" type="image/x-icon">
 
-    <!-- <script src="js/general.js" defer></script> -->
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <script src="{{ asset('js/general.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/formulaire.css') }}">
 
     <title>@yield('titre')</title>
 </head>
 <body>
-
+  
   <!-- Navigation du projet -->
   <nav id="navigation-projet">
     <a href="../../../" class="lien-navigation accueil">🏠 Accueil</a>
@@ -27,8 +28,9 @@
     <h1 id="titre-site">SoundWave</h1>
     <p id="slogan">Ta musique, ton style</p>
   </header>
-
-  @yield('contenu')
+  <main id="contenu-principal">
+    @yield('contenu')
+  </main>
 
   <footer id="pied-page">
     SoundWave © <?=date('Y')?> • Votre musique, votre univers
