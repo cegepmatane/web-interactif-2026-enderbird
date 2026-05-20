@@ -2,7 +2,7 @@
 
 ## Projet Form
 
-- https://web.wavesofsounds.space/admin
+- **Admin**[^admin] : https://web.wavesofsounds.space/admin/
 
 ---
 
@@ -14,7 +14,7 @@
 
 ## Projet Blog
 
-- https://web-projet-app.wavesofsounds.space/blog
+- https://web-projet-app.wavesofsounds.space/blog/
 
 ---
 
@@ -61,6 +61,6 @@ Sections du [Ajax.md](Ajax.md) :
 - **Liste d'albums** (et morceaux) : https://web.wavesofsounds.space/liste-albums.php
 - **Blog** : https://web.wavesofsounds.space/blog
 - **Espace Membre** : https://web.wavesofsounds.space/espace-membre.php
-- **Admin**[^admin] : https://web.wavesofsounds.space/admin/index.php
+- **Admin**[^admin] : https://web.wavesofsounds.space/admin/
 
-[^admin]: **Accès restreint** - Il faut le nom d'utilisateur et son mot de passe de la base de donnée (contracteur) pour accéder aux pages admin
+[^admin]: **Accès restreint** - Il faut le nom d'utilisateur (**contracteur**) et son mot de passe (**m'écrire pour l'avoir si problème**) de la base de donnée pour accéder aux pages admin

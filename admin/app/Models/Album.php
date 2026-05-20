@@ -6,10 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Album extends Model
 {
-   protected $fillable = ['name'];
+  public $timestamps = false;
+  protected $table = 'album';
 
-   public function morceaux()
-   {
-      return $this->hasMany(Morceau::class);
-   }
+  protected $fillable = [
+    'nom',
+    'artiste',
+    'type',
+    'date_sortie',
+    'fichier_image',
+    'duree'
+  ];
+
+  public function morceaux()
+  {
+    return $this->hasMany(Morceau::class, 'id_album');
+  }
 }

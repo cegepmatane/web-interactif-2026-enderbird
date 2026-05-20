@@ -7,19 +7,19 @@
 @section('contenu')
   <h1>Ajouter un morceau</h1>
   
-  <a href="{{ route('admin.index') }}">← Retour</a>
+  <a href="{{ route('index') }}">← Retour</a>
   
-  <form action="{{ route('admin.morceau.store') }}" method="POST">
+  <form action="{{ route('morceau.store') }}" method="POST">
     @csrf
   
     <div>
       <label>Album</label>
   
-      <select name="album_id">
+      <select name="id_album">
         <option value="">Aucun album</option>
   
         @foreach($albums as $album)
-        <option value="{{ $album->id }}">{{ $album->name }}</option>
+        <option value="{{ $album->id }}">{{ $album->nom }}</option>
         @endforeach
       </select>
     </div>

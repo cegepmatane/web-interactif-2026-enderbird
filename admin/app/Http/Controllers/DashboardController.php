@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Models\Morceau;
@@ -12,15 +12,19 @@ class DashboardController extends Controller
   public function index()
   {
     $albums = Album::with([
-      'morceaux' => fn($q) => $q->orderBy('ordre')
-    ])->get();
+        'morceaux' => fn($q) => $q->orderBy('ordre')
+      ])
+      ->orderBy('id', 'desc')
+      ->get();
 
-    $morceauxSansAlbum = Morceau::whereNull('album_id')->orderBy('ordre')->get();
+    $morceauxSansAlbum = Morceau::whereDoesntHave('album')
+      ->orderBy('ordre')
+      ->get();
 
     $backups = Storage::disk('local')->files('backups');
 
     return view(
-      'admin.index', 
+      'index', 
       [
         'albums' => $albums,
         'morceauxSansAlbum' => $morceauxSansAlbum,

@@ -5,13 +5,13 @@
 @stop
 
 @section('contenu')
-  <form method="POST" action="{{ route('admin.backup.create') }}">
+  <form method="POST" action="{{ route('backup.create') }}">
 
     <input type="password" name="password" placeholder="mot de passe">
     <button type="submit">Créer backup</button>
 
   </form>
-  <form method="POST" action="{{ route('admin.backup.restore') }}">
+  <form method="POST" action="{{ route('backup.restore') }}">
 
     <select name="file">
       @forelse($backups as $backup)
@@ -27,21 +27,21 @@
 
   <h1>Liste des albums</h1>
   
-  <a href="{{ route('admin.morceau.create') }}">Ajouter un morceau</a>
-  <a href="{{ route('admin.album.create') }}">Ajouter un album</a>
+  <a href="{{ route('morceau.create') }}">Ajouter un morceau</a>
+  <a href="{{ route('album.create') }}">Ajouter un album</a>
   
     @foreach($albums as $album)
     <h2>
-      {{ $album->name }}
+      {{ $album->nom }}
   
-      <a href="{{ route('admin.album.edit', $album->id) }}">Éditer</a>
+      <a href="{{ route('album.edit', $album->id) }}">Éditer</a>
     </h2>
     <ul>
       @foreach($album->morceaux as $morceau)
         <li>
           {{ $morceau->ordre }}. {{ $morceau->titre }} - {{ $morceau->artiste }} - {{ $morceau->duree }}
   
-          <a href="{{ route('admin.morceau.edit', $morceau->id) }}">Modifier</a>
+          <a href="{{ route('morceau.edit', $morceau->id) }}">Modifier</a>
         </li>
       @endforeach
     </ul>
@@ -53,7 +53,7 @@
         <li>
           {{ $morceau->ordre }}. {{ $morceau->titre }} - {{ $morceau->artiste }} - {{ $morceau->duree }}
   
-          <a href="{{ route('admin.morceau.edit', $morceau->id) }}">Modifier</a>
+          <a href="{{ route('morceau.edit', $morceau->id) }}">Modifier</a>
         </li>
       @endforeach
     </ul>

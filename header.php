@@ -48,13 +48,13 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $_S
             } ?>
         </div>
 
-        <a href="index.php" class="lien-navigation accueil">🏠 Accueil</a>
+        <a href="/" class="lien-navigation accueil">🏠 Accueil</a>
         <a href="splash.php" class="lien-navigation splash">🫟 Splash</a>
         <a href="liste-albums.php" class="lien-navigation liste">🎵 Albums</a>
         <a href="https://web-projet-app.wavesofsounds.space" class="lien-navigation accueil">🔊 App</a>
         <a href="blog/" class="lien-navigation blog">📝 Blog</a>
         <a href="espace-membre.php" class="lien-navigation espace">✨ Mon Espace</a>
-        <a href="admin/index.php" class="lien-navigation admin">⚙️ Admin</a>
+        <a href="admin/" class="lien-navigation admin">⚙️ Admin</a>
     </nav>
 
     <!-- En-tête -->

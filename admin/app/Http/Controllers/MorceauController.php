@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Models\Morceau;
@@ -11,22 +11,27 @@ class MorceauController extends Controller
 {
   public function create()
   {
-    return view('admin.morceau.create', ['albums' => Album::all()]);
+    return view(
+      'morceau.create', 
+      [
+        'albums' => Album::orderBy('id', 'desc')->get() // for bonus
+      ]
+    );
   }
 
   public function store(Request $request)
   {
     Morceau::create($request->all());
-    return redirect()->route('admin.index');
+    return redirect()->route('index');
   }
 
   public function edit($id)
   {
     return view(
-      'admin.morceau.edit', 
+      'morceau.edit', 
       [
         'morceau' => Morceau::findOrFail($id),
-        'albums' => Album::all()
+        'albums' => Album::orderBy('id', 'desc')->get() // for bonus
       ]
     );
   }
@@ -35,13 +40,13 @@ class MorceauController extends Controller
   {
     Morceau::findOrFail($id)->update($request->all());
 
-    return redirect()->route('admin.index');
+    return redirect()->route('index');
   }
 
   public function delete($id)
   {
     Morceau::destroy($id);
     
-    return redirect()->route('admin.index');
+    return redirect()->route('index');
   }
 }

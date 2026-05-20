@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Morceau extends Model
 {
-    protected $table = 'morceaux';
+  public $timestamps = false;
+  protected $table = 'morceau';
 
-    protected $fillable = [
-        'album_id',
-        'ordre',
-        'titre',
-        'artiste',
-        'duree'
-    ];
+  protected $fillable = [
+    'id_album',
+    'ordre',
+    'titre',
+    'artiste',
+    'duree'
+  ];
 
-    public function album()
-    {
-        return $this->belongsTo(Album::class);
-    }
+  public function album()
+  {
+    return $this->belongsTo(Album::class, 'id_album');
+  }
 }

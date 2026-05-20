@@ -7,19 +7,19 @@
 @section('contenu')
   <h1>Modifier un morceau</h1>
   
-  <a href="{{ route('admin.index') }}">← Retour</a>
+  <a href="{{ route('index') }}">← Retour</a>
   
-  <form action="{{ route('admin.morceau.update', $morceau->id) }}" method="POST">
+  <form action="{{ route('morceau.update', $morceau->id) }}" method="POST">
     @csrf
     @method('PUT')
   
     <div>
       <label>Album</label>
-      <select name="album_id">
+      <select name="id_album">
         <option value="">Aucun album</option>
   
         @foreach($albums as $album)
-        <option value="{{ $album->id }}" {{ $morceau->album_id == $album->id ? 'selected' : '' }}>{{ $album->name }}</option>
+        <option value="{{ $album->id }}" {{ $morceau->id_album == $album->id ? 'selected' : '' }}>{{ $album->nom }}</option>
         @endforeach
       </select>
     </div>
@@ -47,7 +47,7 @@
     <button type="submit">Modifier</button>
   </form>
 
-  <form action="{{ route('admin.morceau.delete', $morceau->id) }}" method="POST">
+  <form action="{{ route('morceau.delete', $morceau->id) }}" method="POST">
     @csrf
     @method('DELETE')
 
