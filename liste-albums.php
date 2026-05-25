@@ -10,7 +10,7 @@
 
     // Collection
     require_once "accesseur/CollectionDAO.php";
-    $collections = CollectionDAO::listerCollectionsUtilisateur($utilisateur) ?? [];
+    $collections = $utilisateur ? (CollectionDAO::listerCollectionsUtilisateur($utilisateur) ?? []) : [];
 ?>
     <link rel="stylesheet" href="css/liste-albums.css">
     <title>SoundWave - Albums</title>
@@ -90,7 +90,7 @@
                 <!-- AJAX #2 : Bookmark -->
                 <button class="bouton-bookmark <?php echo $albumDansCollection ? 'actif' : ''; ?>" 
                     data-item-id="<?= $album->id ?>" 
-                    data-user-id="<?= $utilisateur->id ?>">
+                    data-user-id="<?= $utilisateur?->id ?>">
 
                     <?php if($albumDansCollection) { ?>
                     <span>✓</span> Dans ma collection

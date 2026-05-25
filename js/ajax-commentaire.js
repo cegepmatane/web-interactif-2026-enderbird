@@ -11,16 +11,12 @@ function mettreAJourTousLesCommentaires() {
         console.error('Fetch erreur:', erreur);
     }
 }
-
-function appelerMiseAJourCommentaire(listeCommentaires) {
-    updaterCommentaire(listeCommentaires);
-}
-
 setInterval(mettreAJourTousLesCommentaires, 15000);
 
+function appelerMiseAJourCommentaire(listeCommentaires){ updaterCommentaire(listeCommentaires); }
 async function updaterCommentaire(listeCommentaires) {
     try {
-        const reponse = await fetch(`ajax-commenter.php?id_album=${listeCommentaires.dataset.itemId}`);
+        const reponse = await fetch(`/ajax-commenter.php?id_album=${listeCommentaires.dataset.itemId}`);
         const donnees = await reponse.json();
 
         if (!donnees.reussite) return;
@@ -39,8 +35,7 @@ async function updaterCommentaire(listeCommentaires) {
 }
 
 function creerElementCommentaire(commentaire) {
-    const listeCommentaires = document.querySelector(`.liste-commentaires[data-item-id="${commentaire.id_album}"]`) 
-        || document.querySelector('.liste-commentaires');
+    const listeCommentaires = document.querySelector(`.liste-commentaires[data-item-id="${commentaire.id_album}"]`) || document.querySelector('.liste-commentaires');
 
     const nouveau = document.createElement('div');
     nouveau.className = 'commentaire visible';
@@ -57,17 +52,8 @@ function creerElementCommentaire(commentaire) {
     listeCommentaires.append(nouveau);
 }
 
-const boutonsCommenter = document.querySelectorAll('.bouton-commenter');
 
-function initialiserEvenementBoutonCommenter(bouton) {
-    bouton.addEventListener('click', gererClicBoutonCommenter);
-}
-
-boutonsCommenter.forEach(initialiserEvenementBoutonCommenter);
-
-async function gererClicBoutonCommenter(evenement) {
-    const bouton = evenement.currentTarget;
-
+async function envoyerCommentaire(bouton) {
     let listeCommentaires = bouton.closest('section').querySelector('.liste-commentaires');
     const idAlbum = listeCommentaires.dataset.itemId;
     const idUtilisateur = listeCommentaires.dataset.userId;
@@ -75,29 +61,53 @@ async function gererClicBoutonCommenter(evenement) {
     const champ = bouton.previousElementSibling;
     const texte = champ.value.trim();
 
-    if (texte) {
-        try {
-            // Attendre la réponse
-            const reponse = await fetch('../ajax-commenter.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id_album: idAlbum, id_utilisateur: idUtilisateur, message: texte })
-            });
+    if (!texte) return;
 
-            // // Débuggage si erreur php
-            // const text = await response.text();
-            // console.error('Non-JSON response:', text);
+    try {
+        const reponse = await fetch('../ajax-commenter.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id_album: idAlbum,
+                id_utilisateur: idUtilisateur,
+                message: texte
+            })
+        });
 
-            const resultat = await reponse.json();
-            if (!resultat.reussite) {
-                console.error('Serveur erreur:', resultat.message);
-            } else {
-                listeCommentaires = bouton.closest('section').querySelector('.liste-commentaires');
-                updaterCommentaire(listeCommentaires);
-                champ.value = '';
+        const resultat = await reponse.json();
+
+        if (!resultat.reussite) {
+            console.error('Erreur serveur');
+
+            if (resultat.code === "NOT_AUTHENTICATED") {
+                window.location.href = "/membre/";
             }
-        } catch (erreur) {
-            console.error('Fetch erreur:', erreur);
+            return;
         }
+
+        updaterCommentaire(listeCommentaires);
+        champ.value = '';
+
+    } catch (erreur) {
+        console.error('Fetch erreur:', erreur);
     }
 }
+
+const boutonsCommenter = document.querySelectorAll('.bouton-commenter');
+boutonsCommenter.forEach((bouton) => {
+    bouton.addEventListener('click', () => envoyerCommentaire(bouton));
+});
+const champsCommentaire = document.querySelectorAll('.champ-commentaire');
+champsCommentaire.forEach((champ) => {
+    champ.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+
+            const bouton = e.target
+                .closest('.formulaire-commentaire')
+                .querySelector('.bouton-commenter');
+
+            envoyerCommentaire(bouton);
+        }
+    });
+});

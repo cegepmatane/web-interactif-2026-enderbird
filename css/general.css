@@ -70,6 +70,8 @@ body {
 .lien-navigation.espace { border-color: var(--couleur-violet-clair); }
 .lien-navigation.admin { border-color: var(--couleur-rose); }
 
+.lien-navigation.actif { background-color: var(--couleur-fond);}
+
 /* Navigation utilisateur */
 #navigation-utilisateur {
     position: absolute;  /* stick to left */

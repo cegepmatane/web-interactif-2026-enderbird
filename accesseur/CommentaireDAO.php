@@ -1,7 +1,7 @@
 <?php 
-	require_once "modele/Commentaire.php";
-	require_once "CommentaireSQL.php";
-	require_once "BaseDeDonnees.php";
+	require_once dirname(__DIR__, 1) . "/modele/Commentaire.php";
+	require_once __DIR__ . "/CommentaireSQL.php";
+	require_once __DIR__ . "/BaseDeDonnees.php";
 
 	class CommentaireDAO extends BaseDeDonnees implements CommentaireSQL
 	{	

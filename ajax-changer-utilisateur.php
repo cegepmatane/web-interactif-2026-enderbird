@@ -9,9 +9,6 @@ $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $id
 if ($utilisateur) {
     // Mettre à jour la session
     $_SESSION['id_utilisateur'] = $utilisateur->id;
-    $_SESSION['pseudo'] = $utilisateur->pseudo;
-    $_SESSION['email'] = $utilisateur->email;
-    $_SESSION['fichier_image'] = $utilisateur->fichier_image;
 
     echo json_encode(['reussite' => true]);
     }

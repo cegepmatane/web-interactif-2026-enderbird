@@ -1,7 +1,7 @@
 <?php 
-	require_once "modele/Morceau.php";
-	require_once "MorceauSQL.php";
-	require_once "BaseDeDonnees.php";
+	require_once dirname(__DIR__) . "/modele/Morceau.php";
+	require_once __DIR__ . "/MorceauSQL.php";
+	require_once __DIR__ . "/BaseDeDonnees.php";
 
 	class MorceauDAO extends BaseDeDonnees implements MorceauSQL
 	{				

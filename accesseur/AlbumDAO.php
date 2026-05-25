@@ -1,7 +1,7 @@
 <?php 
-	require_once "modele/Album.php";
-	require_once "AlbumSQL.php";
-	require_once "BaseDeDonnees.php";
+	require_once dirname(__DIR__, 1) . "/modele/Album.php";
+	require_once __DIR__ . "/AlbumSQL.php";
+	require_once __DIR__ . "/BaseDeDonnees.php";
 
 	class AlbumDAO extends BaseDeDonnees implements AlbumSQL
 	{				

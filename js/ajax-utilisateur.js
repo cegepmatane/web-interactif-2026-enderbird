@@ -13,7 +13,7 @@ async function gererClicBoutonUtilisateur(evenement) {
     const idUtilisateur = boutonUtilisateur.dataset.userId;
 
     try {
-        const response = await fetch('ajax-changer-utilisateur.php', {
+        const response = await fetch('/ajax-changer-utilisateur.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `id_utilisateur=${idUtilisateur}`

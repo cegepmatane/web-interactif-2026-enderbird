@@ -33,11 +33,22 @@ try {
         }
     } // POST → AJOUTER COMMENTAIRE
     else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        session_start();
+
+        if (empty($_SESSION['id_utilisateur'])) {
+          echo json_encode([
+            'reussite' => false,
+            'code' => 'NOT_AUTHENTICATED',
+            'message' => 'Utilisateur non connecté'
+          ]);
+          exit;
+        }
+
         $donnees = json_decode(file_get_contents('php://input'), true);
 
         if ($donnees) {
             $idAlbum = $donnees['id_album'] ?? null;
-            $idUtilisateur = $donnees['id_utilisateur'] ?? null;
+            $idUtilisateur = $_SESSION['id_utilisateur'];
             $message = $donnees['message'] ?? '';
 
             $commentaire = new Commentaire([

@@ -15,18 +15,17 @@
     // Votes
     require_once "accesseur/VoteDAO.php";
     $votes = VoteDAO::listerVotesAlbum($albumVedette);
-    $vote = new Vote(['id_utilisateur' => $utilisateur->id, 'id_album' => $albumVedette->id]);
+    $vote = new Vote(['id_utilisateur' => $utilisateur?->id, 'id_album' => $albumVedette->id]);
     if ($votes) {
         foreach($votes as $voteTemp) {
-            if ($voteTemp->id_utilisateur == $utilisateur->id) $vote = VoteDAO::detaillerVote($vote);
+            if ($voteTemp->id_utilisateur == $utilisateur?->id) $vote = VoteDAO::detaillerVote($vote);
         }
     }
     $vote->moyenne = ($votes[0]->moyenne ?? 0);
     
     // Collection
     require_once "accesseur/CollectionDAO.php";
-    $collections = CollectionDAO::listerCollectionsUtilisateur($utilisateur) ?? [];
-
+    $collections = $utilisateur ? (CollectionDAO::listerCollectionsUtilisateur($utilisateur) ?? []) : [];
     $albumDansCollection = false;
     foreach($collections as $collection) {
         if ($collection->id_album == $albumVedette->id) {
@@ -37,7 +36,7 @@
 
     // Favori (presque pareil que collection)
     require_once "accesseur/FavoriDAO.php";
-    $favoris = FavoriDAO::listerFavorisUtilisateur($utilisateur) ?? [];
+    $favoris = $utilisateur ? (FavoriDAO::listerFavorisUtilisateur($utilisateur) ?? []) : [];
 ?>
 
     <title>SoundWave - Ma Musique</title>
@@ -107,7 +106,7 @@
                 <!-- AJAX #3 : Rating -->
                 <div class="zone-rating" 
                     data-item-id="<?= $albumVedette->id ?>" 
-                    data-user-id="<?= $utilisateur->id ?>">
+                    data-user-id="<?= $utilisateur?->id ?>">
                     <span>Votre note :</span>
                     <div class="etoiles">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
@@ -120,7 +119,7 @@
                 <!-- AJAX #2 : Bookmark -->
                 <button class="bouton-bookmark <?php echo $albumDansCollection ? 'actif' : ''; ?>" 
                     data-item-id="<?= $albumVedette->id ?>" 
-                    data-user-id="<?= $utilisateur->id ?>">
+                    data-user-id="<?= $utilisateur?->id ?>">
                     
                     <?php if($albumDansCollection) { ?>
                     <span>✓</span> Dans ma collection
@@ -158,7 +157,7 @@
                 <div class="piste-actions">
                     <button class="bouton-piste favori <?php echo $morceauDansFavori ? 'actif' : ''; ?>" title="Favoris" 
                     data-item-id="<?= $morceau->id ?>" 
-                    data-user-id="<?= $utilisateur->id ?>">❤️</button>
+                    data-user-id="<?= $utilisateur?->id ?>">❤️</button>
                     <button value="<?=$morceau->artiste?> <?=$morceau->titre?>" class="bouton-piste jouer" title="Jouer">▶️</button>
                 </div>
             </article>
@@ -172,7 +171,7 @@
 
             <div class="liste-commentaires" 
                 data-item-id="<?= $albumVedette->id ?>" 
-                data-user-id="<?= $utilisateur->id ?>">
+                data-user-id="<?= $utilisateur?->id ?>">
             
                 <?php foreach($commentaires as $commentaire) { 
                     $utilisateurCommentaire = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $commentaire->id_utilisateur]));

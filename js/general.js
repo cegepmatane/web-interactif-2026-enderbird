@@ -53,3 +53,22 @@ function gererClicBoutonJouer(evenement) {
     const bouton = evenement.currentTarget;
     window.open("https://open.spotify.com/search/" + bouton.value, '_blank');
 }
+
+// Cool script pour sélectionner la page active :) 
+(function () {
+    if (window.hasRunActiveClass) return;
+    window.hasRunActiveClass = true;
+
+    const pageActuelle = window.location.pathname;
+
+    document.querySelectorAll("nav a").forEach(lien => {
+        const href = lien.getAttribute("href");
+
+        if (!href) return;
+
+        // correspondance stricte
+        if (pageActuelle === href) {
+            lien.classList.add("actif");
+        }
+    });
+})();

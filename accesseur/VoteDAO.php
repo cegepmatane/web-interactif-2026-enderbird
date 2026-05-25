@@ -1,7 +1,7 @@
 <?php 
-	require_once "modele/Vote.php";
-	require_once "VoteSQL.php";
-	require_once "BaseDeDonnees.php";
+	require_once dirname(__DIR__, 1) . "/modele/Vote.php";
+	require_once __DIR__ . "/VoteSQL.php";
+	require_once __DIR__ . "/BaseDeDonnees.php";
 
 	class VoteDAO extends BaseDeDonnees implements VoteSQL
 	{	

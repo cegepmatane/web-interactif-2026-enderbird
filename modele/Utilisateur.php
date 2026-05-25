@@ -5,14 +5,14 @@ class Utilisateur
     public static $filtres = array(
 		'id' => FILTER_VALIDATE_INT,
 		'pseudo' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-		'email' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		'courriel' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 		'mot_de_passe' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 		'fichier_image' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
 	);
 
     protected $id;
 	protected $pseudo;
-	protected $email;
+	protected $courriel;
 	protected $mot_de_passe;
 	protected $fichier_image;
 
@@ -22,7 +22,7 @@ class Utilisateur
 
 		$this->id = $tableau['id'] ?? null;
 		$this->pseudo = $tableau['pseudo'] ?? '';
-		$this->email = $tableau['email'] ?? '';
+		$this->courriel = $tableau['courriel'] ?? '';
 		$this->mot_de_passe = $tableau['mot_de_passe'] ?? '';
 		$this->fichier_image = !empty($tableau['fichier_image']) ? $tableau['fichier_image'] : 'defaut.jpg';
 	}
@@ -37,8 +37,8 @@ class Utilisateur
 			case 'pseudo':
 				$this->pseudo = $valeur;
 			break;
-			case 'email':
-				$this->email = $valeur;
+			case 'courriel':
+				$this->courriel = $valeur;
 			break;
 			case 'mot_de_passe':
 				$this->mot_de_passe = $valeur;

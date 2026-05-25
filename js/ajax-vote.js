@@ -27,7 +27,7 @@ async function gererClicEtoile(evenement, zone, etoiles) {
 
     try {
         // Attendre la réponse
-        const response = await fetch('ajax-voter-etoile.php', {
+        const response = await fetch('/ajax-voter-etoile.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_album: idAlbum, id_utilisateur: idUtilisateur, note: note })

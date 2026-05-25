@@ -1,7 +1,7 @@
 <?php 
-	require_once "modele/Favori.php";
-	require_once "FavoriSQL.php";
-	require_once "BaseDeDonnees.php";
+	require_once dirname(__DIR__, 1) . "/modele/Favori.php";
+	require_once __DIR__ . "/FavoriSQL.php";
+	require_once __DIR__ . "/BaseDeDonnees.php";
 
 	class FavoriDAO extends BaseDeDonnees implements FavoriSQL
 	{	

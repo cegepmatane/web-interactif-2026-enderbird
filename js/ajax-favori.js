@@ -15,7 +15,7 @@ async function gererClicBoutonPisteFavori(evenement) {
 
     try {
         // Attendre la réponse
-        const response = await fetch('ajax-ajouter-supprimer-favori.php', {
+        const response = await fetch('/ajax-ajouter-supprimer-favori.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_morceau: idMorceau, id_utilisateur: idUtilisateur })
