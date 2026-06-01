@@ -1,48 +1,90 @@
 <?php
-include "../traitement-fichier.php";
-
-include "../configuration.php";
-require CHEMIN_ACCESSEUR . "MembreDAO.php";
-
-// traitement inscription-information.php
-// php filter
-
-if (isset($_POST['transmis'])) {
-    if (empty($_POST['pseudonyme']) || ! preg_match('/^[A-Za-z0-9]+([A-Za-z0-9]*|[._-]?[A-Za-z0-9]+)*$/', $_POST['pseudonyme'])) {
-        $_SESSION['erreur-information'] = "Veuillez renseigner votre pseudonyme correctement";
-        header('Location: inscription-information.php');
-
-    } else if (! empty(MembreDAO::trouverMembre(['pseudonyme' => $_POST['pseudonyme']]))) {
-        $_SESSION['erreur-information'] = "Veuillez choisir un autre pseudonyme";
-        header('Location: inscription-information.php');
-
-    } else if (empty($_POST['motdepasse1']) || empty($_POST['motdepasse1']) != empty($_POST['motdepasse2'])) {
-        $_SESSION['erreur-information'] = "Veuillez renseigner votre mot de passe correctement";
-        header('Location: inscription-information.php');
-
-    } else if (! preg_match('/^(?=.*\d)\S{8,16}$/', $_POST['motdepasse1'])) { // Le regit est plus simple pour autorisé "admin123"
-        $_SESSION['erreur-information'] = "Votre mot de passe doit contenir au moins 8 caractères avec majuscule, chiffre et caractère spécial";
-        header('Location: inscription-information.php');
-
-    } else {
-        $image = ajouterAvatar(); // Vérification du post des images
-
-        $filtreMembre = [
-            'pseudonyme'  => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'motdepasse1' => FILTER_SANITIZE_ENCODED,
-            'motdepasse2' => FILTER_SANITIZE_ENCODED,
-        ];
-
-        $informations = filter_input_array(INPUT_POST, $filtreMembre);
-
-        $_SESSION['membre']['pseudonyme'] = $informations['pseudonyme'];
-        $_SESSION['membre']['motdepasse'] = password_hash($informations['motdepasse1'], PASSWORD_DEFAULT);
-        $_SESSION['membre']['avatar']     = $image;
-
-        $reussiteInscription = MembreDAO::ajouterMembre($_SESSION['membre']);
-
-        if ($reussiteInscription) {
-            header('Location: ../membre.php');
-        }
-    }
-}
+  error_reporting(E_ALL);
+  ini_set("display_errors", 1);
+  
+  session_start();
+  require_once dirname(__DIR__, 1) . "/accesseur/UtilisateurDAO.php";
+  
+  if (empty($_SESSION['inscription'])) {
+    $_SESSION['erreur'] = "Inscription invalide";
+    header("Location: inscription-identification.php");
+    exit;
+  }
+  
+  $inscription = $_SESSION['inscription'];
+  
+  // =========================
+  // Validation finale
+  // =========================
+  if (
+    empty($inscription['pseudo']) ||
+    empty($inscription['courriel']) ||
+    empty($inscription['role']) ||
+    empty($inscription['mot_de_passe'])
+  ) {
+  
+    $_SESSION['erreur'] = "Informations manquantes";
+    header("Location: inscription-identification.php");
+    exit;
+  }
+  
+  // =========================
+  // Validation courriel
+  // =========================
+  if (!filter_var($inscription['courriel'], FILTER_VALIDATE_EMAIL)) {
+  
+    $_SESSION['erreur'] = "Courriel invalide";
+    header("Location: inscription-identification.php");
+    exit;
+  }
+  
+  // =========================
+  // Vérification doublons
+  // =========================
+  $utilisateurCourriel = UtilisateurDAO::trouverCourriel(
+    new Utilisateur([
+      'courriel' => $inscription['courriel']
+    ])
+  );
+  
+  if ($utilisateurCourriel) {
+  
+    $_SESSION['erreur'] = "Ce courriel est déjà utilisé";
+    header("Location: inscription-identification.php");
+    exit;
+  }
+  
+  // =========================
+  // Création utilisateur
+  // =========================
+  
+  $nouvelUtilisateur = new Utilisateur([
+    'pseudo' => $inscription['pseudo'],
+    'courriel' => $inscription['courriel'],
+    'mot_de_passe' => $inscription['mot_de_passe'],
+    'role' => $inscription['role']
+  ]);
+  
+  $reussiteUtilisateur = UtilisateurDAO::ajouterUtilisateur($nouvelUtilisateur);
+  
+  // =========================
+  // Succès
+  // =========================
+  
+  if ($reussiteUtilisateur) {
+    // connexion auto après inscription
+    $_SESSION['id_utilisateur'] = $reussiteUtilisateur->id;
+    unset($_SESSION['inscription']);
+  
+    header("Location: /membre/");
+    exit;
+  }
+  
+  
+  // =========================
+  // Erreur SQL
+  // =========================
+  
+  $_SESSION['erreur'] = "Erreur lors de l'inscription";
+  header("Location: inscription-identification.php");
+exit;

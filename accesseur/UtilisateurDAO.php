@@ -25,8 +25,8 @@
   	  $requete = BaseDeDonnees::getConnexion()->prepare(UtilisateurDAO::SQL_DETAIL_UTILISATEUR);
   	  $requete->bindParam(':id', $idUtilisateur, PDO::PARAM_INT);
   	  $requete->execute();
+
   	  $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
-  
   	  if (!$utilisateur) return null;
   	  
   	  return new Utilisateur($utilisateur);
@@ -39,11 +39,33 @@
 	  $requete = BaseDeDonnees::getConnexion()->prepare(UtilisateurDAO::SQL_TROUVER_COURRIEL);
   	  $requete->bindParam(':courriel', $courrielUtilisateur, PDO::PARAM_STR);
   	  $requete->execute();
+
   	  $utilisateur = $requete->fetch(PDO::FETCH_ASSOC);
-  
   	  if (!$utilisateur) return null;
   	  
   	  return new Utilisateur($utilisateur);
+	}
+
+	public static function ajouterUtilisateur(Utilisateur $utilisateur)
+	{
+	  $pseudoUtilisateur = $utilisateur->pseudo;
+	  $courrielUtilisateur = $utilisateur->courriel;
+	  $roleUtilisateur = $utilisateur->role;
+	  $motDePasseUtilisateur = $utilisateur->mot_de_passe;
+
+	  $requete = BaseDeDonnees::getConnexion()->prepare(UtilisateurDAO::SQL_AJOUTER_UTILISATEUR);
+	  $requete->bindParam(':pseudo', $pseudoUtilisateur, PDO::PARAM_STR);
+	  $requete->bindParam(':courriel', $courrielUtilisateur, PDO::PARAM_STR);
+	  $requete->bindParam(':role', $roleUtilisateur, PDO::PARAM_STR);
+	  $requete->bindParam(':mot_de_passe', $motDePasseUtilisateur, PDO::PARAM_STR);
+
+	  $reussite = $requete->execute();
+	  if (!$reussite) return null;
+
+	  $idUtilisateur = BaseDeDonnees::getConnexion()->lastInsertId();
+
+	  $utilisateur = UtilisateurDAO::detaillerUtilisateur(new Utilisateur(['id' => $idUtilisateur]));
+	  return $utilisateur;
 	}
   }
 ?>

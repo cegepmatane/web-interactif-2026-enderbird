@@ -1,0 +1,41 @@
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+h1.truc {
+  background-image: url(https://media1.tenor.com/m/jqS9Bb71T6YAAAAC/random.gif);
+  background-size: cover;
+  background-position: center;
+  width: 10%;
+  aspect-ratio: 1 / 1;
+  padding: 2rem;
+}
+h1.truc span { display: none; }
+
+.radio-hidden {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.radio-style {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  background-image: url("icon.png");
+  background-size: cover;
+}
+.radio-hidden:checked + .radio-style {
+  border: 2px solid #4CAF50;
+  box-shadow: 0 0 10px #4CAF50;
+  transform: scale(1.01);
+}
+.radio-hidden:focus + .radio-style {
+  outline: 3px solid blue;
+  outline-offset: 4px;
+}

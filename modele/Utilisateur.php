@@ -7,7 +7,10 @@ class Utilisateur
 		'pseudo' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 		'courriel' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 		'mot_de_passe' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-		'fichier_image' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
+		'fichier_image' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		'prenom' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		'nom' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+		'role' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
 	);
 
     protected $id;
@@ -15,6 +18,9 @@ class Utilisateur
 	protected $courriel;
 	protected $mot_de_passe;
 	protected $fichier_image;
+	protected $prenom;
+	protected $nom;
+	protected $role;
 
     public function __construct($tableau)
 	{
@@ -25,6 +31,9 @@ class Utilisateur
 		$this->courriel = $tableau['courriel'] ?? '';
 		$this->mot_de_passe = $tableau['mot_de_passe'] ?? '';
 		$this->fichier_image = !empty($tableau['fichier_image']) ? $tableau['fichier_image'] : 'defaut.jpg';
+		$this->prenom = $tableau['prenom'] ?? '';
+		$this->nom = $tableau['nom'] ?? '';
+		$this->role = $tableau['role'] ?? '';
 	}
 
     public function __set($propriete, $valeur)
@@ -45,6 +54,15 @@ class Utilisateur
 			break;
 			case 'fichier_image':
 				$this->fichier_image = $valeur;
+			break;
+			case 'prenom':
+				$this->prenom = $valeur;
+			break;
+			case 'nom':
+				$this->nom = $valeur;
+			break;
+			case 'role':
+				$this->role = $valeur;
 			break;
 		}
 	}
