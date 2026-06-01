@@ -32,6 +32,32 @@
 - VIDEO: https://youtu.be/xNzFRRu5RPQ?si=DSb5HtxCZdmbiyuT
 
 
+```bash
+sudo nano /etc/systemd/system/web-projet-app.service
+```
+```bash
+[Unit]
+Description=Service Web Projet APP
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/web.wavesofsounds.space/app
+ExecStart=/usr/bin/npm run prod
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+
 ---
 
 ---
